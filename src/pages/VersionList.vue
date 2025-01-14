@@ -26,14 +26,18 @@
 <script setup>
 import { ref } from 'vue';
 import Tag from './Tag.vue';
+import { useDrawerStore } from '../stores/drawerStore';
+
+
+
 const items = ref([
-    { id: 0, clickable: false, name: '1.21.x', tags: ['最新 2024/12/03 18:02'] },
+    { id: 0, clickable: false, name: '1.21.x', tags: ['🚀 1.21.4', '💕 最新版本'] },
     { id: 1, clickable: true, name: '1.21.4', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.21.3', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.21.2', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.21.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.21', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 0, clickable: false, name: '1.20.x', tags: ['最新 2024/12/03 18:02'] },
+    { id: 0, clickable: false, name: '1.20.x', tags: ['🚀 1.20.6'] },
     { id: 1, clickable: true, name: '1.20.6', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.20.5', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.20.4', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
@@ -42,17 +46,19 @@ const items = ref([
     { id: 1, clickable: true, name: '1.20.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.20', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
 
-    { id: 0, clickable: false, name: '1.19.x', tags: ['最新 2024/12/03 18:02'] },
+    { id: 0, clickable: false, name: '1.19.x', tags: ['🚀 1.19.2'] },
     { id: 1, clickable: true, name: '1.19.2', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.19.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
     { id: 1, clickable: true, name: '1.19', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
 
 ]);
 const activeItem = ref(-1);
+const drawerStore = useDrawerStore();
 
 const handleClick = (item) => {
 if (item.clickable) {
     activeItem.value = item.id; 
+    drawerStore.openDrawer();
 }
 };
 const getIconPath = (icon) => {
@@ -82,7 +88,7 @@ const getIconPath = (icon) => {
 }
 #tags
 {
-    margin-top: 9px;
+    margin-top: 3px;
 }
 #ver-name
 {
@@ -97,6 +103,7 @@ const getIconPath = (icon) => {
     width: 100%;
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 #title {
     color: white;
@@ -153,7 +160,7 @@ li {
 }
 
 li.clickable {
-  width: calc(25% - 45px);
+  width: 200px;
   height: 60px;
   position: relative;
   cursor: pointer;
@@ -164,10 +171,5 @@ li.clickable {
 li.clickable:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
-li.active {
-  background-color: rgba(0, 0, 0, 0.1);
-  color: white;
-  border-left: 2px solid white;
-  padding-left: 13px;
-}
+
 </style>

@@ -6,17 +6,12 @@
       </div>
       <div id="control">
         <img src="../assets/back.svg" id="back">
-        <span id="drawer-title">下载 1.21</span>
+        <span id="drawer-title">过滤器</span>
       </div>
       <div id="detail">
-        <img src="../assets/minecraft.png" width="45px" id="mod-icon">
-        <div id="banner-text">
-          <div id="mod-name">1.21</div>
-          <div id="desc">设置下载选项</div>
-        </div>
         <div id="details">
           <div id="detail-head">
-            <img src="../assets/setting.svg">
+            <img src="../assets/food.svg">
             <span id="head-text">自动安装</span>
           </div>
           <div id="detail-info">

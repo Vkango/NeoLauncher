@@ -62,7 +62,7 @@ textarea{
   background-color: rgba(255, 255, 255, 0.1);
   text-align: center;
   color: white;
-  
+  font-size: 12px;
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

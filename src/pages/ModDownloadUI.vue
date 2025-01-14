@@ -1,9 +1,10 @@
 <template>
   <div id="back_container">
       <div id="banner">
-          <div id="config-title">下载游戏核心</div>
+          <div id="config-title">浏览平台</div>
           <div id="tags">
-              <Tag title="🔗 BUGJUMP"></Tag>
+              <Tag title="🔗 Modrinth"></Tag>
+              <textarea placeholder="🔍 Search"></textarea>
           </div>
           <ul class="horizontal-list">
           <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
@@ -14,27 +15,30 @@
           </li>
           </ul>
       </div>
-      <div id="manage"><VersionList></VersionList></div>
-
+      <div id="manage"><ModDownList></ModDownList></div>
+      <!--<div id="drawer"><ModDownloadDrawer></ModDownloadDrawer></div>-->
   </div>
 </template>
 
 <script setup>
+//https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Amod%22%5D%5D&offset=0
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
 import Tag from './Tag.vue'
 import ConfigDrawer from './DownloadDrawer.vue'
 import { useDrawerStore } from '../stores/drawerStore';
+import ModDownloadDrawer from './ModDownloadDrawer.vue';
+import ModDownList from './ModDownList.vue';
+
 const drawerStore = useDrawerStore();
 
 const items = ref([
-  { id: 1, text: '稳定版', clickable: true, icon: 'home.svg' },
-  { id: 2, text: '快照版', clickable: true, icon: 'camera.svg' },
-  { id: 3, text: 'Beta版', clickable: true, icon: 'beta.svg' },
-  { id: 4, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
-  { id: 5, text: '申必版', clickable: true, icon: 'light.svg'},   
+  { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},
+  { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
+  { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
+  { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
   ]);
-const activeItem = ref(1);// 默认是首页
+const activeItem = ref(0);
 
 const handleClick = (item) => {
 if (item.clickable) {
@@ -48,12 +52,26 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+textarea{
+  position: absolute;
+  height: 20px;
+  border-radius: 5px;
+  resize: none;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  text-align: left;
+  color: white;
+  font-size: 12px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 #manage {
   position: absolute;
-  left: 0px;
+  left: -10px;
   top: 100px;
-  width: 100%;
+  width: calc(100% + 10px);
   height: calc(100% - 100px);
+  overflow-y: scroll;
 }
 .horizontal-list {
 display: flex;

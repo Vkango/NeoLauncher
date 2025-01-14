@@ -2,15 +2,19 @@
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import Navi from "./main/Navi.vue";
-import DownloadUI from './pages/DownloadUI.vue'
+import HomeUI from "./pages/HomeUI.vue";
+import DownloadUI from './pages/DownloadUI.vue';
 import ConfigManage from "./pages/ConfigManage.vue";
+import ModDownloadUI from './pages/ModDownloadUI.vue';
 </script>
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
   <Navi></Navi>
   <!--<ConfigManage></ConfigManage>-->
-  <DownloadUI></DownloadUI>
+  <!--<DownloadUI></DownloadUI>-->
+  <!--<HomeUI></HomeUI>-->
+  <ModDownloadUI></ModDownloadUI>
 </template>
 <style>
 
@@ -37,21 +41,23 @@ import ConfigManage from "./pages/ConfigManage.vue";
 }
 :root
 {
+  color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
 }
 ::-webkit-scrollbar {
-width: 10px; /* 纵向滚动条宽度 */
-height: 10px; /* 横向滚动条高度 */
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
 background: rgba(16, 31, 28, 0.1);
-border-radius: 2em;
+border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb {
 background-color: rgba(255, 255, 255, 0.3);
-border-radius: 2em;
+border-radius: 0;
 transition: background-color 0.3s;
 cursor: pointer;
 }

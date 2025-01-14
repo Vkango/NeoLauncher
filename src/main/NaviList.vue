@@ -14,14 +14,14 @@ import { ref } from 'vue';
 
 const items = ref([
   { text: '开始', clickable: false },
-  { id: 1, text: '首页', clickable: true, icon: 'home.svg' },
-  { text: '导航', clickable: false },
-  { id: 2, text: '游戏', clickable: true, icon: 'game.svg' },
-  { id: 3, text: '联机', clickable: true, icon: 'live.svg' },
-  { id: 4, text: '模组下载', clickable: true, icon: 'download.svg' },
-  { id: 5, text: '材质包', clickable: true, icon: 'color.svg'},
+  { id: 1, text: '启动', clickable: true, icon: 'home.svg' },
+  { id: 2, text: '设置', clickable: true, icon: 'setting.svg' },
+  { text: '下载', clickable: false },
+  { id: 3, text: '游戏', clickable: true, icon: 'game.svg' },
+  { id: 4, text: '浏览平台', clickable: true, icon: 'download.svg' },
+
   { text: '配置列表', clickable: false },
-  { id: 6, text: 'default', clickable: true, icon: 'run.svg' },
+  { id: 5, text: 'default', clickable: true, icon: 'run.svg' },
 ]);
 const activeItem = ref(1);// 默认是首页
 
