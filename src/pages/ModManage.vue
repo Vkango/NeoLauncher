@@ -82,7 +82,7 @@ const getIconPath = (icon) => {
     color: white;
     opacity: 0.5;
     font-size: 10px;
-    left: 20px;
+    left: 30px;
     position: absolute;
     top: 10px
 }

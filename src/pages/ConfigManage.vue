@@ -18,6 +18,7 @@
             </ul>
         </div>
         <div id="manage"><ModManage></ModManage></div>
+        <div id="drawer"><ConfigDrawer></ConfigDrawer></div>
     </div>
 </template>
 
@@ -25,6 +26,7 @@
 import { ref } from 'vue';
 import ModManage from './ModManage.vue';
 import Tag from './Tag.vue'
+import ConfigDrawer from './ConfigDrawer.vue'
 const items = ref([
     { id: 1, text: '摘要', clickable: true, icon: 'home.svg' },
     { id: 2, text: '安装', clickable: true, icon: 'setting.svg' },
@@ -49,15 +51,15 @@ const getIconPath = (icon) => {
 #manage {
     position: absolute;
     left: 0px;
-    top: 80px;
+    top: 100px;
     width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 100px);
 }
 .horizontal-list {
   display: flex;
   list-style-type: none;
   position: absolute;
-  left: 20px;
+  left: 30px;
   bottom: -12px;
 }
 #icon_container {
@@ -67,21 +69,21 @@ const getIconPath = (icon) => {
 #config-title {
     color: white;
     font-size: 24px;
-    left: 20px;
+    left: 30px;
     position: relative;
     display: inline-block;
-    top: 10px
+    top: 20px;
 }
 #tags {
     position: relative;
     display: inline-block;
-    left: 28px;
-    top: 6px;
+    left: 40px;
+    top: 16px;
 }
 #banner {
     position: absolute;
     width: 100%;
-    height: 80px;
+    height: 100px;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(20px);
 }

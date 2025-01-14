@@ -39,7 +39,7 @@ color: String,
   left: 15px;
   color: white;
   font-size: 12px;
-  top: 10px;
+  top: 5px;
 }
 #line
 {
@@ -116,6 +116,6 @@ textarea::placeholder {
   position: absolute;
   left: 0px;
   top: 0px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
 }
 </style>
