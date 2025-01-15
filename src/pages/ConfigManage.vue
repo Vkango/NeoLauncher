@@ -18,7 +18,7 @@
             </ul>
         </div>
         <div id="manage"><ModManage></ModManage></div>
-        <div id="drawer"><ConfigDrawer></ConfigDrawer></div>
+        <!--<div id="drawer"><ConfigDrawer></ConfigDrawer></div>-->
     </div>
 </template>
 

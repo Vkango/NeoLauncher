@@ -10,7 +10,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
+
+const emit = defineEmits(['changePage']);
 
 const items = ref([
   { text: '开始', clickable: false },
@@ -23,11 +25,13 @@ const items = ref([
   { text: '配置列表', clickable: false },
   { id: 5, text: 'default', clickable: true, icon: 'run.svg' },
 ]);
-const activeItem = ref(1);// 默认是首页
+const activeItem = ref(1);
 
 const handleClick = (item) => {
   if (item.clickable) {
     activeItem.value = item.id; 
+    console.log("chanpage", item.id);
+    emit('changePage', item.id);
   }
 };
 const getIconPath = (icon) => {
@@ -37,6 +41,7 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+
 #icon_container {
   margin-right: 30px;
 

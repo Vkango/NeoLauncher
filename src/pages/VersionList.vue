@@ -20,6 +20,9 @@
             </div>
         </li>
         </ul>
+        <transition name="drawer" mode="out-in">
+            <DownloadDrawer v-if="isDrawerOpen" @close="closeDrawer"></DownloadDrawer>
+        </transition>
     </div>
 </template>
 
@@ -27,7 +30,9 @@
 import { ref } from 'vue';
 import Tag from './Tag.vue';
 import { useDrawerStore } from '../stores/drawerStore';
+import DownloadDrawer from './DownloadDrawer.vue';
 
+const isDrawerOpen = ref(false);
 
 
 const items = ref([
@@ -53,13 +58,17 @@ const items = ref([
 
 ]);
 const activeItem = ref(-1);
-const drawerStore = useDrawerStore();
+
 
 const handleClick = (item) => {
-if (item.clickable) {
-    activeItem.value = item.id; 
-    drawerStore.openDrawer();
-}
+  if (item.clickable) {
+    activeItem.value = item.id;
+    isDrawerOpen.value = true;
+  }
+};
+
+const closeDrawer = () => {
+  isDrawerOpen.value = false;
 };
 const getIconPath = (icon) => {
     return new URL(`../assets/${icon}`, import.meta.url).href;
@@ -68,6 +77,22 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+.drawer-enter-active, .drawer-leave-active {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.drawer-enter, .drawer-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
 #head-item
 {
     width: fit-content;

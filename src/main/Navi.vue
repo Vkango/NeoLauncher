@@ -11,19 +11,26 @@
     </div>
     <textarea type="text" placeholder="Search in web / local..."></textarea>
     <div id="line"></div>
-    <div id="list"><NaviList></NaviList></div>
+    <div id="list"><NaviList @changePage="handleChangePage"></NaviList></div>
   </div>         
 </template>
 
 <script setup>
+import { defineEmits } from 'vue';
 import NaviList from './NaviList.vue';
+const emit = defineEmits(['changePage']);
 
+const handleChangePage = (pageId) => {
+  console.log('changpage||', pageId);
+  emit('changePage', pageId);
+};
 defineProps({
 color: String,
 })
 </script>
 
 <style scoped>
+
 #list
 {
   position: absolute;

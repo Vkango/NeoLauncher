@@ -1,11 +1,10 @@
 <template>
   <div id="drawer-mask">
     <div id="config-drawer">
-
       <div id="line">
       </div>
       <div id="control">
-        <img src="../assets/back.svg" id="back">
+        <img src="../assets/back.svg" id="back" @click="closeDrawer">
         <span id="drawer-title">下载 1.21</span>
       </div>
       <div id="detail">
@@ -66,11 +65,22 @@
 
 <script setup>
 import Tag from './Tag.vue';
+import { defineEmits } from 'vue';
 
+const emit = defineEmits(['close']);
+
+const closeDrawer = () => {
+  emit('close');
+};
 
 </script>
 
 <style scoped>
+#config-drawer {
+  transform: translateX(0);
+  transition: transform 0.2s ease;
+
+}
 #detail-icon {
   width: 14px;
   height: 14px;

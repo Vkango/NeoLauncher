@@ -1,22 +1,57 @@
-<script setup lang="ts">
-import { ref } from "vue";
+<script setup>
+import { ref, shallowRef } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import Navi from "./main/Navi.vue";
 import HomeUI from "./pages/HomeUI.vue";
 import DownloadUI from './pages/DownloadUI.vue';
 import ConfigManage from "./pages/ConfigManage.vue";
 import ModDownloadUI from './pages/ModDownloadUI.vue';
+import Settings from './pages/Settings.vue';
+let currentComponent = shallowRef(HomeUI);
+
+const componentsMap = {
+  1: HomeUI,
+  2: Settings,
+  3: DownloadUI,
+  4: ModDownloadUI,
+  5: ConfigManage,
+};
+
+const changePage = (pageId) => {
+  currentComponent.value = componentsMap[pageId] || HomeUI;
+};
 </script>
+
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
-  <Navi></Navi>
-  <!--<ConfigManage></ConfigManage>-->
-  <!--<DownloadUI></DownloadUI>-->
-  <!--<HomeUI></HomeUI>-->
-  <ModDownloadUI></ModDownloadUI>
+  <Navi @changePage="changePage"></Navi>
+  <transition name="fade-up" mode="in">
+      <component :is="currentComponent"></component>
+  </transition>
 </template>
 <style>
+.fade-up-enter-active, .fade-up-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.fade-up-enter, .fade-up-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-up-enter-active {
+  animation: fadeInUp 0.2s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 #container
 {
@@ -44,6 +79,7 @@ import ModDownloadUI from './pages/ModDownloadUI.vue';
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;
+  overflow: hidden;
 }
 ::-webkit-scrollbar {
   width: 5px;
@@ -58,7 +94,7 @@ border-radius: 0;
 ::-webkit-scrollbar-thumb {
 background-color: rgba(255, 255, 255, 0.3);
 border-radius: 0;
-transition: background-color 0.3s;
+transition: background-color 0.2s;
 cursor: pointer;
 }
 
