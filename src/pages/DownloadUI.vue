@@ -6,40 +6,42 @@
               <Tag title="🔗 BUGJUMP"></Tag>
           </div>
           <ul class="horizontal-list">
-          <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
+          <li v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
               <span v-if="item.clickable" id="icon_container">
-              <img :src="getIconPath(item.icon)" id="icon">
+                <img :src="getIconPath(item.icon)" id="icon">
               </span>
               {{ item.text }}
           </li>
           </ul>
       </div>
-      <div id="manage"><VersionList></VersionList></div>
-
+      <div id="manage">
+        <Transition name="fade-up" mode="in">
+          <VersionList :key="currentTabID" :currentTabID="currentTabID" />
+        </Transition>
+      </div>
   </div>
+
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
-import Tag from './Tag.vue'
-import ConfigDrawer from './DownloadDrawer.vue'
-import { useDrawerStore } from '../stores/drawerStore';
-const drawerStore = useDrawerStore();
+import Tag from '../components/Tag.vue'
+
 
 const items = ref([
-  { id: 1, text: '稳定版', clickable: true, icon: 'home.svg' },
-  { id: 2, text: '快照版', clickable: true, icon: 'camera.svg' },
-  { id: 3, text: 'Beta版', clickable: true, icon: 'beta.svg' },
-  { id: 4, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
-  { id: 5, text: '申必版', clickable: true, icon: 'light.svg'},   
+  { id: 0, text: '稳定版', clickable: true, icon: 'home.svg' },
+  { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
+  { id: 2, text: 'Beta版', clickable: true, icon: 'beta.svg' },
+  { id: 3, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
+  { id: 4, text: '申必版', clickable: true, icon: 'light.svg'},   
   ]);
-const activeItem = ref(1);// 默认是首页
+const currentTabID = ref(0);
 
-const handleClick = (item) => {
-if (item.clickable) {
-  activeItem.value = item.id; 
-}
+const handleClick = (id) => {
+  currentTabID.value = id;
+  console.log(currentTabID.value);
 };
 const getIconPath = (icon) => {
   return new URL(`../assets/${icon}`, import.meta.url).href;
@@ -48,6 +50,37 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+.fade-up-enter-active, .fade-up-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.fade-up-enter, .fade-up-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fade-up-enter-active {
+  animation: fadeInLeft 0.2s;
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+#drawer-mask
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+}
 #manage {
   position: absolute;
   left: 0px;

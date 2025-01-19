@@ -23,7 +23,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import Tag from './Tag.vue';
+import Tag from '../components/Tag.vue';
 const items = ref([
     { id: 1, name: 'WorldEdit', desc: '[创世神] worldedit-mod-7.2.10', clickable: true, icon: 'worldedit.png', loaded: true, tags: ['Fabric', '英语', '7.2.10 1742f98'] },
     { id: 2, name: 'WorldEdit', desc: '[创世神] worldedit-mod-7.2.10', clickable: true, icon: 'worldedit.png', loaded: false, tags: ['Fabric', '英语', '7.2.10 1742f98'] },

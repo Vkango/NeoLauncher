@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import Tag from './Tag.vue';
+import Tag from '../components/Tag.vue';
 
 
 </script>

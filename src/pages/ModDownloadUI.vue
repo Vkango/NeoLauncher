@@ -24,13 +24,10 @@
 //https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Amod%22%5D%5D&offset=0
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
-import Tag from './Tag.vue'
+import Tag from '../components/Tag.vue'
 import ConfigDrawer from './DownloadDrawer.vue'
-import { useDrawerStore } from '../stores/drawerStore';
 import ModDownloadDrawer from './ModDownloadDrawer.vue';
 import ModDownList from './ModDownList.vue';
-
-const drawerStore = useDrawerStore();
 
 const items = ref([
   { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},

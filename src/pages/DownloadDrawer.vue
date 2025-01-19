@@ -1,70 +1,69 @@
 <template>
-  <div id="drawer-mask">
-    <div id="config-drawer">
-      <div id="line">
-      </div>
-      <div id="control">
-        <img src="../assets/back.svg" id="back" @click="closeDrawer">
-        <span id="drawer-title">下载 1.21</span>
-      </div>
-      <div id="detail">
-        <img src="../assets/minecraft.png" width="45px" id="mod-icon">
-        <div id="banner-text">
-          <div id="mod-name">1.21</div>
-          <div id="desc">设置下载选项</div>
-        </div>
-        <div id="details">
-          <div id="detail-head">
-            <img src="../assets/setting.svg">
-            <span id="head-text">自动安装</span>
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/forge.svg">
-            <span id="detail-name">Forge</span>
-            <span id="detail-detail">51.0.33</span>
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/note.svg">
-            <span id="detail-name">Fabric</span>
-            <span id="detail-detail">不兼容
-            </span>
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/note.svg">
-            <span id="detail-name">NeoForge</span>
-            <span id="detail-detail">不兼容</span>
-            
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/note.svg">
-            <span id="detail-name">OptiFine</span>
-            <span id="detail-detail">不兼容</span>
-          </div>
-          <div id="detail-head">
-            <img src="../assets/setting.svg">
-            <span id="head-text">安装信息</span>
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/forge.svg">
-            <span id="detail-name">配置名</span>
-            <span id="detail-detail">default</span>
-          </div>
-          <div id="detail-info">
-            <img id="detail-icon" src="../assets/note.svg">
-            <span id="detail-name">显示名称</span>
-            <span id="detail-detail">1.21-Forge_51.0.33
-            </span>
-          </div>
-        </div>
-      </div>
-
+  <div id="config-drawer">
+    <div id="line">
     </div>
+    <div id="control">
+      <img src="../assets/back.svg" id="back" @click="closeDrawer">
+      <span id="drawer-title">下载 1.21</span>
+    </div>
+    <div id="detail">
+      <img src="../assets/minecraft.png" width="45px" id="mod-icon">
+      <div id="banner-text">
+        <div id="mod-name">1.21</div>
+        <div id="desc">设置下载选项</div>
+      </div>
+      <div id="details">
+        <div id="detail-head">
+          <img src="../assets/setting.svg">
+          <span id="head-text">自动安装</span>
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/forge.svg">
+          <span id="detail-name">Forge</span>
+          <span id="detail-detail">51.0.33</span>
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/note.svg">
+          <span id="detail-name">Fabric</span>
+          <span id="detail-detail">不兼容
+          </span>
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/note.svg">
+          <span id="detail-name">NeoForge</span>
+          <span id="detail-detail">不兼容</span>
+          
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/note.svg">
+          <span id="detail-name">OptiFine</span>
+          <span id="detail-detail">不兼容</span>
+        </div>
+        <div id="detail-head">
+          <img src="../assets/setting.svg">
+          <span id="head-text">安装信息</span>
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/forge.svg">
+          <span id="detail-name">配置名</span>
+          <span id="detail-detail">default</span>
+        </div>
+        <div id="detail-info">
+          <img id="detail-icon" src="../assets/note.svg">
+          <span id="detail-name">显示名称</span>
+          <span id="detail-detail">1.21-Forge_51.0.33
+          </span>
+        </div>
+      </div>
+    </div>
+
   </div>
+
 
 </template>
 
 <script setup>
-import Tag from './Tag.vue';
+import Tag from '../components/Tag.vue';
 import { defineEmits } from 'vue';
 
 const emit = defineEmits(['close']);
@@ -179,15 +178,5 @@ const closeDrawer = () => {
   box-shadow: 0px 10px 60px 30px rgba(0,0,0,0.8);
 
 }
-#drawer-mask
-{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: flex-end;
-}
+
 </style>

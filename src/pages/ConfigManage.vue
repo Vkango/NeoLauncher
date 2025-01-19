@@ -25,7 +25,7 @@
 <script setup>
 import { ref } from 'vue';
 import ModManage from './ModManage.vue';
-import Tag from './Tag.vue'
+import Tag from '../components/Tag.vue'
 import ConfigDrawer from './ConfigDrawer.vue'
 const items = ref([
     { id: 1, text: '摘要', clickable: true, icon: 'home.svg' },
@@ -33,6 +33,7 @@ const items = ref([
     { id: 3, text: '模组', clickable: true, icon: 'download.svg' },
     { id: 4, text: '材质', clickable: true, icon: 'color.svg' },
     { id: 5, text: '光影', clickable: true, icon: 'light.svg'},   
+    { id: 6, text: '世界存档', clickable: true, icon: 'world.svg'},   
     ]);
 const activeItem = ref(1);// 默认是首页
 

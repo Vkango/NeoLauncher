@@ -1,5 +1,12 @@
 <template>
-    <div id="ver-list">
+  <div id="container1">
+    <div style="width: 100%; height: 100%; position: absolute">{{ currentTabID }}</div>
+    <!--<Loading color="#ffffff" :size="110" :speed="2.5" />-->
+    <div v-show="!IsLoaded" id="load-status">
+        <span id="load-tip">正在加载</span>
+    </div>
+
+    <div id="ver-list" v-show="IsLoaded">
         <ul>
         <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
             <div v-if="item.clickable">
@@ -20,44 +27,57 @@
             </div>
         </li>
         </ul>
-        <transition name="drawer" mode="out-in">
-            <DownloadDrawer v-if="isDrawerOpen" @close="closeDrawer"></DownloadDrawer>
+        <transition name="drawer" mode="in">
+          <div id="drawer-mask" v-if="isDrawerOpen" >
+            <transition name="drawer" mode="in">
+                  <DownloadDrawer v-if="isDrawerOpen" @close="closeDrawer"></DownloadDrawer>
+            </transition> 
+          </div>
         </transition>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import Tag from './Tag.vue';
-import { useDrawerStore } from '../stores/drawerStore';
+import { ref, onMounted, defineProps, watch } from 'vue';
+import Tag from '../components/Tag.vue';
 import DownloadDrawer from './DownloadDrawer.vue';
-
+import Loading from '../components/Loading.vue';
+  
+const props = defineProps({
+    currentTabID: {
+        type: Number,
+        default: 0
+    }
+});
+const types = ['release', 'snapshot', 'old_beta', 'old_alpha'];
+const IsLoaded = ref(false); // <!!>
 const isDrawerOpen = ref(false);
-
-
-const items = ref([
-    { id: 0, clickable: false, name: '1.21.x', tags: ['🚀 1.21.4', '💕 最新版本'] },
-    { id: 1, clickable: true, name: '1.21.4', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.21.3', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.21.2', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.21.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.21', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 0, clickable: false, name: '1.20.x', tags: ['🚀 1.20.6'] },
-    { id: 1, clickable: true, name: '1.20.6', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20.5', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20.4', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20.3', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20.2', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.20', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-
-    { id: 0, clickable: false, name: '1.19.x', tags: ['🚀 1.19.2'] },
-    { id: 1, clickable: true, name: '1.19.2', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.19.1', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-    { id: 1, clickable: true, name: '1.19', icon: 'minecraft.png', tags: ['2024/12/03 18:02'] },
-
-]);
+const items = ref([]);
 const activeItem = ref(-1);
+const worker = new Worker(new URL('./versionWorker.js', import.meta.url));
+
+
+
+onMounted(() => {
+  fetchVersions();
+});
+
+
+
+
+const fetchVersions = () => {
+  IsLoaded.value = false;
+  worker.postMessage({ currentTabID: props.currentTabID, types });
+  worker.onmessage = (event) => {
+    if (event.data.error) {
+      console.error('Error fetching versions:', event.data.error);
+    } else {
+      items.value = event.data.items;
+    }
+    IsLoaded.value = true;
+  };
+};
 
 
 const handleClick = (item) => {
@@ -77,21 +97,25 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
-.drawer-enter-active, .drawer-leave-active {
-  transition: transform 0.2s ease, opacity 0.2s ease;
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: opacity 0.2s ease;
 }
 
-.drawer-enter, .drawer-leave-to {
-  transform: translateX(100%);
+.drawer-enter-from,
+.drawer-leave-to {
   opacity: 0;
 }
-
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: all 0.5s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
+#drawer-mask
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
 }
 #head-item
 {
@@ -130,32 +154,10 @@ const getIconPath = (icon) => {
     overflow-y: scroll;
     overflow-x: hidden;
 }
-#title {
-    color: white;
-    opacity: 0.5;
-    font-size: 10px;
-    left: 30px;
-    position: absolute;
-    top: 10px
-}
-#banner {
-    position: absolute;
-    width: 100%;
-    height: 80px;
-    background-color: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(20px);
-}
-#container
-{
-    left: 0px;
-    top: 80px;
-    position: absolute;
-    width: 100%;
-    height: calc(100% - 80px);
-}
+
+
 #icon_container {
   margin-left: 10px;
-  margin-right: 14px;
   margin-top: 6px;
 }
 #icon {
@@ -179,7 +181,7 @@ ul {
 }
 
 li {
-  padding: 10px 15px;
+  padding: 20px 15px;
   color: rgba(255, 255, 255, 0.3);
   width: 100%;
 }

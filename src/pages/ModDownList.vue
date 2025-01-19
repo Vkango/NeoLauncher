@@ -22,8 +22,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import Tag from './Tag.vue';
-import { useDrawerStore } from '../stores/drawerStore';
+import Tag from '../components/Tag.vue';
 
 
 
@@ -84,12 +83,10 @@ const items = ref([
 
 ]);
 const activeItem = ref(-1);
-const drawerStore = useDrawerStore();
 
 const handleClick = (item) => {
 if (item.clickable) {
     activeItem.value = item.id; 
-    drawerStore.openDrawer();
 }
 };
 
