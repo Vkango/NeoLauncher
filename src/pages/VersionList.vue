@@ -1,11 +1,9 @@
 <template>
-  <div id="container1">
-    <div v-show="!IsLoaded" id="load-status">
-        <span id="load-tip">正在加载</span>
-    </div>
-
-    <div id="ver-list" v-show="IsLoaded">
-        <ul>
+    <div id="ver-list">
+      <Transition name="fade1">
+        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" line-color="#ffffff" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
+      </Transition>
+        <ul v-show="IsLoaded">
         <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
             <div v-if="item.clickable">
                 <span id="icon_container">
@@ -33,7 +31,7 @@
           </div>
         </transition>
     </div>
-  </div>
+
 </template>
 
 <script setup>
@@ -72,8 +70,9 @@ const fetchVersions = () => {
       console.error('Error fetching versions:', event.data.error);
     } else {
       items.value = event.data.items;
+      IsLoaded.value = true;
     }
-    IsLoaded.value = true;
+
   };
 };
 
@@ -95,6 +94,27 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+.fade1-enter-active,
+.fade1-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade1-enter-from,
+.fade1-leave-to {
+  opacity: 0;
+}
+#tip2 {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  padding: 10px 15px;
+  border-radius: 30px;
+  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+}
 .drawer-enter-active,
 .drawer-leave-active {
   transition: opacity 0.2s ease;

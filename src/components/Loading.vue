@@ -1,142 +1,83 @@
 <template>
-    <div class="wrap" :style="{ width: size + 'px', height: size + 'px'}">
-      <div class="circle-layout" :style="{ width: size + 'px', height: size + 'px', animationDuration: speed + 's' }">
-        <div class="layout-left">
-          <div class="circle-left" :style="circleStyle"></div>
-        </div>
-        <div class="layout-right">
-          <div class="circle-right" :style="circleStyle"></div>
-        </div>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  import { defineProps, computed } from 'vue';
-  
-  const props = defineProps({
-    color: {
+  <div class="loading-container" :style="containerStyle">
+    <div class="loading-spinner" :style="spinnerStyle"></div>
+  </div>
+</template>
+
+<script>
+import { reactive, computed } from 'vue';
+
+export default {
+  name: 'LoadingBox',
+  props: {
+    // 圆环宽度
+    ringWidth: {
+      type: Number,
+      default: 2,
+    },
+    // 圆环颜色
+    ringColor: {
       type: String,
-      default: '#F88E8B'
+      default: '#ffffff',
     },
-    size: {
+    // 组件宽度
+    width: {
       type: Number,
-      default: 110
+      default: 100,
     },
-    speed: {
+    // 组件高度
+    height: {
       type: Number,
-      default: 2.5
-    }
-  });
-  
-  const circleStyle = computed(() => ({
+      default: 100,
+    },
+  },
+  setup(props) {
+    // 定义容器样式
+    const containerStyle = computed(() => ({
+      width: `${props.width}px`,
+      height: `${props.height}px`,
+    }));
 
-    animationDuration: props.speed + 's'
-  }));
-  </script>
-  
-  <style scoped>
-  .wrap {
-    animation: animation-wrap 2.5s linear infinite;
-  }
-  
-  .circle-layout {
-    animation: animation-circle 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-  
-  .layout-left {
-    float: left;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .layout-right {
-    float: right;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .circle-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    border: 5px solid #fff;
+    // 定义加载框样式
+    const spinnerStyle = computed(() => ({
+      width: `${props.width - 2 * props.ringWidth}px`,
+      height: `${props.height - 2 * props.ringWidth}px`,
+      borderWidth: `${props.ringWidth}px`,
+      borderColor: `${props.ringColor} transparent transparent transparent`,
+    }));
 
-    border-radius: 50%;
-    border-left: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    transform: rotate(40deg);
-    animation: animation-circle-left 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    return {
+      containerStyle,
+      spinnerStyle,
+    };
+  },
+};
+</script>
+
+<style scoped>
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loading-spinner {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
   }
-  
-  .circle-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    border: 5px solid #fff;
-    border-radius: 50%;
-    border-left: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    transform: rotate(-310deg);
-    animation: animation-circle-right 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
-  
-  @keyframes animation-circle-left {
-    0% {
-      transform: rotate(40deg);
-    }
-    50% {
-      transform: rotate(-100deg);
-    }
-    100% {
-      transform: rotate(40deg);
-    }
-  }
-  
-  @keyframes animation-circle-right {
-    0% {
-      transform: rotate(-310deg);
-    }
-    50% {
-      transform: rotate(-170deg);
-    }
-    100% {
-      transform: rotate(-310deg);
-    }
-  }
-  
-  @keyframes animation-circle {
-    0% {
-      transform: rotate(0deg);
-    }
-    25% {
-      transform: rotate(180deg);
-    }
-    50% {
-      transform: rotate(360deg);
-    }
-    75% {
-      transform: rotate(540deg);
-    }
-    100% {
-      transform: rotate(720deg);
-    }
-  }
-  
-  @keyframes animation-wrap {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  </style>
+}
+</style>
