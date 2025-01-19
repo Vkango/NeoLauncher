@@ -1,7 +1,5 @@
 <template>
   <div id="container1">
-    <div style="width: 100%; height: 100%; position: absolute">{{ currentTabID }}</div>
-    <!--<Loading color="#ffffff" :size="110" :speed="2.5" />-->
     <div v-show="!IsLoaded" id="load-status">
         <span id="load-tip">正在加载</span>
     </div>

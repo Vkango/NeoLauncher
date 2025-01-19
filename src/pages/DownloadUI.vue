@@ -15,7 +15,7 @@
           </ul>
       </div>
       <div id="manage">
-        <Transition name="fade-up" mode="in">
+        <Transition name="fade" mode="in">
           <VersionList :key="currentTabID" :currentTabID="currentTabID" />
         </Transition>
       </div>
@@ -50,14 +50,14 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
-.fade-up-enter-active, .fade-up-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }
-.fade-up-enter, .fade-up-leave-to {
+.fade-enter, .fade-leave-to {
   opacity: 0;
   transform: translateX(20px);
 }
-.fade-up-enter-active {
+.fade-enter-active {
   animation: fadeInLeft 0.2s;
 }
 @keyframes fadeInLeft {
