@@ -52,9 +52,9 @@ const getIconPath = (icon) => {
 #manage {
     position: absolute;
     left: 0px;
-    top: 100px;
+    top: 120px;
     width: 100%;
-    height: calc(100% - 100px);
+    height: calc(100% - 120px);
 }
 .horizontal-list {
   display: flex;
@@ -73,18 +73,18 @@ const getIconPath = (icon) => {
     left: 30px;
     position: relative;
     display: inline-block;
-    top: 20px;
+    top: 40px;
 }
 #tags {
     position: relative;
     display: inline-block;
     left: 40px;
-    top: 16px;
+    top: 36px;
 }
 #banner {
     position: absolute;
     width: 100%;
-    height: 100px;
+    height: 120px;
     background-color: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(20px);
 }

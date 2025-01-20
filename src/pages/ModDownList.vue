@@ -9,7 +9,6 @@
             </span>
             <div id="version-info">
                 <div id="ver-name">{{ item.name }}</div>
-
                 <div id="desc">{{ item.desc }}</div>
                 <div id="tags">
                     <Tag v-for="tagname in item.tags" :title="tagname"></Tag>
@@ -21,11 +20,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import Tag from '../components/Tag.vue';
-
-
-
+const listItems = ref(null);
+const activeItem = ref(-1);
 const items = ref([
     { id: 1, clickable: true, name: 'Fabric API' , background_image: 'https://cdn.modrinth.com/data/AANobbMI/images/b681a9e87daa53a0e85336a894db70427007149b_350.webp', desc: "Lightweight and modular API providing common hooks and intercompatibility measures utilized by mods using the Fabric toolchain.", icon: 'https://cdn.modrinth.com/data/P7dR8mSH/icon.png', tags: ['Library','Fabric'] },
     { id: 1, clickable: true, name: 'Sodium' , 
@@ -82,7 +80,20 @@ const items = ref([
 
 
 ]);
-const activeItem = ref(-1);
+const syncItemWidths = () => {
+  if (listItems.value && listItems.value.length > 0) {
+    const firstItemWidth = listItems.value[0].offsetWidth;
+    listItems.value.forEach((item) => {
+      item.style.width = `${firstItemWidth}px`;
+    });
+  }
+};
+onMounted(() => {
+  nextTick(syncItemWidths);
+});
+
+
+
 
 const handleClick = (item) => {
 if (item.clickable) {
@@ -122,13 +133,14 @@ if (item.clickable) {
     color: white;
     font-weight: bold;
     font-size: 15px;
+    bottom: 0px;
 }
 #desc
 {
     color: rgba(255, 255, 255, 0.5);
-    word-wrap: break-word;
-    word-break: break-all;
-    height: 20px;
+    top: 155px;
+    height: 85px;
+    overflow-y: hidden;
     position: absolute;
     width: calc(100% - 20px);
     margin-top: 5px;
@@ -151,7 +163,7 @@ if (item.clickable) {
   border-radius: 5px;
   position: absolute;
   right: 10px;
-  bottom: 50px;
+  bottom: 150px;
 }
 #version-info {
     height: auto;
@@ -166,6 +178,9 @@ ul {
   font-size: 12px; 
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 30;
+  
 }
 
 li {
@@ -174,15 +189,17 @@ li {
 }
 
 li.clickable {
+  flex: 1 1 auto; /* 适应宽度 */
+  
   width: 200px;
-  height: 200px;
+  height: 300px;
   position: relative;
   cursor: pointer;
   color: white;
   font-size: 12px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
-  margin: 8px;
+  margin: 20px;
   margin-top: 0px;
   margin-left: 0px;
   backdrop-filter: blur(0px);

@@ -1,8 +1,9 @@
 <template>
     <div id="ver-list">
       <Transition name="fade1">
-        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" line-color="#ffffff" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
+        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
       </Transition>
+      <Transition name="fade1">
         <ul v-show="IsLoaded">
         <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
             <div v-if="item.clickable">
@@ -23,13 +24,17 @@
             </div>
         </li>
         </ul>
-        <transition name="drawer" mode="in">
-          <div id="drawer-mask" v-if="isDrawerOpen" >
-            <transition name="drawer" mode="in">
-                  <DownloadDrawer v-if="isDrawerOpen" @close="closeDrawer"></DownloadDrawer>
-            </transition> 
+      </Transition>
+        <Transition name="drawer" mode="in">
+          <div id="drawer-mask" v-if="isDrawerOpen">
+
           </div>
-        </transition>
+        </Transition>
+        <Transition name="drawer1" mode="in">
+          <div id="drawer-container" v-if="isDrawerOpen" @click="closeDrawer">
+            <DownloadDrawer @click.stop @close="closeDrawer"></DownloadDrawer>
+          </div>
+        </Transition> 
     </div>
 
 </template>
@@ -124,6 +129,18 @@ const getIconPath = (icon) => {
 .drawer-leave-to {
   opacity: 0;
 }
+
+.drawer1-enter-active,
+.drawer1-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+}
+
+.drawer1-enter-from,
+.drawer1-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
 #drawer-mask
 {
   position: fixed;
@@ -132,6 +149,17 @@ const getIconPath = (icon) => {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+}
+
+#drawer-container
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: flex-end;
 }
@@ -205,16 +233,19 @@ li {
 }
 
 li.clickable {
+  top: 0px;
   width: 200px;
   height: 60px;
   position: relative;
   cursor: pointer;
   color: white;
   font-size: 12px;
+  transition: top 0.2s ease;
 }
 
 li.clickable:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  top: -5px;
 }
+
 
 </style>

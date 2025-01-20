@@ -3,8 +3,8 @@
   <div id="back_container">
       <div id="config-title">开始游戏</div>
       <div id="tags">
-          <Tag title="▶ default"></Tag>
-          <Tag title="▶ 25 寒假考研休息区"></Tag>
+          <Tag title="▶ default" @click.stop></Tag>
+          <Tag title="▶ 25 寒假考研休息区" @click.stop></Tag>
       </div>
       <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
       <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
@@ -43,7 +43,7 @@ import Tag from '../components/Tag.vue'
   margin-left: 30px;
   position: relative;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 40px;
   font-weight: bold;
 }
 #tags {

@@ -7,6 +7,7 @@ import DownloadUI from './pages/DownloadUI.vue';
 import ConfigManage from "./pages/ConfigManage.vue";
 import ModDownloadUI from './pages/ModDownloadUI.vue';
 import Settings from './pages/Settings.vue';
+import TitleBar from './components/TitleBar.vue';
 let currentComponent = shallowRef(HomeUI);
 
 const componentsMap = {
@@ -29,6 +30,7 @@ const changePage = (pageId) => {
   <transition name="fade-up" mode="in">
       <component :is="currentComponent"></component>
   </transition>
+  <TitleBar title="NeoLauncher" style="z-index: 10000;" />
 </template>
 <style>
 .fade-up-enter-active, .fade-up-leave-active {
@@ -52,7 +54,21 @@ const changePage = (pageId) => {
     transform: translateY(0);
   }
 }
-
+button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 0;
+  padding: 10px 15px;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-content: center;
+}
+button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.6);
+}
 #container
 {
   background: url('./assets/background.jpg');
@@ -82,8 +98,9 @@ const changePage = (pageId) => {
   overflow: hidden;
 }
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
+  padding-right: 10px;
 }
 
 ::-webkit-scrollbar-track {

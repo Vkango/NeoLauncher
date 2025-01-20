@@ -5,7 +5,7 @@
         <div id="tags">
             <Tag title="▶ 全局配置"></Tag>
         </div>
-        <div id="tip">🔧 更改指定配置或全局配置偏好设置</div>
+        <div id="tip">🔧 更改指定配置或全局配置偏好设置，指定配置偏好设置优先级高于全局配置</div>
         <div id="settings-container">
           <h1>启动行为</h1>
           <div id="config-name">游戏窗口标题</div>
@@ -121,7 +121,7 @@ h1 {
   margin-left: 30px;
   position: relative;
   display: inline-block;
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: bold;
 }
 #tags {
@@ -143,7 +143,7 @@ h1 {
 #container1{
   position: absolute;
   left: 225px;
-  top: 0px;
+  top: 30px;
   width: calc(100% - 225px);
   height: 100%;
   overflow-y: scroll;

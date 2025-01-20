@@ -4,7 +4,7 @@
     </div>
     <div id="control">
       <img src="../assets/back.svg" id="back" @click="closeDrawer">
-      <span id="drawer-title">下载 1.21</span>
+      <span id="drawer-title">下载 {{ verName }}</span>
     </div>
     <div id="detail">
       <img src="../assets/minecraft.png" width="45px" id="mod-icon">
@@ -47,6 +47,7 @@
           <img id="detail-icon" src="../assets/forge.svg">
           <span id="detail-name">配置名</span>
           <span id="detail-detail">default</span>
+          
         </div>
         <div id="detail-info">
           <img id="detail-icon" src="../assets/note.svg">
@@ -55,8 +56,9 @@
           </span>
         </div>
       </div>
-    </div>
 
+    </div>
+    <RippleButton id="download-button" @click="console.log('hello')"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
   </div>
 
 
@@ -65,7 +67,8 @@
 <script setup>
 import Tag from '../components/Tag.vue';
 import { defineEmits } from 'vue';
-
+import RippleButton from '../components/RippleButton.vue';
+const verName = defineProps(['verName']);
 const emit = defineEmits(['close']);
 
 const closeDrawer = () => {
@@ -75,6 +78,12 @@ const closeDrawer = () => {
 </script>
 
 <style scoped>
+#download-button {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  
+}
 #config-drawer {
   transform: translateX(0);
   transition: transform 0.2s ease;

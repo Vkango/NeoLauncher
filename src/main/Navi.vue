@@ -1,6 +1,5 @@
 <template>
   <div id="background">
-    <div id="title">NeoLauncher By:Lonyou</div>
     <div id="user-info">
       <img id="avatar" src="../assets/avatar.png">
       <div id="user-name">Vkango</div>
@@ -21,7 +20,6 @@ import NaviList from './NaviList.vue';
 const emit = defineEmits(['changePage']);
 
 const handleChangePage = (pageId) => {
-  console.log('changpage||', pageId);
   emit('changePage', pageId);
 };
 defineProps({
@@ -35,24 +33,17 @@ color: String,
 {
   position: absolute;
   left: 0px;
-  top: 120px;
+  top: 130px;
   width: 225px;
-  height: calc(100% - 120px);
+  height: calc(100% - 130px);
 
 }
-#title
-{
-  position: absolute;
-  left: 15px;
-  color: white;
-  font-size: 12px;
-  top: 5px;
-}
+
 #line
 {
   position: absolute;
   left: 15px;
-  top: 123px;
+  top: 133px;
   width: 195px;
   height: 2px;
   background-color: rgba(255, 255, 255, 0.1);
@@ -60,8 +51,8 @@ color: String,
 textarea{
   position: absolute;
   left: 15px;
-  top: 90px;
-  width: 195px;
+  top: 100px;
+  width: 191px;
   height: 20px;
   border-radius: 5px;
   resize: none;
@@ -80,7 +71,7 @@ textarea::placeholder {
 #user-info #avatar
 {
   position: absolute;
-  top: 40px;
+  top: 50px;
   left: 15px;
   width: 40px;
   height: 40px;
@@ -94,14 +85,14 @@ textarea::placeholder {
   color: white;
   font-size: 10px;
   left: 83px;
-  top: 66px;
+  top: 76px;
   position: absolute;
 }
 #user-info #user-name
 {
   position: absolute;
   left: 71px;
-  top: 38px;
+  top: 48px;
   color: white;
   font-size: 17px;
 }
@@ -113,7 +104,7 @@ textarea::placeholder {
   position: absolute;
   border-radius: 5px;
   left: 71px;
-  top: 70px;
+  top: 80px;
 }
 #background
 {
