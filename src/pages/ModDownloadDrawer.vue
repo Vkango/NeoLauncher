@@ -11,7 +11,7 @@
       <div id="detail">
         <div id="details">
           <div id="detail-head">
-            <img src="../assets/food.svg">
+            <img src="../assets/setting.svg">
             <span id="head-text">自动安装</span>
           </div>
           <div id="detail-info">

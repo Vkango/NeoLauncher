@@ -8,6 +8,8 @@ import ConfigManage from "./pages/ConfigManage.vue";
 import ModDownloadUI from './pages/ModDownloadUI.vue';
 import Settings from './pages/Settings.vue';
 import TitleBar from './components/TitleBar.vue';
+import Notification from "./components/Notification.vue";
+import Toast from "./components/Toast.vue";
 let currentComponent = shallowRef(HomeUI);
 
 const componentsMap = {
@@ -18,6 +20,20 @@ const componentsMap = {
   5: ConfigManage,
 };
 
+const notificationComponent = ref(null);
+
+// 定义显示通知的方法
+const showNotification = () => {
+  // 调用子组件的 addNotification 方法
+  if (notificationComponent.value) {
+    notificationComponent.value.addNotification(
+      '欢迎使用申必动力启动器', // 标题
+      '申必通知', // 内容
+      5000 // 持续时间（毫秒）
+    );
+  }
+};
+
 const changePage = (pageId) => {
   currentComponent.value = componentsMap[pageId] || HomeUI;
 };
@@ -26,13 +42,29 @@ const changePage = (pageId) => {
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
+  <TitleBar title="NeoLauncher" style="z-index: 1;" />
   <Navi @changePage="changePage"></Navi>
   <transition name="fade-up" mode="in">
       <component :is="currentComponent"></component>
   </transition>
-  <TitleBar title="NeoLauncher" style="z-index: 10000;" />
+
+  <div style="position: absolute; left: 30px; top: 30px">
+    <button @click="showNotification">显示通知</button>
+  </div>
+    <Notification ref="notificationComponent" position="top-right" />
+  <Toast></Toast>
+
 </template>
 <style>
+#notifications {
+  display: flex;
+  flex-direction: column; /* 垂直排列 */
+  position: fixed; /* 固定位置 */
+  top: 20px; /* 距离顶部的距离 */
+  right: 20px; /* 距离右侧的距离 */
+  gap: 10px; /* 通知之间的间距 */
+
+}
 .fade-up-enter-active, .fade-up-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }

@@ -87,7 +87,6 @@ const closeDrawer = () => {
 #config-drawer {
   transform: translateX(0);
   transition: transform 0.2s ease;
-
 }
 #detail-icon {
   width: 14px;
@@ -184,8 +183,7 @@ const closeDrawer = () => {
   width: 400px;
   background-color: rgba(30, 30, 30, 0.5);
   backdrop-filter: blur(20px);
-  box-shadow: 0px 10px 60px 30px rgba(0,0,0,0.8);
-
+  box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.8);
 }
 
 </style>

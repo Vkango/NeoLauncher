@@ -162,6 +162,7 @@ const getIconPath = (icon) => {
   height: 100%;
   display: flex;
   justify-content: flex-end;
+  z-index: 3;
 }
 #head-item
 {
