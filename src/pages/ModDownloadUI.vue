@@ -24,7 +24,6 @@
 //https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Amod%22%5D%5D&offset=0
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
-import Tag from '../components/Tag.vue'
 import ConfigDrawer from './DownloadDrawer.vue'
 import ModDownloadDrawer from './ModDownloadDrawer.vue';
 import ModDownList from './ModDownList.vue';

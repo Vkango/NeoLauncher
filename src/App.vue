@@ -9,7 +9,7 @@ import ModDownloadUI from './pages/ModDownloadUI.vue';
 import Settings from './pages/Settings.vue';
 import TitleBar from './components/TitleBar.vue';
 import Notification from "./components/Notification.vue";
-import Toast from "./components/Toast.vue";
+import AddConfigUI from "./pages/AddConfigUI.vue";
 let currentComponent = shallowRef(HomeUI);
 
 const componentsMap = {
@@ -17,7 +17,8 @@ const componentsMap = {
   2: Settings,
   3: DownloadUI,
   4: ModDownloadUI,
-  5: ConfigManage,
+  5: AddConfigUI,
+  6: ConfigManage,
 };
 
 const notificationComponent = ref(null);
@@ -27,8 +28,8 @@ const showNotification = () => {
   // 调用子组件的 addNotification 方法
   if (notificationComponent.value) {
     notificationComponent.value.addNotification(
-      '欢迎使用申必动力启动器', // 标题
-      '申必通知', // 内容
+      '1.12.2 下载完成', // 标题
+      '以添加到配置 default', // 内容
       5000 // 持续时间（毫秒）
     );
   }

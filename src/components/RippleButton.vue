@@ -84,28 +84,20 @@ setup() {
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
     outline: none;
     transition: background-color 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .ripple-button:hover {
-    background-color: #111;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .ripple-button:active {
-    background-color: #222;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.ripple-content {
-    z-index: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .ripple {
     position: absolute;

@@ -25,7 +25,6 @@
 <script setup>
 import { ref } from 'vue';
 import ModManage from './ModManage.vue';
-import Tag from '../components/Tag.vue'
 import ConfigDrawer from './ConfigDrawer.vue'
 const items = ref([
     { id: 1, text: '摘要', clickable: true, icon: 'home.svg' },

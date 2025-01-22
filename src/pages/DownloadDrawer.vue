@@ -58,16 +58,14 @@
       </div>
 
     </div>
-    <RippleButton id="download-button" @click="console.log('hello')"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
+    <RippleButton id="download-button"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
   </div>
 
 
 </template>
 
 <script setup>
-import Tag from '../components/Tag.vue';
 import { defineEmits } from 'vue';
-import RippleButton from '../components/RippleButton.vue';
 const verName = defineProps(['verName']);
 const emit = defineEmits(['close']);
 

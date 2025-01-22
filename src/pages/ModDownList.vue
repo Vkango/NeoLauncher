@@ -21,7 +21,6 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
-import Tag from '../components/Tag.vue';
 const listItems = ref(null);
 const activeItem = ref(-1);
 const items = ref([

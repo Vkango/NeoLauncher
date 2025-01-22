@@ -6,12 +6,12 @@
               <Tag title="🔗 BUGJUMP"></Tag>
           </div>
           <ul class="horizontal-list">
-          <li v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
+          <RippleButton id="RippleButton" v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
               <span v-if="item.clickable" id="icon_container">
                 <img :src="getIconPath(item.icon)" id="icon">
               </span>
               {{ item.text }}
-          </li>
+          </RippleButton>
           </ul>
       </div>
       <div id="manage">
@@ -27,8 +27,6 @@
 
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
-import Tag from '../components/Tag.vue'
-
 
 const items = ref([
   { id: 0, text: '稳定版', clickable: true, icon: 'home.svg' },
@@ -131,23 +129,27 @@ ul {
   font-size: 12px;
 }
 
-li {
+#RippleButton {
   padding: 10px 0px;
   margin-right: 30px;
   color: rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  transition: opacity 0.2s ease;
 }
 
-li.clickable {
+#RippleButton.clickable {
   cursor: pointer;
   color: white;
   font-size: 12px;
 
 }
 
-li.clickable:hover {
+#RippleButton.clickable:hover {
   opacity: 0.5;
 }
-li.active {
+#RippleButton.active {
   color: white;
   border-bottom: 2px solid white;
   font-weight: bold;

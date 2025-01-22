@@ -9,120 +9,118 @@
           @mouseenter="pauseTimer(item.id)" 
           @mouseleave="startTimer(item.id, item.duration)" 
         >
-          <div class="notification-content">
+          <RippleButton class="notification-content">
             <div class="notification-title">{{ item.title }}</div>
             <div class="notification-message">{{ item.message }}</div>
-          </div>
-          <button class="notification-close" @click="close(item.id)">关闭</button>
+            <button class="notification-close" @click="close(item.id)">关闭</button>
+          </RippleButton>
+
         </div>
       </transition-group>
     </div>
   </template>
   
-  <script>
-  import { ref, onUnmounted } from 'vue';
+  <script setup>
+  import { ref, onUnmounted } from 'vue';   
+  const notifications = ref([]);
+  const timers = ref({});
   
-  export default {
-    name: 'Notification',
-    props: {
-    },
-    setup(props) {
-      const notifications = ref([]);
-      const timers = ref({});
-  
-      const addNotification = (title, message, duration = 5000) => {
-        const id = Date.now();
-        notifications.value.push({ id, title, message, duration, visible: true });
-        startTimer(id, duration);
-        };
-  
-        const close = (id) => {
-            const index = notifications.value.findIndex((item) => item.id === id);
-            if (index !== -1) {
-            // 设置项目为不可见，触发动画
-                notifications.value[index].visible = false;
-            // 等待动画完成后再移除项目
-                setTimeout(() => {
-                    notifications.value.splice(index, 1);
-                }, 300);
-            }
-        };
-  
-      const startTimer = (id, duration) => {
-        if (timers.value[id]) {
-            clearTimeout(timers.value[id]);
-        }
-        if (duration > 0) {
-            timers.value[id] = setTimeout(() => {
-            close(id);
-            delete timers.value[id];
-        }, duration);
-        }
-      };
-  
-      const pauseTimer = (id) => {
-        if (timers.value[id]) {
-            clearTimeout(timers.value[id]);
-            delete timers.value[id]; 
-        }
-      };
-  
-      onUnmounted(() => {
-        for (const id in timers.value) {
-          if (timers.value[id]) clearTimeout(timers.value[id]);
-        }
-      });
-  
-      return {
-        notifications,
-        addNotification,
-        close,
-        startTimer,
-        pauseTimer,
-      };
-    },
+  const addNotification = (title, message, duration = 5000) => {
+    const id = Date.now();
+    notifications.value.unshift({ id, title, message, duration, visible: true });
+    startTimer(id, duration);
   };
-  </script>
   
+  const close = (id) => {
+    const index = notifications.value.findIndex((item) => item.id === id);
+    if (index !== -1) {
+      // 设置项目为不可见，触发动画
+      notifications.value[index].visible = false;
+      // 等待动画完成后再移除项目
+      setTimeout(() => {
+        notifications.value.splice(index, 1);
+      }, 300);
+    }
+  };
+  
+  const startTimer = (id, duration) => {
+    if (timers.value[id]) {
+      clearTimeout(timers.value[id]);
+    }
+    if (duration > 0) {
+      timers.value[id] = setTimeout(() => {
+        close(id);
+        delete timers.value[id];
+      }, duration);
+    }
+  };
+  
+  const pauseTimer = (id) => {
+    if (timers.value[id]) {
+      clearTimeout(timers.value[id]);
+      delete timers.value[id];
+    }
+  };
+  
+  onUnmounted(() => {
+    for (const id in timers.value) {
+      if (timers.value[id]) clearTimeout(timers.value[id]);
+    }
+  });
+  defineExpose({
+  addNotification,
+  close,
+  startTimer,
+  pauseTimer,
+});
+  </script>
   <style scoped>
-  /* 通知容器 */
+  ::-webkit-scrollbar {
+    display: none;
+}
   .notification-container {
     position: fixed;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     z-index: 2;
     overflow-y: scroll;
     overflow-x: hidden;
     right: 0px;
     top: 40px;
+    padding-right: 10px;
     height: calc(100% - 40px);
+    pointer-events: none;
+    width: 300px;
   }
   
   .notification {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
+    pointer-events: all;
+
+
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(20px);
     border-radius: 4px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    max-width: 100%;
-    margin-bottom: 10px;
+    box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+    width: calc(100% - 10px);
+    margin: 10px;
+    margin-top: 0px;
   }
   
   .notification-title {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 4px;
+    text-align: left;
   }
   
   .notification-message {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
   }
-  
+  .notification-content {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
   .notification-close {
     border: none;
     background: none;

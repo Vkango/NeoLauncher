@@ -41,10 +41,7 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch } from 'vue';
-import Tag from '../components/Tag.vue';
 import DownloadDrawer from './DownloadDrawer.vue';
-import Loading from '../components/Loading.vue';
-  
 const props = defineProps({
     currentTabID: {
         type: Number,

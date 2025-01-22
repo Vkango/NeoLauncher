@@ -1,11 +1,8 @@
 <template>
   <div id="container1">
     <div id="back_container">
-        <div id="config-title">配置设置</div>
-        <div id="tags">
-            <Tag title="▶ 全局配置"></Tag>
-        </div>
-        <div id="tip">🔧 更改指定配置或全局配置偏好设置，指定配置偏好设置优先级高于全局配置</div>
+        <div id="config-title">创建新配置</div>
+        <div id="tip"></div>
         <div id="settings-container">
           <h1>启动行为</h1>
           <div id="config-name">游戏窗口标题</div>
@@ -20,8 +17,6 @@
           <div id="config-name">自定义信息</div>
           <div id="config-name">最大实例数</div>
         </div>
-
-        
         <div id="config-title">启动器设置</div>
         <div id="tags">
             <Tag title="全局"></Tag>
@@ -77,8 +72,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 </script>
 
 <style scoped>

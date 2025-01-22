@@ -4,7 +4,8 @@
       <div id="config-title">开始游戏</div>
       <div id="tags">
           <Tag title="▶ default" @click.stop></Tag>
-          <Tag title="▶ 25 寒假考研休息区" @click.stop></Tag>
+          <Tag title="▶ 基岩版" @click.stop></Tag>
+          <Tag title="+" @click.stop></Tag>
       </div>
       <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
       <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
@@ -14,7 +15,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import Tag from '../components/Tag.vue'
 
 </script>
 
@@ -51,6 +51,7 @@ import Tag from '../components/Tag.vue'
   display: inline-block;
   margin-left: 10px;
   top: -3px;
+  cursor: default;
 }
 #container1
 {

@@ -1,17 +1,16 @@
 <template>
   <ul>
-    <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
+    <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
       <span v-if="item.clickable" id="icon_container">
         <img :src="getIconPath(item.icon)" id="icon">
       </span>
       {{ item.text }}
-    </li>
+    </RippleButton>
   </ul>
 </template>
 
 <script setup>
 import { ref, defineEmits } from 'vue';
-
 const emit = defineEmits(['changePage']);
 
 const items = ref([
@@ -23,7 +22,8 @@ const items = ref([
   { id: 4, text: '浏览平台', clickable: true, icon: 'download.svg' },
 
   { text: '配置列表', clickable: false },
-  { id: 5, text: 'default', clickable: true, icon: 'run.svg' },
+  { id: 5, text: '创建新配置', clickable: true, icon: 'add.svg' },
+  { id: 6, text: 'default', clickable: true, icon: 'run.svg' },
 ]);
 const activeItem = ref(1);
 
@@ -57,22 +57,29 @@ ul {
   font-size: 12px;
 }
 
-li {
+#RippleButton {
   padding: 10px 15px;
   color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  border-radius: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-li.clickable {
+#RippleButton.clickable {
   cursor: pointer;
   color: white;
   font-size: 12px;
-
+  pointer-events: all;
+  background-color: rgba(0, 0, 0, 0);
 }
 
-li.clickable:hover {
+#RippleButton.clickable:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
-li.active {
+#RippleButton.active {
   background-color: rgba(0, 0, 0, 0.1);
   color: white;
   border-left: 2px solid white;
