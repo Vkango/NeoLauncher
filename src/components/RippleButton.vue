@@ -4,7 +4,6 @@
       @mousedown="startRipple"
       @mouseup="endRipple"
       @mouseleave="endRipple"
-      @click="$emit('click')"
     >
       <span class="ripple-content">
         <slot></slot>
@@ -80,7 +79,6 @@ setup() {
 .ripple-button {
     position: relative;
     overflow: hidden;
-    background-color: #000;
     color: white;
     border: none;
     border-radius: 4px;

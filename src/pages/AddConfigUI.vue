@@ -1,5 +1,5 @@
 <template>
-  <div id="container1">
+  <UIContainer>
     <div id="back_container">
         <div id="config-title">创建新配置</div>
         <div id="tip"></div>
@@ -68,7 +68,7 @@
           <div id="config-name">没有可用的新版本</div>
         </div>
     </div>
-  </div>
+  </UIContainer>
 </template>
 
 <script setup>
@@ -128,7 +128,7 @@ h1 {
   left: 0px;
   top: 0px;
   position: relative;
-  
+  padding-top: 30px;
   width: calc(100% - 60px);
   height: 100%;
 }

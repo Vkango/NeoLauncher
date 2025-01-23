@@ -1,5 +1,5 @@
 <template>
-  <div id="back_container">
+  <UIContainer>
       <div id="banner">
           <div id="config-title">下载游戏核心</div>
           <div id="tags">
@@ -19,7 +19,7 @@
           <VersionList :key="currentTabID" :currentTabID="currentTabID" />
         </Transition>
       </div>
-  </div>
+  </UIContainer>
 
 </template>
 
@@ -27,6 +27,7 @@
 
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
+
 
 const items = ref([
   { id: 0, text: '稳定版', clickable: true, icon: 'home.svg' },
@@ -158,12 +159,5 @@ ul {
 {
   font-weight: bold;
 }
-#back_container
-{
-  left: 225px;
-  top: 0px;
-  position: absolute;
-  width: calc(100% - 225px);
-  height: 100%;
-}
+
 </style>

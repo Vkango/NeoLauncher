@@ -1,16 +1,16 @@
 <template>
-  <div id="container1">
-  <div id="back_container">
-      <div id="config-title">开始游戏</div>
-      <div id="tags">
-          <Tag title="▶ default" @click.stop></Tag>
-          <Tag title="▶ 基岩版" @click.stop></Tag>
-          <Tag title="+" @click.stop></Tag>
+    <UIContainer>
+      <div id="container1">
+        <div id="config-title">开始游戏</div>
+        <div id="tags">
+            <Tag title="▶ default" @click.stop></Tag>
+            <Tag title="▶ 基岩版" @click.stop></Tag>
+            <Tag title="+" @click.stop></Tag>
+        </div>
+        <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
+        <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
       </div>
-      <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
-      <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
-  </div>
-  </div>
+  </UIContainer>
 </template>
 
 <script setup>
@@ -55,16 +55,6 @@ import { ref } from 'vue';
 }
 #container1
 {
-  left: 225px;
-  top: 0px;
-  position: absolute;
-  width: calc(100% - 225px);
-  height: 100%;
-  cursor: pointer;
-
-}
-#back_container
-{
   left: 0px;
   top: 0px;
   position: absolute;
@@ -72,8 +62,9 @@ import { ref } from 'vue';
   height: 100%;
   cursor: pointer;
   transition: background-color 0.2s ease;
+
 }
-#back_container:hover
+#container1:hover
 {
   background-color: rgba(255, 255, 255, 0.025);
 }

@@ -1,6 +1,5 @@
 <template>
-  <div id="container1">
-    <div id="back_container">
+    <UIContainer style="padding-top: 30px;">
         <div id="config-title">配置设置</div>
         <div id="tags">
             <Tag title="▶ 全局配置"></Tag>
@@ -72,8 +71,7 @@
           <div id="config-name">开发版通道</div>
           <div id="config-name">没有可用的新版本</div>
         </div>
-    </div>
-  </div>
+    </UIContainer>
 </template>
 
 <script setup>
@@ -135,7 +133,7 @@ h1 {
   left: 0px;
   top: 0px;
   position: relative;
-  
+  padding-top: 30px;
   width: calc(100% - 60px);
   height: 100%;
 }

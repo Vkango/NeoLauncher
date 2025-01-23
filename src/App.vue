@@ -10,6 +10,8 @@ import Settings from './pages/Settings.vue';
 import TitleBar from './components/TitleBar.vue';
 import Notification from "./components/Notification.vue";
 import AddConfigUI from "./pages/AddConfigUI.vue";
+import Loading from './components/Loading.vue';
+
 let currentComponent = shallowRef(HomeUI);
 
 const componentsMap = {
@@ -25,11 +27,12 @@ const notificationComponent = ref(null);
 
 // 定义显示通知的方法
 const showNotification = () => {
-  // 调用子组件的 addNotification 方法
+  
   if (notificationComponent.value) {
     notificationComponent.value.addNotification(
-      '1.12.2 下载完成', // 标题
-      '以添加到配置 default', // 内容
+      '正在下载 1.12.2', // 标题
+      Loading, // 组件
+      { lineWidth: 8, ringColor: 'rgba(255, 255, 255, 0.5)', width: 16, height: 16 }, // 组件属性
       5000 // 持续时间（毫秒）
     );
   }
@@ -50,10 +53,9 @@ const changePage = (pageId) => {
   </transition>
 
   <div style="position: absolute; left: 30px; top: 30px">
-    <button @click="showNotification">显示通知</button>
+    <RippleButton @click="showNotification">显示通知</RippleButton>
   </div>
-    <Notification ref="notificationComponent" position="top-right" />
-  <Toast></Toast>
+    <Notification ref="notificationComponent"/>
 
 </template>
 <style>

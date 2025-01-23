@@ -25,23 +25,67 @@
         </li>
         </ul>
       </Transition>
-        <Transition name="drawer" mode="in">
-          <div id="drawer-mask" v-if="isDrawerOpen">
+      <Drawer>
+        <div id="drawer-content">
+          <img src="../assets/minecraft.png" width="45px" id="mod-icon">
+          <div id="banner-text">
+            <div id="mod-name">1.21</div>
+            <div id="desc">设置下载选项</div>
+          </div>
+          <div id="details">
+            <div id="detail-head">
+              <img src="../assets/setting.svg">
+              <span id="head-text">自动安装</span>
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/forge.svg">
+              <span id="detail-name">Forge</span>
+              <span id="detail-detail">51.0.33</span>
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/note.svg">
+              <span id="detail-name">Fabric</span>
+              <span id="detail-detail">不兼容
+              </span>
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/note.svg">
+              <span id="detail-name">NeoForge</span>
+              <span id="detail-detail">不兼容</span>
+              
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/note.svg">
+              <span id="detail-name">OptiFine</span>
+              <span id="detail-detail">不兼容</span>
+            </div>
+            <div id="detail-head">
+              <img src="../assets/setting.svg">
+              <span id="head-text">安装信息</span>
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/forge.svg">
+              <span id="detail-name">配置名</span>
+              <span id="detail-detail">default</span>
+              
+            </div>
+            <div id="detail-info">
+              <img id="detail-icon" src="../assets/note.svg">
+              <span id="detail-name">显示名称</span>
+              <span id="detail-detail">1.21-Forge_51.0.33
+              </span>
+            </div>
+          </div>
 
-          </div>
-        </Transition>
-        <Transition name="drawer1" mode="in">
-          <div id="drawer-container" v-if="isDrawerOpen" @click="closeDrawer">
-            <DownloadDrawer @click.stop @close="closeDrawer"></DownloadDrawer>
-          </div>
-        </Transition> 
+        </div>
+        <RippleButton id="download-button"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
+      </Drawer>
     </div>
 
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, watch } from 'vue';
-import DownloadDrawer from './DownloadDrawer.vue';
+import { ref, onMounted, defineProps, watch, getCurrentInstance } from 'vue';
 const props = defineProps({
     currentTabID: {
         type: Number,
@@ -50,10 +94,11 @@ const props = defineProps({
 });
 const types = ['release', 'snapshot', 'old_beta', 'old_alpha'];
 const IsLoaded = ref(false); // <!!>
-const isDrawerOpen = ref(false);
+const instance = getCurrentInstance();
+let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
 const items = ref([]);
 const activeItem = ref(-1);
-const worker = new Worker(new URL('./versionWorker.js', import.meta.url));
+const worker = new Worker(new URL('../scripts/versionWorker.js', import.meta.url));
 
 
 
@@ -82,12 +127,14 @@ const fetchVersions = () => {
 const handleClick = (item) => {
   if (item.clickable) {
     activeItem.value = item.id;
-    isDrawerOpen.value = true;
+    isDrawerOpen.state = true;
+    
+
   }
 };
 
 const closeDrawer = () => {
-  isDrawerOpen.value = false;
+  isDrawerOpen.state = false;
 };
 const getIconPath = (icon) => {
     return new URL(`../assets/${icon}`, import.meta.url).href;
@@ -105,6 +152,73 @@ const getIconPath = (icon) => {
 .fade1-leave-to {
   opacity: 0;
 }
+#download-button {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  
+}
+
+#detail-icon {
+  width: 14px;
+  height: 14px;
+  margin-top: 10px;
+  opacity: 0.5;
+
+}
+#detail-name {
+  color: white;
+  font-size: 12px;
+  position: relative;
+  margin: 8px 10px;
+  opacity: 0.5;
+}
+#detail-detail {
+  position: relative;
+  left: 0px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+#head-text {
+  
+  font-size: 12px;
+  position: relative;
+  left: 10px;
+  top: -5px;
+
+}
+#details {
+
+  flex-grow: 1; 
+  padding: 10px;
+  color: white;
+}
+#detail-head {
+  opacity: 0.5;
+  margin-top: 15px;
+}
+#banner-text {
+  margin: 0 10px;
+}
+#mod-name {
+  font-weight: bold;
+  color: white;
+}
+
+
+#desc {
+  color: white;
+  line-height: 20px;
+  font-size: 13px;
+  opacity: 0.5;
+}
+#mod-icon {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  border-radius: 5px;
+}
+
 #tip2 {
   position: absolute;
   right: 15px;
@@ -117,50 +231,8 @@ const getIconPath = (icon) => {
   border-radius: 30px;
   box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
 }
-.drawer-enter-active,
-.drawer-leave-active {
-  transition: opacity 0.2s ease;
-}
 
-.drawer-enter-from,
-.drawer-leave-to {
-  opacity: 0;
-}
 
-.drawer1-enter-active,
-.drawer1-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-
-}
-
-.drawer1-enter-from,
-.drawer1-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-#drawer-mask
-{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: flex-end;
-}
-
-#drawer-container
-{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  z-index: 3;
-}
 #head-item
 {
     width: fit-content;

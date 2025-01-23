@@ -25,7 +25,6 @@
 <script setup>
 import { ref } from 'vue';
 import ModManage from './ModManage.vue';
-import ConfigDrawer from './ConfigDrawer.vue'
 const items = ref([
     { id: 1, text: '摘要', clickable: true, icon: 'home.svg' },
     { id: 2, text: '安装', clickable: true, icon: 'setting.svg' },
