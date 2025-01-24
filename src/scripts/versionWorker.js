@@ -7,7 +7,6 @@ self.onmessage = async (event) => {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
-      console.log("json已加载完成");
       const releases = data.versions.filter(version => version.type === types[currentTabID]);
       const groupedItems = [];
       const groupedMap = {};
@@ -48,10 +47,11 @@ self.onmessage = async (event) => {
             }
           }
           groupedItems.push({
-            id: groupedItems.length,
+            id: release.id,
             clickable: true,
             name: release.id,
             icon: 'minecraft.png',
+            url: release.url,
             tags: ['🕖 ' + release.releaseTime.split("T")[0].replace("-", "/").replace("-", "/")]
           });
           if (groupedItems.length % 100 === 0) {

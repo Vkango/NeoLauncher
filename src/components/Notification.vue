@@ -18,11 +18,10 @@
             <!--无法使用插槽，因为App.vue添加通知时不能传动态页面-->
             <component :is="item.component" v-bind="item.props"></component>
           </div>
-          <Button class="notification-close" @click="close(item.id)">
+          <Button class="notification-close" @click="close(item.id)" @mouseup.stop> <!--注意mouseup.stop受父组件影响-->
             <img src="../assets/close.svg" width="12px">
           </Button>
         </RippleButton>
-
         </div>
       </transition-group>
     </div>
@@ -35,49 +34,70 @@ const timers = ref({});
 const dragging = ref(false);
 const dragStartX = ref(0);
 const currentDragId = ref(null);
+const isClosing = ref(false); // 全局关闭状态
 let deltaX = 0;
-const addNotification = (title, component, props = {}, duration = 5000) => {
-    const id = Date.now();
-    notifications.value.unshift({ id, title, component: markRaw(component), props, duration, visible: true });
-    startTimer(id, duration);
+let notificationCounter = 0;
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const addNotification = async (title, component, props = {}, duration = 5000) => {
+  // 等待当前通知关闭动画完成
+  while (isClosing.value) {
+    await delay(100); // 短暂等待，避免阻塞
+  }
+  const id = `${Date.now()}-${notificationCounter++}`;
+  notifications.value.unshift({
+    id,
+    title,
+    component: markRaw(component),
+    props,
+    duration,
+    visible: false
+  });
+  const notification = notifications.value[0];
+  notification.visible = true;
+  startTimer(id, duration);
 };
-  
-const close = (id) => {
-    const index = notifications.value.findIndex((item) => item.id === id);
-    if (index !== -1) {
-        // 设置项目为不可见，触发动画
-        notifications.value[index].visible = false;
-        // 等待动画完成后再移除项目
-        setTimeout(() => {
-        notifications.value.splice(index, 1);
-        }, 300);
-    }
+
+const close = async (id) => {
+  const index = notifications.value.findIndex(item => item.id === id);
+  if (index === -1) return;
+
+  isClosing.value = true;
+  const notification = notifications.value[index];
+  notification.visible = false;
+  await delay(300);
+  notifications.value.splice(index, 1);
+  isClosing.value = false;
 };
-  
+
 const startTimer = (id, duration) => {
-    if (timers.value[id]) {
-        clearTimeout(timers.value[id]);
-    }
-    if (duration > 0) {
-        timers.value[id] = setTimeout(() => {
-        close(id);
-        delete timers.value[id];
-        }, duration);
-    }
+  if (timers.value[id]) {
+    clearTimeout(timers.value[id]);
+  }
+  if (duration > 0) {
+    timers.value[id] = setTimeout(() => {
+      close(id);
+      delete timers.value[id];
+    }, duration);
+  }
 };
-  
+
 const pauseTimer = (id) => {
-    if (timers.value[id]) {
-        clearTimeout(timers.value[id]);
-        delete timers.value[id];
-    }
+  if (timers.value[id]) {
+    clearTimeout(timers.value[id]);
+    delete timers.value[id];
+  }
 };
+
 const startDrag = (event, id) => {
-    dragging.value = true;
-    dragStartX.value = event.clientX;
-    currentDragId.value = id;
-    document.addEventListener('mousemove', onDrag);
-    document.addEventListener('mouseup', endDrag);
+  dragging.value = true;
+  dragStartX.value = event.clientX;
+  currentDragId.value = id;
+  document.addEventListener('mousemove', onDrag);
+  document.addEventListener('mouseup', endDrag);
 };
 
 const onDrag = (event) => {
@@ -85,48 +105,40 @@ const onDrag = (event) => {
     deltaX = event.clientX - dragStartX.value;
     const notificationElement = document.querySelector(`.notification[data-id="${currentDragId.value}"]`);
     if (notificationElement) {
-        notificationElement.style.transform = `translateX(${deltaX}px)`;
-        notificationElement.style.opacity = `${1 - Math.abs(deltaX / 100)}`;
-
+      notificationElement.style.transition = '';
+      notificationElement.style.transform = `translateX(${deltaX}px)`;
+      notificationElement.style.opacity = `${1 - Math.abs(deltaX / 100)}`;
     }
   }
 };
 
 const endDrag = () => {
-    if (Math.abs(deltaX) > 100) {
-        console.log(currentDragId.value, "closed");
-        // 不要调用close显示动画，直接删除
-        const index = notifications.value.findIndex((item) => item.id === currentDragId.value);
-        if (index !== -1) {
-        // 设置项目为不可见，触发动画
-        notifications.value[index].visible = false;
-        // 等待动画完成后再移除项目
-        setTimeout(() => {
-        notifications.value.splice(index, 1);
-        }, 300);
-    }
-      }
-    if (Math.abs(deltaX) <= 100) {
-        deltaX = 0
-        const notificationElement = document.querySelector(`.notification[data-id="${currentDragId.value}"]`);
-        notificationElement.style.transform = `translateX(0px)`;
-        notificationElement.style.opacity = 1;
-    }
+  if (Math.abs(deltaX) > 100) {
+    close(currentDragId.value);
+  } else {
+    deltaX = 0;
+    const notificationElement = document.querySelector(`.notification[data-id="${currentDragId.value}"]`);
+    notificationElement.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+    notificationElement.style.transform = `translateX(0px)`;
+    notificationElement.style.opacity = 1;
+  } 
   dragging.value = false;
   currentDragId.value = null;
   document.removeEventListener('mousemove', onDrag);
   document.removeEventListener('mouseup', endDrag);
 };
-  onUnmounted(() => {
-    for (const id in timers.value) {
-      if (timers.value[id]) clearTimeout(timers.value[id]);
-    }
-  });
-  defineExpose({
+
+onUnmounted(() => {
+  for (const id in timers.value) {
+    if (timers.value[id]) clearTimeout(timers.value[id]);
+  }
+});
+
+defineExpose({
   addNotification,
   close,
   startTimer,
-  pauseTimer,
+  pauseTimer
 });
   </script>
   <style scoped>
@@ -157,8 +169,8 @@ const endDrag = () => {
     width: calc(100% - 10px);
     margin: 10px;
     margin-top: 0px;
+    
   }
-  
   .notification-title {
     font-size: 16px;
     font-weight: bold;
@@ -170,6 +182,9 @@ const endDrag = () => {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
     text-align: left;
+    width: 100%;
+    height: fit-content;
+    margin-top: 5px;
   }
   .notification-content {
     width: 100%;
@@ -198,7 +213,7 @@ const endDrag = () => {
   .fade-enter-active,
   .fade-leave-active,
   .fade-move {
-    transition: all 0.3s ease, opacity 0.3s ease;
+    transition: all 0.3s ease;
   }
   
   .fade-enter-from,

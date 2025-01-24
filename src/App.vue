@@ -1,5 +1,5 @@
 <script setup>
-import { ref, shallowRef } from "vue";
+import { ref, shallowRef, provide } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import Navi from "./main/Navi.vue";
 import HomeUI from "./pages/HomeUI.vue";
@@ -10,7 +10,7 @@ import Settings from './pages/Settings.vue';
 import TitleBar from './components/TitleBar.vue';
 import Notification from "./components/Notification.vue";
 import AddConfigUI from "./pages/AddConfigUI.vue";
-import Loading from './components/Loading.vue';
+import LoadingWithTip from "./components/Notification/LoadingWithTip.vue";
 
 let currentComponent = shallowRef(HomeUI);
 
@@ -25,18 +25,27 @@ const componentsMap = {
 
 const notificationComponent = ref(null);
 
+provide('sendNotification', (title, component, props = {}, duration = 5000) => {
+  notificationComponent.value.addNotification(title, component, props, duration);
+})
 // 定义显示通知的方法
-const showNotification = () => {
+/*const showNotification   = () => {
   
   if (notificationComponent.value) {
     notificationComponent.value.addNotification(
-      '正在下载 1.12.2', // 标题
-      Loading, // 组件
-      { lineWidth: 8, ringColor: 'rgba(255, 255, 255, 0.5)', width: 16, height: 16 }, // 组件属性
+      '正在下载米米世界', // 标题
+      LoadingWithTip, // 组件
+      {  }, // 组件属性
+      2000 // 持续时间（毫秒）
+    );
+    notificationComponent.value.addNotification(
+      '米米世界下载完成', // 标题
+      ImageWithTip, // 组件
+      {  }, // 组件属性
       5000 // 持续时间（毫秒）
     );
   }
-};
+};*/
 
 const changePage = (pageId) => {
   currentComponent.value = componentsMap[pageId] || HomeUI;
@@ -53,7 +62,7 @@ const changePage = (pageId) => {
   </transition>
 
   <div style="position: absolute; left: 30px; top: 30px">
-    <RippleButton @click="showNotification">显示通知</RippleButton>
+
   </div>
     <Notification ref="notificationComponent"/>
 
@@ -135,9 +144,7 @@ button:hover {
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
-  padding-right: 10px;
 }
-
 ::-webkit-scrollbar-track {
 background: rgba(16, 31, 28, 0.1);
 border-radius: 0;

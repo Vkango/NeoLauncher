@@ -8,8 +8,8 @@
         <div id="config-drawer" @click.stop>
             <div id="line"></div>
             <div id="control">
-                <img src="../assets/back.svg" id="back" @click="closeDrawer">
-                <span id="drawer-title">下载 {{ 1.21 }}</span>
+                <RippleButton style="padding: 0; box-shadow: none; background-color: transparent; border-radius: 0;"><img src="../assets/back.svg" id="back" @click="closeDrawer"></RippleButton>
+                <span id="drawer-title">{{ ctitle }}</span>
             </div>
             <div id="detail" @click.stop style="overflow-y: scroll;">
                 <slot></slot>
@@ -20,12 +20,17 @@
   </Transition> 
 </template>
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, defineProps } from 'vue';
 let isDrawerOpen = getCurrentInstance().appContext.config.globalProperties.$IsDrawerOpen;
-console.log("is_drawer_open", isDrawerOpen.state);
 const closeDrawer = () => {
   isDrawerOpen.state = false;
 };
+defineProps({
+  ctitle: {
+    type: String,
+    required: true
+  },
+});
 </script>
 <style>
 .drawer-enter-active,
@@ -76,7 +81,7 @@ const closeDrawer = () => {
   padding: 15px;
 }
 #drawer-title {
-  left: 50px;
+  left: 45px;
   top: 16px;
   position: absolute;
   width: calc(100% - 47px);

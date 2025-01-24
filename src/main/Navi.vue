@@ -8,7 +8,7 @@
         <div id="status-info">正版登录</div>
       </div>
     </div>
-    <textarea type="text" placeholder="Search in web / local..."></textarea>
+    <input type="text" placeholder="Search in web / local..."></input>
     <div id="line"></div>
     <div id="list"><NaviList @changePage="handleChangePage"></NaviList></div>
   </div>         
@@ -48,12 +48,12 @@ color: String,
   height: 2px;
   background-color: rgba(255, 255, 255, 0.1);
 }
-textarea{
+input{
   position: absolute;
   left: 15px;
   top: 100px;
   width: 191px;
-  height: 20px;
+  height: 22px;
   border-radius: 5px;
   resize: none;
   border: none;
@@ -64,7 +64,7 @@ textarea{
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-textarea::placeholder {
+input::placeholder {
   color: rgba(255, 255, 255, 0.5); /* 设置placeholder的颜色 */
 }
 

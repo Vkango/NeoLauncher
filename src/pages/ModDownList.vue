@@ -20,7 +20,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick, inject } from 'vue';
+import ImageWithTip from "../components/Notification/ImageWithTip.vue";
+import LoadingWithTip from '../components/Notification/LoadingWithTip.vue';
 const listItems = ref(null);
 const activeItem = ref(-1);
 const items = ref([
@@ -92,11 +94,25 @@ onMounted(() => {
 });
 
 
-
+const sendNotification = inject('sendNotification');
 
 const handleClick = (item) => {
 if (item.clickable) {
     activeItem.value = item.id; 
+    sendNotification(
+      '正在下载米米世界模组……',
+      LoadingWithTip,
+      { Tip: item.name },
+      3000)
+    setTimeout(() => {
+      sendNotification(
+      '米米世界模组以下载完成' + item.name,
+      ImageWithTip,
+      { showImage: item.background_image, Tip: item.desc },
+      8000)
+    }, 3000);
+
+
 }
 };
 

@@ -25,11 +25,11 @@
         </li>
         </ul>
       </Transition>
-      <Drawer>
+      <Drawer :ctitle="'下载 ' + activeItem">
         <div id="drawer-content">
           <img src="../assets/minecraft.png" width="45px" id="mod-icon">
           <div id="banner-text">
-            <div id="mod-name">1.21</div>
+            <div id="mod-name">{{ activeItem }}</div>
             <div id="desc">设置下载选项</div>
           </div>
           <div id="details">
@@ -86,6 +86,7 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch, getCurrentInstance } from 'vue';
+
 const props = defineProps({
     currentTabID: {
         type: Number,
@@ -159,6 +160,10 @@ const getIconPath = (icon) => {
   
 }
 
+#detail-info {
+  display: flex;
+  align-content: center;
+}
 #detail-icon {
   width: 14px;
   height: 14px;
@@ -174,8 +179,8 @@ const getIconPath = (icon) => {
   opacity: 0.5;
 }
 #detail-detail {
-  position: relative;
-  left: 0px;
+  position: absolute;
+  left: 100px;
   margin-top: 8px;
   font-size: 12px;
 }

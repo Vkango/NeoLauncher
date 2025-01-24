@@ -1,5 +1,5 @@
 <template>
-    <div id="back_container">
+    <UIContainer>
         <div id="banner">
             <div id="config-title">default</div>
             <div id="tags">
@@ -19,7 +19,7 @@
         </div>
         <div id="manage"><ModManage></ModManage></div>
         <!--<div id="drawer"><ConfigDrawer></ConfigDrawer></div>-->
-    </div>
+</UIContainer>
 </template>
 
 <script setup>
