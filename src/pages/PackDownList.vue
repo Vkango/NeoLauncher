@@ -52,16 +52,12 @@
 
 <script setup>
 import { ref, onMounted, inject, getCurrentInstance } from 'vue';
-import ImageWithTip from "../components/Notification/ImageWithTip.vue";
-import LoadingWithTip from '../components/Notification/LoadingWithTip.vue';
 const instance = getCurrentInstance();
 let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
-const listItems = ref(null);
 const activeItem = ref(-1);
 const IsLoaded = ref(false);
 const items = ref({ });
-const sendNotification = inject('sendNotification');
-const worker = new Worker(new URL('../scripts/modListWorker.js', import.meta.url));
+const worker = new Worker(new URL('../scripts/packListWorker.js', import.meta.url));
 const fetchVersions = () => {
   IsLoaded.value = false;
   worker.postMessage({ });
@@ -185,14 +181,14 @@ const handleClick = (item) => {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     width: 100%;
-    height: 160px;
+    height: 200px;
     border-radius: 5px 5px 0px 0px;
 }
 #background-image
 {
     position: fixed;
     width: 100%;
-    height: 160px;
+    height: 200px;
     background-size: cover;
     background-position: center;
     border-radius: 5px 5px 0px 0px;
@@ -207,7 +203,7 @@ const handleClick = (item) => {
 #tags
 {
     position: absolute;
-    top: 180px;
+    top: 220px;
     left: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -262,7 +258,7 @@ const handleClick = (item) => {
   border-radius: 5px;
   position: absolute;
   right: 10px;
-  top: 110px;
+  top: 150px;
 }
 #version-info {
     height: auto;
@@ -277,7 +273,7 @@ ul {
   font-size: 12px; 
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   margin-top: 30;
   width: calc(100% - 70px);
 }
@@ -288,7 +284,7 @@ li {
   color: rgba(255, 255, 255, 0.3);
   width: 100%;
   top: 5px;
-  height: 250px;
+  height: 300px;
   position: relative;
   cursor: pointer;
   color: white;

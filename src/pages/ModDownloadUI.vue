@@ -7,36 +7,38 @@
               <textarea placeholder="🔍 Search"></textarea>
           </div>
           <ul class="horizontal-list">
-          <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
-              <span v-if="item.clickable" id="icon_container">
+          <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ active: item.id === currentTabID }" @click="handleClick(item)">
+              <span id="icon_container">
               <img :src="getIconPath(item.icon)" id="icon">
               </span>
               {{ item.text }}
-          </li>
+          </RippleButton>
           </ul>
       </div>
-      <div id="manage"><ModDownList></ModDownList></div>
-      <!--<div id="drawer"><ModDownloadDrawer></ModDownloadDrawer></div>-->
+      <div id="manage">
+        <Transition name="fade" mode="in">
+          <component :is="currentTabID == 0 ? ModDownList : PackDownList" :key="currentTabID" :currentTabID="currentTabID" />
+        </Transition>
+      </div>
+      
   </UIContainer>
 </template>
 
 <script setup>
-//https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Amod%22%5D%5D&offset=0
 import { ref } from 'vue';
-import VersionList from './VersionList.vue';
 import ModDownList from './ModDownList.vue';
-
+import PackDownList from './PackDownList.vue';
+const currentTabID = ref(0);
 const items = ref([
   { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},
   { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
   { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
   { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
   ]);
-const activeItem = ref(0);
 
 const handleClick = (item) => {
 if (item.clickable) {
-  activeItem.value = item.id; 
+  currentTabID.value = item.id; 
 }
 };
 const getIconPath = (icon) => {
@@ -46,6 +48,50 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fade-enter-active {
+  animation: fadeInLeft 0.2s;
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+#RippleButton {
+  padding: 10px 0px;
+  margin-right: 30px;
+
+  background-color: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  transition: opacity 0.2s ease;
+}
+
+#RippleButton.clickable {
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+
+}
+#RippleButton.clickable:hover {
+  opacity: 0.5;
+}
+#RippleButton.active {
+  color: white;
+  border-bottom: 2px solid white;
+  font-weight: bold;
+}
 textarea{
   position: absolute;
   height: 20px;
@@ -61,11 +107,11 @@ textarea{
 }
 #manage {
   position: absolute;
-  left: -10px;
   top: 120px;
-  width: calc(100% + 10px);
+  width: calc(100% + 14px);
   height: calc(100% - 120px);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .horizontal-list {
 display: flex;
@@ -74,6 +120,7 @@ position: absolute;
 left: 30px;
 bottom: -12px;
 }
+
 #icon_container {
   margin-right: 30px;
 
@@ -114,16 +161,12 @@ li {
   padding: 10px 0px;
   margin-right: 30px;
   color: rgba(255, 255, 255, 0.3);
-}
-
-li.clickable {
   cursor: pointer;
   color: white;
   font-size: 12px;
-
 }
 
-li.clickable:hover {
+li:hover {
   opacity: 0.5;
 }
 li.active {

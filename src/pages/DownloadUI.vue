@@ -49,26 +49,7 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.2s, transform 0.2s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
-}
-.fade-enter-active {
-  animation: fadeInLeft 0.2s;
-}
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+
 #drawer-mask
 {
   position: fixed;
@@ -129,7 +110,6 @@ ul {
   padding: 0;
   font-size: 12px;
 }
-
 #RippleButton {
   padding: 10px 0px;
   margin-right: 30px;
@@ -146,7 +126,6 @@ ul {
   font-size: 12px;
 
 }
-
 #RippleButton.clickable:hover {
   opacity: 0.5;
 }

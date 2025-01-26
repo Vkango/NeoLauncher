@@ -109,6 +109,35 @@ const changePage = (pageId) => {
 }
 </style>
 <style>
+.fade1-enter-active,
+.fade1-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade1-enter-from,
+.fade1-leave-to {
+  opacity: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fade-enter-active {
+  animation: fadeInLeft 0.2s;
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
 button {
   background-color: rgba(0, 0, 0, 0.5);

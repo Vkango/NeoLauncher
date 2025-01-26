@@ -145,15 +145,7 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
-.fade1-enter-active,
-.fade1-leave-active {
-  transition: opacity 0.5s ease;
-}
 
-.fade1-enter-from,
-.fade1-leave-to {
-  opacity: 0;
-}
 #download-button {
   position: fixed;
   right: 15px;

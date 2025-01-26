@@ -17,7 +17,7 @@ const items = ref([
   { text: '开始', clickable: false },
   { id: 1, text: '启动', clickable: true, icon: 'home.svg' },
   { id: 2, text: '设置', clickable: true, icon: 'setting.svg' },
-  { id: 0, text: '调教刑具', clickable: true, icon: 'sm.svg' },
+  { id: 0, text: '调教刑具', clickable: true, icon: 'set-up.svg' },
   { text: '下载', clickable: false },
   { id: 3, text: '游戏', clickable: true, icon: 'game.svg' },
   { id: 4, text: '浏览平台', clickable: true, icon: 'download.svg' },
