@@ -106,10 +106,10 @@ if (item.clickable) {
       3000)
     setTimeout(() => {
       sendNotification(
-      '米米世界模组以下载完成' + item.name,
+      '米米世界模组以下载完成\n' + item.name,
       ImageWithTip,
       { showImage: item.background_image, Tip: item.desc },
-      8000)
+      5000)
     }, 3000);
 
 

@@ -12,7 +12,7 @@ defineProps ({
     }
 })
 </script>
-<style>
+<style scoped>
     #loading-with-tip {
         height: fit-content;
         width: 100%;

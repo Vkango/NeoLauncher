@@ -78,14 +78,15 @@
           </div>
 
         </div>
-        <RippleButton id="download-button"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
+        <RippleButton id="download-button" @click="sendToast('稍等片刻', 10000);"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
       </Drawer>
     </div>
 
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, watch, getCurrentInstance } from 'vue';
+import { ref, onMounted, defineProps, watch, getCurrentInstance, inject } from 'vue';
+const sendToast = inject("sendToast");
 
 const props = defineProps({
     currentTabID: {

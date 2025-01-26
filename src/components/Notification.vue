@@ -13,7 +13,7 @@
           @mouseup="endDrag(item.id)"
         >
         <RippleButton class="notification-content">
-          <div class="notification-title">{{ item.title }}</div>
+          <div class="notification-title" v-html="item.title"></div>
           <div class="notification-message">
             <!--无法使用插槽，因为App.vue添加通知时不能传动态页面-->
             <component :is="item.component" v-bind="item.props"></component>
@@ -176,7 +176,10 @@ defineExpose({
     font-weight: bold;
     margin-bottom: 4px;
     text-align: left;
-  }
+    width: 250px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
   
   .notification-message {
     font-size: 14px;

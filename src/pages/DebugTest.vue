@@ -1,20 +1,24 @@
 <template>
     <UIContainer>
-      <RippleButton id="container">
-        <div id="config-title">开始游戏</div>
-        <div id="tags" @click.stop @mousedown.stop>
-            <Tag title="▶ default"></Tag>
-            <Tag title="▶ 基岩版"></Tag>
-            <Tag title="+"></Tag>
-        </div>
-        <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
-        <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
-      </RippleButton>
+      <div id="config-title">调教刑具</div>
+      <div style="display: flex; gap: 5px; margin: 20px; flex-wrap: wrap;">
+        <RippleButton @mousedown.stop @click="onclick1()">MessageBox</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick1()">Toast</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick1()">Notification</RippleButton>
+      </div>
   </UIContainer>
 </template>
 
 <script setup>
-
+import { ref, inject } from 'vue';
+import Loading from '../components/Loading.vue';
+const showMessageBox = inject('messageBox');
+const onclick1 = (() => {
+  showMessageBox(
+    "哦还有",
+    Loading
+  );
+})
 </script>
 
 <style scoped>

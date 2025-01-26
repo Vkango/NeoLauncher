@@ -32,7 +32,7 @@ defineProps({
   },
 });
 </script>
-<style>
+<style scoped>
 .drawer-enter-active,
 .drawer-leave-active {
   transition: opacity 0.2s ease;

@@ -15,78 +15,56 @@
     </transition>
   </template>
   
-  <script>
-  import { ref, onMounted, onUnmounted, watch } from 'vue';
+  <script setup>
+  import { ref, onMounted, onUnmounted, watch, defineProps, defineEmits } from 'vue';
+  const duration = ref('3000');
+  const title = ref('');
+  const visible = ref(false);
+  function showToast(set_title, set_duration) {
+    title.value = set_title;
+    duration.value = set_duration;
+    visible.value = true;
+    startTimer();
+  }
+
+  const emit = defineEmits(['closed']);
+  let timer = null;
   
-  export default {
-    name: 'Toast',
-    props: {
-      title: {
-        type: String,
-        default: '请选择启动配置',
-      },
-      duration: {
-        type: Number,
-        default: 3000, // 通知持续时间（毫秒）
-      },
-      position: {
-        type: String,
-        default: 'top-right', // 通知位置
-        validator: (value) => ['top-left', 'top-right', 'bottom-left', 'bottom-right'].includes(value),
-      },
-    },
-    setup(props, { emit }) {
-      const visible = ref(false);
-      let timer = null;
-  
-      // 显示通知
-      const show = () => {
-        visible.value = true;
-        startTimer();
-      };
-  
-      // 关闭通知
-      const close = () => {
-        visible.value = false;
-        emit('closed');
-      };
-  
-      // 启动定时器
-      const startTimer = () => {
-        if (timer) clearTimeout(timer);
-        if (props.duration > 0) {
-          timer = setTimeout(close, props.duration);
-        }
-      };
-  
-      // 暂停定时器
-      const pauseTimer = () => {
-        if (timer) clearTimeout(timer);
-      };
-  
-      // 监听 visible 的变化
-      watch(visible, (newVal) => {
-        if (newVal) {
-          startTimer();
-        }
-      });
-  
-      // 挂载时显示通知
-      onMounted(show);
-  
-      // 卸载时清理定时器
-      onUnmounted(() => {
-        if (timer) clearTimeout(timer);
-      });
-  
-      return {
-        visible,
-        close,
-        startTimer,
-        pauseTimer,
-      };
-    },
+  // 关闭Toast
+  const close = () => {
+    visible.value = false;
+    emit('closed');
   };
+  
+  // 启动定时器
+  const startTimer = () => {
+    if (timer) clearTimeout(timer);
+    if (duration.value > 0) {
+      timer = setTimeout(close, duration.value);
+    }
+  };
+  
+  // 暂停定时器
+  const pauseTimer = () => {
+    if (timer) clearTimeout(timer);
+  };
+  
+  // 监听 visible 的变化
+  watch(visible, (newVal) => {
+    if (newVal) {
+      startTimer();
+    }
+  });
+
+  
+  // 卸载时清理定时器
+  onUnmounted(() => {
+    if (timer) clearTimeout(timer);
+  });
+
+  defineExpose({
+    showToast,
+  })
   </script>
   
   <style scoped>

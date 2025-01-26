@@ -10,10 +10,8 @@ import Settings from './pages/Settings.vue';
 import TitleBar from './components/TitleBar.vue';
 import Notification from "./components/Notification.vue";
 import AddConfigUI from "./pages/AddConfigUI.vue";
-import LoadingWithTip from "./components/Notification/LoadingWithTip.vue";
-
+import DebugTest from "./pages/DebugTest.vue";
 let currentComponent = shallowRef(HomeUI);
-
 const componentsMap = {
   1: HomeUI,
   2: Settings,
@@ -21,32 +19,21 @@ const componentsMap = {
   4: ModDownloadUI,
   5: AddConfigUI,
   6: ConfigManage,
+  0: DebugTest,
 };
-
+///////// 定义全局方法
 const notificationComponent = ref(null);
-
+const ToastComponent = ref(null);
+const MessageBoxComponent = ref(null);
 provide('sendNotification', (title, component, props = {}, duration = 5000) => {
   notificationComponent.value.addNotification(title, component, props, duration);
 })
-// 定义显示通知的方法
-/*const showNotification   = () => {
-  
-  if (notificationComponent.value) {
-    notificationComponent.value.addNotification(
-      '正在下载米米世界', // 标题
-      LoadingWithTip, // 组件
-      {  }, // 组件属性
-      2000 // 持续时间（毫秒）
-    );
-    notificationComponent.value.addNotification(
-      '米米世界下载完成', // 标题
-      ImageWithTip, // 组件
-      {  }, // 组件属性
-      5000 // 持续时间（毫秒）
-    );
-  }
-};*/
-
+provide('sendToast', (title, duration = 3000) => {
+  ToastComponent.value.showToast(title, duration);
+})
+provide('messageBox', (title, component, props = {}) => {
+  MessageBoxComponent.value.showMessageBox(title, component, props);
+})
 const changePage = (pageId) => {
   currentComponent.value = componentsMap[pageId] || HomeUI;
 };
@@ -65,9 +52,11 @@ const changePage = (pageId) => {
 
   </div>
     <Notification ref="notificationComponent"/>
+    <Toast ref="ToastComponent"/>
+    <MessageBox ref="MessageBoxComponent"/>
 
 </template>
-<style>
+<style scoped>
 #notifications {
   display: flex;
   flex-direction: column; /* 垂直排列 */
@@ -75,7 +64,6 @@ const changePage = (pageId) => {
   top: 20px; /* 距离顶部的距离 */
   right: 20px; /* 距离右侧的距离 */
   gap: 10px; /* 通知之间的间距 */
-
 }
 .fade-up-enter-active, .fade-up-leave-active {
   transition: opacity 0.2s, transform 0.2s;
@@ -98,21 +86,6 @@ const changePage = (pageId) => {
     transform: translateY(0);
   }
 }
-button {
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 0;
-  padding: 10px 15px;
-  border-radius: 3px;
-  color: white;
-  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  align-content: center;
-}
-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.6);
-}
 #container
 {
   background: url('./assets/background.jpg');
@@ -134,6 +107,25 @@ button:hover {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
 }
+</style>
+<style>
+
+button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 0;
+  padding: 10px 15px;
+  border-radius: 3px;
+  color: white;
+  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-content: center;
+}
+button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.6);
+}
+
 :root
 {
   color: white;

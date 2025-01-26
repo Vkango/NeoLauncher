@@ -3,7 +3,7 @@
         <slot></slot>
     </div>
 </template>
-<style>
+<style scoped>
 #ui-container
 {
   left: 225px;
