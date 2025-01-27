@@ -1,21 +1,21 @@
 <template>
     <div id="ver-list">
       <Transition name="fade1">
-        <div v-show="IsLoaded" style="overflow-y: scroll; height: 100%; width: 100%; position: absolute;">
+        <div v-show="IsLoaded" style="overflow-y: auto; height: 100%; width: 100%; position: absolute;">
           <ul v-show="IsLoaded">
-            <li v-for="item in items" :key="item.text" :class="{ active: item.id === activeItem }" @click="handleClick(item)"> 
-                <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }" style="filter: blur(20px);">
+            <li ref="item" class="item" v-for="item in items" :key="item.text" :class="{ active: item.id === activeItem }" @click="handleClick(item)"> 
+              <div v-if="item.gallery" >
+                <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }" style="filter: blur(20px); position: absolute;">
                 <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }">
+              </div>
                 <div id="mask"></div>
-                <span id="icon_container">
-                <img :src="item.icon" id="icon">
-                </span>
-                <div id="version-info">
-                    <div id="ver-name">{{ item.name }}</div>
+                <img :src="item.icon" id="icon" :class="{ gallery: item.gallery }">
+                <div id="version-info" :style="{ position: item.gallery ? 'absolute' : 'relative' }">
+                    <div id="ver-name" :style="{ width: item.gallery ? '100%' : 'calc(100% - 70px)' }">{{ item.name }}</div>
                     <div id="desc">{{ item.desc }}</div>
-                    <div id="tags">
-                        <Tag v-for="tagname in item.tags" :title="tagname.charAt(0).toUpperCase() + tagname.slice(1)" style="margin: 0;"></Tag>
-                    </div>
+                </div>
+                <div id="tags">
+                    <Tag v-for="tagname in item.tags" :title="tagname.charAt(0).toUpperCase() + tagname.slice(1)" style="margin: 0;"></Tag>
                 </div>
             </li>
           </ul>
@@ -25,9 +25,14 @@
         <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
       </Transition>
 
-      <Drawer :ctitle="'下载 ' + activeItem.name">
+      <Drawer :ctitle="'下载 ' + activeItem.name" top_position="true">
         <div id="drawer-content">
-          <img :src="activeItem.icon" width="45px" id="mod-icon">
+          <div id="background-image1">
+            <Carousel id="background_image" :images="activeItem.gallerys" :interval="5000"/>
+            <!--<img id="background_image" :src="activeItem.background_image">-->
+            <div id="background_image" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent); position: absolute; top: 2px"></div>
+          </div>
+          <img :src="activeItem.icon" id="mod-icon">
           <div id="banner-text">
             <div id="mod-name">{{ activeItem.name }}</div>
             <div id="desc1">{{ activeItem.desc }}</div>
@@ -51,16 +56,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject, getCurrentInstance } from 'vue';
+import { ref, onMounted, inject, getCurrentInstance, watch, nextTick, onUnmounted } from 'vue';
 const instance = getCurrentInstance();
 let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
 const activeItem = ref(-1);
 const IsLoaded = ref(false);
 const items = ref({ });
 const worker = new Worker(new URL('../scripts/packListWorker.js', import.meta.url));
+const props = defineProps({
+  currentTabID: {
+    type: String
+  }
+})
 const fetchVersions = () => {
   IsLoaded.value = false;
-  worker.postMessage({ });
+  worker.postMessage({ currentTabID: props.currentTabID });
   worker.onmessage = (event) => {
     if (event.data.error) {
       console.error('Error fetching versions:', event.data.error);
@@ -74,7 +84,24 @@ const fetchVersions = () => {
 
 onMounted(() => {
   fetchVersions();
+  window.addEventListener('resize', handleResize)
 });
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+const handleResize = (() => {
+  nextTick(() => {
+    const el = ref(null);
+    el.value = document.querySelectorAll('.item');
+    if (el.value) {
+      el.value.forEach((li, index) => {
+        console.log(li.clientHeight);
+        const rows = Math.ceil(li.clientHeight / 2) + 4;
+        li.style.gridRowEnd = `span ${rows}`;
+      });
+    }
+  });
+})
 const handleClick = (item) => {
     activeItem.value = item; 
     /*sendNotification(
@@ -93,16 +120,40 @@ const handleClick = (item) => {
 
 };
 
+
+watch(items, (newItems, oldItems) => {
+  nextTick(() => {
+    const el = ref(null);
+    el.value = document.querySelectorAll('.item');
+    if (el.value) {
+      el.value.forEach((li, index) => {
+        console.log(li.clientHeight);
+        const rows = Math.ceil(li.clientHeight / 2) + 4;
+        li.style.gridRowEnd = `span ${rows}`;
+      });
+    }
+  });
+}, { immediate: true, deep: true });
 </script>
 
 <style scoped>
+#background_image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+#background-image1 {
+  width: 100%;
+  padding-top: 2px;
+}
+
 #ver-list
 {
-    position: absolute;
+    position: relative;
     left: 0px;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 #download-button {
@@ -131,7 +182,7 @@ const handleClick = (item) => {
   opacity: 0.5;
 }
 #detail-detail {
-  position: absolute;
+  position: relative;
   left: 100px;
   margin-top: 8px;
   font-size: 12px;
@@ -160,6 +211,7 @@ const handleClick = (item) => {
 #mod-name {
   font-weight: bold;
   color: white;
+  margin-top: 15px;
 }
 
 
@@ -171,40 +223,42 @@ const handleClick = (item) => {
   height: fit-content;
 }
 #mod-icon {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   margin: 10px;
   border-radius: 5px;
+  position: absolute;
+  top: 190px;
+  right: 5px;
 }
 #mask
 {
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     width: 100%;
-    height: 200px;
+    height: fit-content;
     border-radius: 5px 5px 0px 0px;
 }
 #background-image
 {
-    position: fixed;
+    position: relative;
     width: 100%;
     height: 200px;
     background-size: cover;
     background-position: center;
     border-radius: 5px 5px 0px 0px;
+    object-fit: cover;
 }
 #background-image.gallery
 {
-  filter: blur(100px);
   overflow: hidden;
   width: 100%;
   height: 160px;
 }
 #tags
 {
-    position: absolute;
-    top: 220px;
-    left: 15px;
+    position: relative;
+    padding: 15px;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -229,22 +283,22 @@ const handleClick = (item) => {
     font-weight: bold;
     font-size: 15px;
     bottom: 0px;
+    width: fit-content;
 }
 #desc
 {
     color: rgba(255, 255, 255, 0.5);
     top: 165px;
-    height: 85px;
     overflow-y: hidden;
 
     width: calc(100% - 35px);
-    margin-top: 5px;
+    margin-top: 10px;
 }
 #container
 {
     left: 0px;
     top: 80px;
-    position: absolute;
+    position: relative;
     width: 100%;
     height: calc(100% - 80px);
 }
@@ -258,13 +312,20 @@ const handleClick = (item) => {
   border-radius: 5px;
   position: absolute;
   right: 10px;
-  top: 150px;
+  top: 10px;
+}
+#icon.gallery {
+  width: 42px;
+  height: 42px;
+  border-radius: 5px;
+  position: absolute;
+  right: 10px;
+  top: 130px;
 }
 #version-info {
-    height: auto;
+    height: fit-content;
     position: absolute;
     left: 0px;
-    height: 100%;
     width: 100%;
     padding: 10px;
 }
@@ -272,10 +333,12 @@ ul {
   list-style-type: none;
   font-size: 12px; 
   display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  margin-top: 30;
-  width: calc(100% - 70px);
+  grid-auto-rows: 2px;
+  gap: 0 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 修改了列的最小宽度 */
+  align-items: start;
+  justify-content: space-between;
+  padding: 0 40px;
 }
 
 li {
@@ -284,7 +347,7 @@ li {
   color: rgba(255, 255, 255, 0.3);
   width: 100%;
   top: 5px;
-  height: 300px;
+  height: fit-content;
   position: relative;
   cursor: pointer;
   color: white;
@@ -295,7 +358,6 @@ li {
   transition: top 0.2s ease, background-color 0.2s ease, background-filter 0.2s ease;
   overflow: hidden;
 }
-
 
 li:hover {
   background-color: rgba(255, 255, 255, 0.2);

@@ -4,7 +4,7 @@
       @mousedown="startDragging"
       @mouseup="stopDragging"
       @mouseleave="stopDragging"
-      @dblclick="maximizeWindow"
+
     >
       <div class="title">{{ title }}</div>
       <div class="controls" @mouseup.stop @mouseleave.stop @mousedown.stop>

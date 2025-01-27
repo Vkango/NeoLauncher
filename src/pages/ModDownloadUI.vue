@@ -2,9 +2,10 @@
   <UIContainer>
       <div id="banner">
           <div id="config-title">浏览平台</div>
-          <div id="tags">
+          <div id="tags" style="">
+
               <Tag title="🔗 Modrinth"></Tag>
-              <textarea placeholder="🔍 Search"></textarea>
+              <input placeholder="🔍 Search"></input>
           </div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ active: item.id === currentTabID }" @click="handleClick(item)">
@@ -17,17 +18,22 @@
       </div>
       <div id="manage">
         <Transition name="fade" mode="in">
-          <component :is="currentTabID == 0 ? ModDownList : PackDownList" :key="currentTabID" :currentTabID="currentTabID" />
+          <PackDownList :key="currentTabID" :currentTabID="currentTabID" />
         </Transition>
       </div>
+      <!--<ComboBox :options="options" style="position: absolute; right: 0px; z-index: 1"/>-->
       
   </UIContainer>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import ModDownList from './ModDownList.vue';
 import PackDownList from './PackDownList.vue';
+const options = ref([
+  { label: 'Option 1', value: '1' },
+  { label: 'Option 2', value: '2' },
+  { label: 'Option 3', value: '3' }
+]);
 const currentTabID = ref(0);
 const items = ref([
   { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},
@@ -48,6 +54,22 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+input{
+  position: absolute;
+  border-radius: 5px;
+  resize: none;
+  padding: 4px 7px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: fit-content;
+  color: white;
+  font-size: 12px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }
@@ -108,9 +130,9 @@ textarea{
 #manage {
   position: absolute;
   top: 120px;
-  width: calc(100% + 14px);
+  width: 100%;
   height: calc(100% - 120px);
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 .horizontal-list {

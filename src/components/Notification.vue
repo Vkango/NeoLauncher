@@ -150,7 +150,7 @@ defineExpose({
     display: flex;
     flex-direction: column;
     z-index: 2;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     right: 0px;
     top: 40px;

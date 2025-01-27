@@ -65,7 +65,7 @@ export default {
 .loading-spinner {
   border: 2px solid transparent;
   border-radius: 50%;
-  animation: spin 0.5s linear infinite;
+  animation: spin 0.8s ease-in-out infinite;
   position: absolute;
   top: 50%;
   left: 50%;

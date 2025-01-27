@@ -65,7 +65,7 @@ input{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 input::placeholder {
-  color: rgba(255, 255, 255, 0.5); /* 设置placeholder的颜色 */
+  color: rgba(255, 255, 255, 0.5);
 }
 
 #user-info #avatar

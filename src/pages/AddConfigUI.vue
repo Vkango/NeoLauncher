@@ -138,6 +138,6 @@ h1 {
   top: 30px;
   width: calc(100% - 225px);
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 </style>

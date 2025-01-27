@@ -9,9 +9,9 @@
   left: 225px;
   top: 0px;
   position: absolute;
-  width: calc(100% - 219px);
+  width: calc(100% - 225px);
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 </style>

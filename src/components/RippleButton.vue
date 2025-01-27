@@ -83,7 +83,7 @@ setup() {
     border: none;
     border-radius: 4px;
     outline: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease box-shadow 0.3s ease;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

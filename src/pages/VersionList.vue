@@ -265,7 +265,7 @@ const getIconPath = (icon) => {
     left: 0px;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 

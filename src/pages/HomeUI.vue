@@ -3,9 +3,9 @@
       <RippleButton id="container">
         <div id="config-title">开始游戏</div>
         <div id="tags" @click.stop @mousedown.stop>
-            <Tag title="▶ default"></Tag>
-            <Tag title="▶ 基岩版"></Tag>
-            <Tag title="+"></Tag>
+            <RippleButton id="RippleButton">▶ default</RippleButton>
+            <RippleButton id="RippleButton">▶ 基岩版</RippleButton>
+            <RippleButton id="RippleButton"><img src="../assets/add.svg"></RippleButton>
         </div>
         <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
         <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
@@ -47,10 +47,25 @@
 }
 #tags {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   margin-left: 10px;
   top: -3px;
   cursor: default;
+  gap: 5px;
+}
+#RippleButton {
+  padding: 4px 7px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  margin: 0px 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: auto;
+  align-items: center;
+  box-shadow: none;
+}
+#RippleButton:hover {
+  text-decoration: line-through;
 }
 #container
 {

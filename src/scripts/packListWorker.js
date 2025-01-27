@@ -1,8 +1,14 @@
 // modListWorker.js
 self.onmessage = async (event) => {
-    const { currentTabID, types } = event.data; // 以后用
+    const { currentTabID } = event.data; // 以后用
     try {
-      const response = await fetch('https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Aresourcepack%22%5D%5D');
+      const Apis = [
+        'https://api.modrinth.com/v2/search?limit=20',
+        'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Aresourcepack%22%5D%5D',
+        'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Ashader%22%5D%5D',
+        'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Adatapack%22%5D%5D'
+      ]
+      const response = await fetch(Apis[currentTabID]);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -19,14 +25,15 @@ self.onmessage = async (event) => {
           background_image_ = release.gallery?.[0] || release.icon_url;
           Items.push({
             id: release.project_id,
-            gallery: background_image_ == release.icon_url,
+            gallery: !(background_image_ == release.icon_url),
             name: release.title,
             icon: release.icon_url,
             url: release.license,
             desc: release.description,
             tags: release.display_categories,
             background_image: background_image_,
-            color: release.color
+            color: release.color,
+            gallerys: release.gallery
           });
           if (Items.length % 100 === 0) {
             self.postMessage({ items: Items })

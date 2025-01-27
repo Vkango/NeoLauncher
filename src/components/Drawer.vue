@@ -6,13 +6,13 @@
   <Transition name="drawer1" mode="in">
     <div id="drawer-container" v-if="isDrawerOpen.state" @click="closeDrawer">
         <div id="config-drawer" @click.stop>
+            <div id="detail" @click.stop :style="{ top: top_position ? '0px' : '40px', height: top_position ? '100%' : 'calc(100% - 40px)'}">
+                <slot></slot>
+            </div>
             <div id="line"></div>
             <div id="control">
                 <RippleButton style="padding: 0; box-shadow: none; background-color: transparent; border-radius: 0;"><img src="../assets/back.svg" id="back" @click="closeDrawer"></RippleButton>
                 <span id="drawer-title">{{ ctitle }}</span>
-            </div>
-            <div id="detail" @click.stop style="overflow-y: scroll;">
-                <slot></slot>
             </div>
         </div>
 
@@ -30,6 +30,11 @@ defineProps({
     type: String,
     required: true
   },
+  top_position: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 });
 </script>
 <style scoped>
@@ -73,8 +78,9 @@ defineProps({
   background-color: rgba(124, 162, 64, 0.5);
 }
 #detail {
-    height: calc(100% - 50px);
-    padding: 0 5px;
+  position: absolute;
+  overflow-y: auto;
+  width: 100%;
 }
 #back {
 
