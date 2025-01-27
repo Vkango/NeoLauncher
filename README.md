@@ -8,7 +8,7 @@
 
 # 📷 窗口截图
 
-![](.\md\screenshot.png)
+![](md/screenshot.png)
 
 
 
