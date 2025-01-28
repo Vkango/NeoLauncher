@@ -1,6 +1,7 @@
 // modListWorker.js
 self.onmessage = async (event) => {
-    const { currentTabID } = event.data; // 以后用
+    const { currentTabID, page } = event.data; // 以后用
+    console.log('loading page:', page);
     try {
       const Apis = [
         'https://api.modrinth.com/v2/search?limit=20',
@@ -8,7 +9,7 @@ self.onmessage = async (event) => {
         'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Ashader%22%5D%5D',
         'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Adatapack%22%5D%5D'
       ]
-      const response = await fetch(Apis[currentTabID]);
+      const response = await fetch(Apis[currentTabID] + '&offset=' + page * 20);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

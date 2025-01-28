@@ -1,7 +1,7 @@
 <template>
     <div id="ver-list">
       <Transition name="fade1">
-        <div v-show="IsLoaded" style="overflow-y: auto; height: 100%; width: 100%; position: absolute;">
+        <div id="listview" v-show="IsLoaded" @scroll="handleScroll" style="overflow-y: auto; height: 100%; width: 100%; position: absolute;">
           <ul v-show="IsLoaded">
             <li ref="item" class="item" v-for="item in items" :key="item.text" :class="{ active: item.id === activeItem }" @click="handleClick(item)"> 
               <div v-if="item.gallery" >
@@ -12,7 +12,7 @@
                 <img :src="item.icon" id="icon" :class="{ gallery: item.gallery }">
                 <div id="version-info" :style="{ position: item.gallery ? 'absolute' : 'relative' }">
                     <div id="ver-name" :style="{ width: item.gallery ? '100%' : 'calc(100% - 70px)' }">{{ item.name }}</div>
-                    <div id="desc">{{ item.desc }}</div>
+                    <div id="desc" :class="{ gallery: item.gallery }">{{ item.desc }}</div>
                 </div>
                 <div id="tags">
                     <Tag v-for="tagname in item.tags" :title="tagname.charAt(0).toUpperCase() + tagname.slice(1)" style="margin: 0;"></Tag>
@@ -22,17 +22,17 @@
         </div>
       </Transition>
       <Transition name="fade1">
-        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
+        <div id="tip2" v-if="IsLoading" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
       </Transition>
 
-      <Drawer :ctitle="'下载 ' + activeItem.name" top_position="true">
+      <Drawer :ctitle="'下载 ' + activeItem.name" :top_position="activeItem.gallery">
         <div id="drawer-content">
-          <div id="background-image1">
+          <div id="background-image1" v-if="activeItem.gallery">
             <Carousel id="background_image" :images="activeItem.gallerys" :interval="5000"/>
             <!--<img id="background_image" :src="activeItem.background_image">-->
             <div id="background_image" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent); position: absolute; top: 2px"></div>
           </div>
-          <img :src="activeItem.icon" id="mod-icon">
+          <img :src="activeItem.icon" id="mod-icon" :class="{ gallery: activeItem.gallery }">
           <div id="banner-text">
             <div id="mod-name">{{ activeItem.name }}</div>
             <div id="desc1">{{ activeItem.desc }}</div>
@@ -61,6 +61,8 @@ const instance = getCurrentInstance();
 let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
 const activeItem = ref(-1);
 const IsLoaded = ref(false);
+const IsLoading = ref(true);
+const currentPage = ref(0);
 const items = ref({ });
 const worker = new Worker(new URL('../scripts/packListWorker.js', import.meta.url));
 const props = defineProps({
@@ -70,24 +72,61 @@ const props = defineProps({
 })
 const fetchVersions = () => {
   IsLoaded.value = false;
-  worker.postMessage({ currentTabID: props.currentTabID });
+  IsLoading.value = true;
+  worker.postMessage({ currentTabID: props.currentTabID, page: currentPage.value });
   worker.onmessage = (event) => {
     if (event.data.error) {
       console.error('Error fetching versions:', event.data.error);
     } else {
       items.value = event.data.items;
       IsLoaded.value = true;
+      IsLoading.value = false;
+      nextTick(() => {
+        const container = document.getElementById('listview');
+        if (container.scrollHeight <= container.clientHeight) {
+          nextPage();
+          nextTick(() => {
+              if (container.scrollHeight <= container.clientHeight) {
+                nextPage();
+              }
+          })
+        }
+      });
     }
-
+    
   };
 };
 
 onMounted(() => {
-  fetchVersions();
+  fetchVersions()
   window.addEventListener('resize', handleResize)
+  document.getElementById('ver-list').addEventListener('scroll', console.log('shenbi'))
 });
+const nextPage = () => {
+    IsLoading.value = true;
+    currentPage.value++;
+    worker.postMessage({ currentTabID: props.currentTabID , page: currentPage.value });
+    worker.onmessage = (event) => {
+    if (event.data.error) {
+      console.error('Error fetching versions:', event.data.error);
+    } else {
+      items.value = [...items.value, ...event.data.items];
+      IsLoading.value = false;
+    }
+  }
+}
+const handleScroll = (event) => {
+  const container = event.target;
+  if ((container.scrollTop + container.clientHeight + 20 >= container.scrollHeight)) {
+    if (IsLoading.value) {
+      return;
+    }
+    nextPage();
+}
+};
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
+  document.getElementById('ver-list').addEventListener('scroll', console.log('shenbi'))
 })
 const handleResize = (() => {
   nextTick(() => {
@@ -95,7 +134,6 @@ const handleResize = (() => {
     el.value = document.querySelectorAll('.item');
     if (el.value) {
       el.value.forEach((li, index) => {
-        console.log(li.clientHeight);
         const rows = Math.ceil(li.clientHeight / 2) + 4;
         li.style.gridRowEnd = `span ${rows}`;
       });
@@ -127,7 +165,6 @@ watch(items, (newItems, oldItems) => {
     el.value = document.querySelectorAll('.item');
     if (el.value) {
       el.value.forEach((li, index) => {
-        console.log(li.clientHeight);
         const rows = Math.ceil(li.clientHeight / 2) + 4;
         li.style.gridRowEnd = `span ${rows}`;
       });
@@ -227,6 +264,13 @@ watch(items, (newItems, oldItems) => {
   height: 60px;
   margin: 10px;
   border-radius: 5px;
+  position: relative;
+}
+#mod-icon.gallery {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  border-radius: 5px;
   position: absolute;
   top: 190px;
   right: 5px;
@@ -284,15 +328,19 @@ watch(items, (newItems, oldItems) => {
     font-size: 15px;
     bottom: 0px;
     width: fit-content;
+    text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
 }
 #desc
 {
     color: rgba(255, 255, 255, 0.5);
     top: 165px;
-    overflow-y: hidden;
-
-    width: calc(100% - 35px);
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 1);
+    width: calc(100% - 60px);
     margin-top: 10px;
+}
+#desc.gallery
+{
+    width: calc(100% - 35px);
 }
 #container
 {

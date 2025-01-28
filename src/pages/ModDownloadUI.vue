@@ -40,6 +40,7 @@ const items = ref([
   { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
   { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
   { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
+  { id: 4, text: '已下载', clickable: true, icon: 'download.svg'}, 
   ]);
 
 const handleClick = (item) => {
