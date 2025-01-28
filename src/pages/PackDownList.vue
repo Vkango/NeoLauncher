@@ -24,12 +24,12 @@
       <Transition name="fade1">
         <div id="tip2" v-if="IsLoading" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
       </Transition>
-
-      <Drawer :ctitle="'下载 ' + activeItem.name" :top_position="activeItem.gallery">
+     
+      <Drawer :ctitle="showFilter ? ('筛选器') : ('下载 ' + activeItem.name) " :top_position="showFilter ? false : activeItem.gallery">
+        <div v-if="!showFilter">
         <div id="drawer-content">
           <div id="background-image1" v-if="activeItem.gallery">
             <Carousel id="background_image" :images="activeItem.gallerys" :interval="5000"/>
-            <!--<img id="background_image" :src="activeItem.background_image">-->
             <div id="background_image" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent); position: absolute; top: 2px"></div>
           </div>
           <img :src="activeItem.icon" id="mod-icon" :class="{ gallery: activeItem.gallery }">
@@ -48,18 +48,27 @@
               <span id="detail-detail">51.0.33</span>
             </div>
           </div>
-
+          <ModInfo :id="activeItem.id"></ModInfo>
         </div>
         <RippleButton id="download-button"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
+      </div>
+      <div v-if="showFilter">
+
+      </div>
       </Drawer>
+      
+      
+      <RippleButton id="filter-button" @click="onFilterButtonClicked"><img src="../assets/filter.svg"></RippleButton>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted, inject, getCurrentInstance, watch, nextTick, onUnmounted } from 'vue';
+import ModInfo from '../components/ModInfo.vue';
 const instance = getCurrentInstance();
 let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
 const activeItem = ref(-1);
+const showFilter = ref(false);
 const IsLoaded = ref(false);
 const IsLoading = ref(true);
 const currentPage = ref(0);
@@ -70,6 +79,10 @@ const props = defineProps({
     type: String
   }
 })
+const onFilterButtonClicked = () => {
+  showFilter.value = true;
+  isDrawerOpen.state = true;
+}
 const fetchVersions = () => {
   IsLoaded.value = false;
   IsLoading.value = true;
@@ -154,6 +167,7 @@ const handleClick = (item) => {
       { showImage: item.background_image, Tip: item.desc },
       5000)
     }, 3000);*/
+    showFilter.value = false;
     isDrawerOpen.state = true;
 
 };
@@ -174,6 +188,16 @@ watch(items, (newItems, oldItems) => {
 </script>
 
 <style scoped>
+#filter-button {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
 #background_image {
   width: 100%;
   height: 250px;
