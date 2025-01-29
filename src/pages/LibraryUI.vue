@@ -2,12 +2,7 @@
   <UIContainer>
       <div id="banner">
           <div id="config-title">库内容</div>
-          <div id="tip">🔧 更改指定配置或全局配置偏好设置，指定配置偏好设置优先级高于全局配置</div>
-          <div id="tags" style="">
-
-              <Tag title="🔗 Modrinth"></Tag>
-              <input placeholder="🔍 Search"></input>
-          </div>
+          <div id="tip">📂 查看和管理本地内容，支持拖放导入</div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ active: item.id === currentTabID }" @click="handleClick(item)">
               <span id="icon_container">
@@ -37,12 +32,14 @@ const options = ref([
 ]);
 const currentTabID = ref(0);
 const items = ref([
-  { id: 0, text: '游戏核心', clickable: true, icon: 'game.svg'},
-  { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},
-  { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
-  { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
-  { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
-  { id: 4, text: '', clickable: true, icon: 'download.svg'}, 
+  { id: 0, text: '配置', clickable: true, icon: 'run.svg'}, 
+  { id: 1, text: '游戏核心', clickable: true, icon: 'game.svg'},
+  { id: 2, text: '模组', clickable: true, icon: 'setting.svg'},
+  { id: 3, text: '材质', clickable: true, icon: 'color.svg'},
+  { id: 4, text: '光影', clickable: true, icon: 'light.svg'},
+  { id: 5, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
+  { id: 6, text: '世界存档', clickable: true, icon: 'world.svg'}, 
+  { id: 7, text: '启动器插件', clickable: true, icon: 'plugin.svg'}, 
   ]);
 
 const handleClick = (item) => {
@@ -138,9 +135,9 @@ textarea{
 }
 #manage {
   position: absolute;
-  top: 120px;
+  top: 140px;
   width: 100%;
-  height: calc(100% - 120px);
+  height: calc(100% - 140px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -162,18 +159,12 @@ bottom: -12px;
   left: 30px;
   position: relative;
   display: inline-block;
-  top: 40px;
-}
-#tags {
-  position: relative;
-  display: inline-block;
-  left: 40px;
-  top: 36px;
+  margin-top: 40px;
 }
 #banner {
   position: absolute;
   width: 100%;
-  height: 120px;
+  height: 140px;
   background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(20px);
 }

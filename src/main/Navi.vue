@@ -1,7 +1,7 @@
 <template>
   <div id="background">
     <div id="user-info">
-      <img id="avatar" src="../assets/avatar.png">
+      <img id="avatar" src="../assets/avatar.png" @click="onLoginUI">
       <div id="user-name">Vkango</div>
       <div id="status">
         <div id="circle"></div>
@@ -11,14 +11,17 @@
     <input type="text" placeholder="Search in web / local..."></input>
     <div id="line"></div>
     <div id="list"><NaviList @changePage="handleChangePage"></NaviList></div>
+
   </div>         
 </template>
 
 <script setup>
 import { defineEmits } from 'vue';
 import NaviList from './NaviList.vue';
-const emit = defineEmits(['changePage']);
-
+const emit = defineEmits(['changePage', 'onLoginUI']);
+const onLoginUI = () => {
+  emit('onLoginUI');
+}
 const handleChangePage = (pageId) => {
   emit('changePage', pageId);
 };

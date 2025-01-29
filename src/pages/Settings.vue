@@ -110,7 +110,7 @@ h1 {
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
 }
 #config-title {
   color: rgba(var(--text-color));

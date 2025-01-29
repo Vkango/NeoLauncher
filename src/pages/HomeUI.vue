@@ -5,7 +5,7 @@
         <div id="tags" @click.stop @mousedown.stop>
             <RippleButton id="RippleButton">▶ default</RippleButton>
             <RippleButton id="RippleButton">▶ 基岩版</RippleButton>
-            <RippleButton id="RippleButton"><img src="../assets/add.svg"></RippleButton>
+            <RippleButton id="RippleButton"><div style="display: flex; align-content: center;"><img class="icon" src="../assets/add.svg"></div></RippleButton>
         </div>
         <div id="tip">🌸 已选择 2 个配置，可继续添加</div>
         <div id="tip2">🚀 点击页面任意空白处启动选定配置</div>
@@ -34,7 +34,7 @@
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
 }
 #config-title {
   color: rgba(var(--text-color));

@@ -362,7 +362,7 @@ watch(items, (newItems, oldItems) => {
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
 }
 #ver-name
 {
@@ -441,7 +441,6 @@ ul {
 li {
   display: flex;
   flex-direction: column;
-  color: rgba(var(--text-color), 0.3);
   width: 100%;
   top: 5px;
   height: fit-content;

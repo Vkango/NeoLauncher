@@ -26,7 +26,7 @@
         </ul>
       </Transition>
       <Drawer :ctitle="'下载 ' + activeItem">
-        <div id="drawer-content">
+        <div id="drawer-content" style="padding: 0 5px;">
           <img src="../assets/minecraft.png" width="45px" id="mod-icon">
           <div id="banner-text">
             <div id="mod-name">{{ activeItem }}</div>
@@ -235,7 +235,7 @@ const getIconPath = (icon) => {
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
 }
 
 

@@ -14,16 +14,15 @@ import { ref, defineEmits } from 'vue';
 const emit = defineEmits(['changePage']);
 
 const items = ref([
-  { text: '首页', clickable: false },
+  { text: '任务', clickable: false },
   { id: 1, text: '开始游戏', clickable: true, icon: 'home.svg' },
   { id: 2, text: '库内容', clickable: true, icon: 'folder.svg' },
   { id: 3, text: '设置', clickable: true, icon: 'setting.svg' },
   { id: 0, text: '调教刑具', clickable: true, icon: 'set-up.svg' },
-  { text: '下载', clickable: false },
-  { id: 4, text: '游戏', clickable: true, icon: 'game.svg' },
-  { id: 5, text: '浏览平台', clickable: true, icon: 'download.svg' },
-  { text: '配置列表', clickable: false },
   { id: 6, text: '创建新配置', clickable: true, icon: 'add.svg' },
+  { text: '浏览', clickable: false },
+  { id: 4, text: '游戏', clickable: true, icon: 'game.svg' },
+  { id: 5, text: 'CurseForge & Modrinth', clickable: true, icon: 'download.svg' },
 ]);
 const activeItem = ref(1);
 

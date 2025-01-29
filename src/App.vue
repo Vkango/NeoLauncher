@@ -12,7 +12,9 @@ import Notification from "./components/Notification.vue";
 import AddConfigUI from "./pages/AddConfigUI.vue";
 import DebugTest from "./pages/DebugTest.vue";
 import LibraryUI from './pages/LibraryUI.vue';
+import LoginUI from "./pages/LoginUI.vue";
 let currentComponent = shallowRef(HomeUI);
+const showLoginUI = ref(false);
 const componentsMap = {
   1: HomeUI,
   2: LibraryUI,
@@ -38,13 +40,19 @@ provide('messageBox', (title, component, props = {}) => {
 const changePage = (pageId) => {
   currentComponent.value = componentsMap[pageId] || HomeUI;
 };
+const onLoginUI = () => {
+  showLoginUI.value = true;
+}
+const onLoginUIClose = () => {
+  showLoginUI.value = false;
+}
 </script>
 
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
   <TitleBar title="NeoLauncher" style="z-index: 1;" />
-  <Navi @changePage="changePage"></Navi>
+  <Navi @changePage="changePage" @onLoginUI="onLoginUI"></Navi>
   <transition name="fade-up" mode="in">
       <component :is="currentComponent"></component>
   </transition>
@@ -52,6 +60,7 @@ const changePage = (pageId) => {
   <div style="position: absolute; left: 30px; top: 30px">
 
   </div>
+    <LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>
     <Notification ref="notificationComponent"/>
     <Toast ref="ToastComponent"/>
     <MessageBox ref="MessageBoxComponent"/>
@@ -146,14 +155,14 @@ button {
   padding: 10px 15px;
   border-radius: 3px;
   color: rgba(var(--text-color));
-  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-content: center;
 }
 button:hover {
   background-color: rgba(var(--background-color), 0.8);
-  box-shadow: 0px 3px 10px 0px rgba(var(--background-color),0.6);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.6);
 }
 .icon {
   filter: invert(var(--invert-percent));
