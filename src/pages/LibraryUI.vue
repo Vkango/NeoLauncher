@@ -1,7 +1,8 @@
 <template>
   <UIContainer>
       <div id="banner">
-          <div id="config-title">浏览平台</div>
+          <div id="config-title">库内容</div>
+          <div id="tip">🔧 更改指定配置或全局配置偏好设置，指定配置偏好设置优先级高于全局配置</div>
           <div id="tags" style="">
 
               <Tag title="🔗 Modrinth"></Tag>
@@ -36,11 +37,12 @@ const options = ref([
 ]);
 const currentTabID = ref(0);
 const items = ref([
+  { id: 0, text: '游戏核心', clickable: true, icon: 'game.svg'},
   { id: 0, text: '模组', clickable: true, icon: 'setting.svg'},
   { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
   { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
   { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
-  { id: 4, text: '已下载', clickable: true, icon: 'download.svg'}, 
+  { id: 4, text: '', clickable: true, icon: 'download.svg'}, 
   ]);
 
 const handleClick = (item) => {
@@ -55,6 +57,12 @@ const getIconPath = (icon) => {
 </script>
 
 <style scoped>
+#tip {
+  opacity: 0.5;
+  margin-left: 30px;
+  margin-top: 5px;
+  font-size: 12px;
+}
 input{
   position: absolute;
   border-radius: 5px;

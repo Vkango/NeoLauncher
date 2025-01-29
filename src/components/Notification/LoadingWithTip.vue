@@ -1,6 +1,6 @@
 <template>
     <div id="loading-with-tip">
-        <Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" id="loading"></Loading>
+        <Loading :line-width="8" ringColor="rgba(var(--text-color), 0.5)" :width="16" :height="16" id="loading"></Loading>
         <div id="content">{{ Tip }}</div>
     </div>
 </template>

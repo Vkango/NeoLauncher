@@ -4,7 +4,8 @@ self.onmessage = async (event) => {
     console.log('loading page:', page);
     try {
       const Apis = [
-        'https://api.modrinth.com/v2/search?limit=20',
+        
+        'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Amod%22%5D%5D',
         'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Aresourcepack%22%5D%5D',
         'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Ashader%22%5D%5D',
         'https://api.modrinth.com/v2/search?limit=20&index=relevance&facets=%5B%5B%22project_type%3Adatapack%22%5D%5D'

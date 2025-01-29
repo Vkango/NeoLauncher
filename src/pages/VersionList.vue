@@ -1,7 +1,7 @@
 <template>
     <div id="ver-list">
       <Transition name="fade1">
-        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(255, 255, 255, 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
+        <div id="tip2" v-if="!IsLoaded" style="display: flex; align-items: center;"><Loading :line-width="8" ringColor="rgba(var(--text-color), 0.5)" :width="16" :height="16" style="display: inline-block; margin-right: 20px;"></Loading>正在加载……</div>
       </Transition>
       <Transition name="fade1">
         <ul v-show="IsLoaded">
@@ -34,43 +34,43 @@
           </div>
           <div id="details">
             <div id="detail-head">
-              <img src="../assets/setting.svg">
+              <img class="icon" src="../assets/setting.svg">
               <span id="head-text">自动安装</span>
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/forge.svg">
+              <img class="icon" id="detail-icon" src="../assets/forge.svg">
               <span id="detail-name">Forge</span>
               <span id="detail-detail">51.0.33</span>
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/note.svg">
+              <img class="icon" id="detail-icon" src="../assets/note.svg">
               <span id="detail-name">Fabric</span>
               <span id="detail-detail">不兼容
               </span>
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/note.svg">
+              <img class="icon" id="detail-icon" src="../assets/note.svg">
               <span id="detail-name">NeoForge</span>
               <span id="detail-detail">不兼容</span>
               
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/note.svg">
+              <img class="icon" id="detail-icon" src="../assets/note.svg">
               <span id="detail-name">OptiFine</span>
               <span id="detail-detail">不兼容</span>
             </div>
             <div id="detail-head">
-              <img src="../assets/setting.svg">
+              <img class="icon" src="../assets/setting.svg">
               <span id="head-text">安装信息</span>
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/forge.svg">
+              <img class="icon" id="detail-icon" src="../assets/forge.svg">
               <span id="detail-name">配置名</span>
               <span id="detail-detail">default</span>
               
             </div>
             <div id="detail-info">
-              <img id="detail-icon" src="../assets/note.svg">
+              <img class="icon" id="detail-icon" src="../assets/note.svg">
               <span id="detail-name">显示名称</span>
               <span id="detail-detail">1.21-Forge_51.0.33
               </span>
@@ -80,6 +80,11 @@
         </div>
         <RippleButton id="download-button" @click="sendToast('稍等片刻', 10000);"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
       </Drawer>
+      <Transition name="fade1">
+        <div v-if="isLoadingFailed" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+          <Card icon="offline.svg" title="加载失败" content="可能是网络有问题" @click="fetchVersions"></Card>
+        </div>
+      </Transition>
     </div>
 
 </template>
@@ -87,7 +92,7 @@
 <script setup>
 import { ref, onMounted, defineProps, watch, getCurrentInstance, inject } from 'vue';
 const sendToast = inject("sendToast");
-
+const isLoadingFailed = ref(false);
 const props = defineProps({
     currentTabID: {
         type: Number,
@@ -113,10 +118,13 @@ onMounted(() => {
 
 const fetchVersions = () => {
   IsLoaded.value = false;
+  isLoadingFailed.value = false;
   worker.postMessage({ currentTabID: props.currentTabID, types });
   worker.onmessage = (event) => {
     if (event.data.error) {
       console.error('Error fetching versions:', event.data.error);
+      isLoadingFailed.value = true;
+      IsLoaded.value = true;
     } else {
       items.value = event.data.items;
       IsLoaded.value = true;
@@ -165,7 +173,7 @@ const getIconPath = (icon) => {
 
 }
 #detail-name {
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
   position: relative;
   margin: 8px 10px;
@@ -189,7 +197,7 @@ const getIconPath = (icon) => {
 
   flex-grow: 1; 
   padding: 10px;
-  color: white;
+  color: rgba(var(--text-color));
 }
 #detail-head {
   opacity: 0.5;
@@ -200,12 +208,12 @@ const getIconPath = (icon) => {
 }
 #mod-name {
   font-weight: bold;
-  color: white;
+  color: rgba(var(--text-color));
 }
 
 
 #desc {
-  color: white;
+  color: rgba(var(--text-color));
   line-height: 20px;
   font-size: 13px;
   opacity: 0.5;
@@ -222,25 +230,25 @@ const getIconPath = (icon) => {
   right: 15px;
   bottom: 15px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(0, 0, 0, 0.3);
+  color: rgba(var(--text-color), 0.5);
+  background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
 }
 
 
 #head-item
 {
     width: fit-content;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--background-color), 0.3);
     padding: 8px;
     border-radius: 5px;
 }
 #head-name
 {
-    color: white;
+    color: rgba(var(--text-color));
     font-weight: bold;
     font-size: 15px;
 }
@@ -296,7 +304,7 @@ ul {
 
 li {
   padding: 20px 15px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(var(--text-color), 0.3);
   width: 100%;
 }
 
@@ -306,7 +314,7 @@ li.clickable {
   height: 60px;
   position: relative;
   cursor: pointer;
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
   transition: top 0.2s ease;
 }

@@ -80,7 +80,7 @@
     min-width: 300px;
     background-color: rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(20px);
-    box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.8);
+    box-shadow: 0px 10px 30px 0px rgba(var(--background-color),0.8);
   
   }
   #control-buttons {
@@ -98,7 +98,7 @@
     background-color: transparent;
     box-shadow: none;
     border-radius: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(var(--text-color), 0.03);
   }
   #line {
     left: 0px;
@@ -120,7 +120,7 @@
     top: 16px;
     position: absolute;
     width: calc(100% - 47px);
-    color: white;
+    color: rgba(var(--text-color));
     font-size: 13px;
     font-weight: bold;
 
@@ -144,7 +144,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--background-color), 0.5);
   }
   
   </style>

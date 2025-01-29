@@ -1,5 +1,5 @@
 <script setup>
-import { ref, shallowRef, provide } from "vue";
+import { ref, shallowRef, provide, onMounted } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import Navi from "./main/Navi.vue";
 import HomeUI from "./pages/HomeUI.vue";
@@ -11,14 +11,15 @@ import TitleBar from './components/TitleBar.vue';
 import Notification from "./components/Notification.vue";
 import AddConfigUI from "./pages/AddConfigUI.vue";
 import DebugTest from "./pages/DebugTest.vue";
+import LibraryUI from './pages/LibraryUI.vue';
 let currentComponent = shallowRef(HomeUI);
 const componentsMap = {
   1: HomeUI,
-  2: Settings,
-  3: DownloadUI,
-  4: ModDownloadUI,
-  5: AddConfigUI,
-  6: ConfigManage,
+  2: LibraryUI,
+  3: Settings,
+  4: DownloadUI,
+  5: ModDownloadUI,
+  6: AddConfigUI,
   0: DebugTest,
 };
 ///////// 定义全局方法
@@ -105,7 +106,7 @@ const changePage = (pageId) => {
   left: 0px;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(var(--background-color), 0.6);
 }
 </style>
 <style>
@@ -140,27 +141,33 @@ const changePage = (pageId) => {
 }
 
 button {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--background-color), 0.5);
   border: 0;
   padding: 10px 15px;
   border-radius: 3px;
-  color: white;
-  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+  color: rgba(var(--text-color));
+  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-content: center;
 }
 button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.6);
+  background-color: rgba(var(--background-color), 0.8);
+  box-shadow: 0px 3px 10px 0px rgba(var(--background-color),0.6);
 }
-
+.icon {
+  filter: invert(var(--invert-percent));
+}
 :root
 {
-  color: white;
+  --background-color: 0, 0, 0;
+  --text-color: 255, 255, 255;
+  --invert-percent: 0%;
+  color: rgba(var(--text-color));
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;
   overflow: hidden;
+  transition: color 0.5s ease, background-color 0.5s ease;
 }
 ::-webkit-scrollbar {
   width: 7px;
@@ -172,13 +179,13 @@ border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb {
-background-color: rgba(255, 255, 255, 0.3);
+background-color: rgba(var(--text-color), 0.3);
 border-radius: 0;
 transition: background-color 0.2s;
 cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-background-color: rgba(255, 255, 255, 0.5);
+background-color: rgba(var(--text-color), 0.5);
 }
 </style>

@@ -480,7 +480,7 @@ function splitCells(tableRow, count) {
         }
     }
     for (; i < cells.length; i++) {
-        // leading or trailing whitespace is ignored per the gfm spec
+        // leading or trailing rgba(var(--text-color))space is ignored per the gfm spec
         cells[i] = cells[i].trim().replace(other.slashPipe, '|');
     }
     return cells;

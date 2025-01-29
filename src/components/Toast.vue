@@ -80,10 +80,10 @@
   }
   .toast-content {
     padding: 10px 15px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--background-color), 0.5);
     backdrop-filter: blur(20px);
     border-radius: 4px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 12px rgba(var(--background-color), 0.1);
   }
   .toast-title {
     font-size: 12px;

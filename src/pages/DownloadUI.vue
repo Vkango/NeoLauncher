@@ -8,7 +8,7 @@
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
               <span v-if="item.clickable" id="icon_container">
-                <img :src="getIconPath(item.icon)" id="icon">
+                <img class="icon" :src="getIconPath(item.icon)" id="icon">
               </span>
               {{ item.text }}
           </RippleButton>
@@ -34,7 +34,7 @@ const items = ref([
   { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
   { id: 2, text: 'Beta版', clickable: true, icon: 'beta.svg' },
   { id: 3, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
-  { id: 4, text: '申必版', clickable: true, icon: 'light.svg'},   
+  { id: 4, text: '基岩版', clickable: true, icon: 'light.svg'},   
   ]);
 const currentTabID = ref(0);
 
@@ -57,7 +57,7 @@ const getIconPath = (icon) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(var(--background-color), 0.5);
   display: flex;
   justify-content: flex-end;
 }
@@ -80,7 +80,7 @@ bottom: -12px;
 
 }
 #config-title {
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 24px;
   left: 30px;
   position: relative;
@@ -97,7 +97,7 @@ bottom: -12px;
   position: absolute;
   width: 100%;
   height: 120px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(20px);
 }
 #icon {
@@ -113,7 +113,7 @@ ul {
 #RippleButton {
   padding: 10px 0px;
   margin-right: 30px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(var(--text-color), 0.3);
   background-color: transparent;
   border-radius: 0;
   box-shadow: none;
@@ -122,7 +122,7 @@ ul {
 
 #RippleButton.clickable {
   cursor: pointer;
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
 
 }
@@ -130,8 +130,8 @@ ul {
   opacity: 0.5;
 }
 #RippleButton.active {
-  color: white;
-  border-bottom: 2px solid white;
+  color: rgba(var(--text-color));
+  border-bottom: 2px solid rgba(var(--text-color));
   font-weight: bold;
 }
 #config-title

@@ -66,7 +66,7 @@ const getIconPath = (icon) => {
 
 }
 #config-title {
-    color: white;
+    color: rgba(var(--text-color));
     font-size: 24px;
     left: 30px;
     position: relative;
@@ -83,7 +83,7 @@ const getIconPath = (icon) => {
     position: absolute;
     width: 100%;
     height: 120px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--background-color), 0.3);
     backdrop-filter: blur(20px);
 }
 #icon {
@@ -100,12 +100,12 @@ ul {
 li {
     padding: 10px 0px;
     margin-right: 30px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(var(--text-color), 0.3);
 }
 
 li.clickable {
     cursor: pointer;
-    color: white;
+    color: rgba(var(--text-color));
     font-size: 12px;
 
 }
@@ -114,8 +114,8 @@ li.clickable:hover {
     opacity: 0.5;
 }
 li.active {
-    color: white;
-    border-bottom: 2px solid white;
+    color: rgba(var(--text-color));
+    border-bottom: 2px solid rgba(var(--text-color));
     font-weight: bold;
 }
 #config-title

@@ -93,7 +93,7 @@
     left: 0px;
     width: 100%;
     height: 40px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--background-color), 0.5);
     backdrop-filter: blur(20px);
   }
   .snackbar-content {

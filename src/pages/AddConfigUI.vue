@@ -77,7 +77,7 @@
 <style scoped>
 #config-name {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(var(--text-color), 0.5);
   line-height: 30px;
 }
 #settings-container {
@@ -100,15 +100,15 @@ h1 {
   right: 15px;
   bottom: 15px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(0, 0, 0, 0.3);
+  color: rgba(var(--text-color), 0.5);
+  background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(20px);
   padding: 10px 15px;
   border-radius: 30px;
-  box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+  box-shadow: 0px 3px 10px -3px rgba(var(--background-color),0.6);
 }
 #config-title {
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 24px;
   margin-left: 30px;
   position: relative;

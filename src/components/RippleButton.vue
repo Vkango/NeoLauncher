@@ -79,7 +79,7 @@ setup() {
 .ripple-button {
     position: relative;
     overflow: hidden;
-    color: white;
+    color: rgba(var(--text-color));
     border: none;
     border-radius: 4px;
     outline: none;
@@ -88,18 +88,18 @@ setup() {
 }
 
 .ripple-button:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--background-color), 0.5);
 }
 
 .ripple-button:active {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--background-color), 0.3);
 }
 
 
 
 .ripple {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(var(--text-color), 0.3);
     border-radius: 50%;
     pointer-events: none;
     transition: transform 0.5s ease, opacity 0.5s ease;

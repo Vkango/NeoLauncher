@@ -14,7 +14,7 @@ defineProps({
   },
   bgColor: {
     type: String,
-    default: 'rgba(255,255,255,0.1)'
+    default: 'rgba(var(--text-color), 0.1)'
   }
 });
 </script>
@@ -24,7 +24,7 @@ defineProps({
   display: inline-block;
   padding: 4px 7px;
   border-radius: 5px;
-  color: #fff;
+  color: rgba(var(--text-color));
   font-size: 12px;
   margin: 0px 3px;
 }

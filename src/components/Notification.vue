@@ -1,6 +1,6 @@
 <template>
     <div class="notification-container" :class="`notification-container-${position}`">
-      <transition-group name="fade" tag="div" class="notification-list">
+      <transition-group name="fade-notify" tag="div" class="notification-list">
         <div
           v-for="item in notifications"
           :key="item.id"
@@ -19,7 +19,7 @@
             <component :is="item.component" v-bind="item.props"></component>
           </div>
           <Button class="notification-close" @click="close(item.id)" @mouseup.stop> <!--注意mouseup.stop受父组件影响-->
-            <img src="../assets/close.svg" width="12px">
+            <img class="icon" src="../assets/close.svg" width="12px">
           </Button>
         </RippleButton>
         </div>
@@ -162,10 +162,10 @@ defineExpose({
   
   .notification {
     pointer-events: all;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--background-color), 0.5);
     backdrop-filter: blur(20px);
     border-radius: 4px;
-    box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.6);
+    box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
     width: calc(100% - 10px);
     margin: 10px;
     margin-top: 0px;
@@ -177,13 +177,13 @@ defineExpose({
     margin-bottom: 4px;
     text-align: left;
     width: 250px;
-    white-space: pre-wrap;
+    color: rgba(var(--text-color));
     word-wrap: break-word;
 }
   
   .notification-message {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(var(--text-color), 0.5);
     text-align: left;
     width: 100%;
     height: fit-content;
@@ -191,7 +191,7 @@ defineExpose({
   }
   .notification-content {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(var(--background-color), 0.2);
   }
   .notification-close {
     border: none;
@@ -213,14 +213,14 @@ defineExpose({
     opacity: 1;
   }
   
-  .fade-enter-active,
-  .fade-leave-active,
-  .fade-move {
+  .fade-notify-enter-active,
+  .fade-notify-leave-active,
+  .fade-notify-move {
     transition: all 0.3s ease;
   }
   
-  .fade-enter-from,
-  .fade-leave-to {
+  .fade-notify-enter-from,
+  .fade-notify-leave-to {
     opacity: 0;
     transform: translateX(20px);
   }

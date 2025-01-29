@@ -10,7 +10,7 @@
                 <div id="mod-name">{{ item.name }}</div>
                 <div id="mod-desc"> - {{ item.desc }}</div>
                 <Tag id="load-status" v-if="item.loaded" title="已加载"></Tag>
-                <Tag id="load-status" v-if="!item.loaded" title="未加载" bgColor="rgba(255,0,0,0.5)"></Tag>
+                <Tag id="load-status" v-if="!item.loaded" title="未加载" bgColor="rgba(255,var(--background-color).5)"></Tag>
                 <div id="tags">
                     <Tag v-for="tagname in item.tags" :title="tagname"></Tag>
                 </div>
@@ -78,7 +78,7 @@ const getIconPath = (icon) => {
     height: calc(100% - 20px);
 }
 #title {
-    color: white;
+    color: rgba(var(--text-color));
     opacity: 0.5;
     font-size: 10px;
     left: 30px;
@@ -89,7 +89,7 @@ const getIconPath = (icon) => {
     position: absolute;
     width: 100%;
     height: 80px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(var(--background-color), 0.1);
     backdrop-filter: blur(20px);
 }
 #container
@@ -124,25 +124,25 @@ ul {
 
 li {
   padding: 10px 15px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(var(--text-color), 0.3);
   display: flex;
   position: relative;
 }
 
 li.clickable {
   cursor: pointer;
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
 
 }
 
 li.clickable:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(var(--background-color), 0.05);
 }
 li.active {
-  background-color: rgba(0, 0, 0, 0.1);
-  color: white;
-  border-left: 2px solid white;
+  background-color: rgba(var(--background-color), 0.1);
+  color: rgba(var(--text-color));
+  border-left: 2px solid rgba(var(--text-color));
   padding-left: 13px;
 }
 </style>

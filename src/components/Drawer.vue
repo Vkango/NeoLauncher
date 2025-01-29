@@ -11,7 +11,7 @@
             </div>
             <div id="line"></div>
             <div id="control">
-                <RippleButton style="padding: 0; box-shadow: none; background-color: transparent; border-radius: 0;"><img src="../assets/back.svg" id="back" @click="closeDrawer"></RippleButton>
+                <RippleButton style="padding: 0; box-shadow: none; background-color: transparent; border-radius: 0;"><img class="icon" src="../assets/back.svg" id="back" @click="closeDrawer"></RippleButton>
                 <span id="drawer-title">{{ ctitle }}</span>
             </div>
         </div>
@@ -65,9 +65,9 @@ defineProps({
   top: 0px;
   height: 100%;
   width: 400px;
-  background-color: rgba(30, 30, 30, 0.5);
+  background-color: rgba(var(--background-color), 0.5);
   backdrop-filter: blur(20px);
-  box-shadow: 0px 10px 60px 30px rgba(0,0,0,0.8);
+  box-shadow: 0px 10px 60px 30px rgba(0, 0, 0, 0.4);
 
 }
 #line {
@@ -91,7 +91,7 @@ defineProps({
   top: 16px;
   position: absolute;
   width: calc(100% - 47px);
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
 }
 #drawer-container

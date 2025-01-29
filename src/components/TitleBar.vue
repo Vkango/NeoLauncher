@@ -8,17 +8,17 @@
     >
       <div class="title">{{ title }}</div>
       <div class="controls" @mouseup.stop @mouseleave.stop @mousedown.stop>
-        <RippleButton class="control-button" @click="minimizeWindow"><img src="../assets/notice.svg" style="width: 80%;"><div id="msgCount">1</div></RippleButton>
+        <RippleButton class="control-button" @click="minimizeWindow"><img class="icon" src="../assets/notice.svg" style="width: 80%;"><div id="msgCount">1</div></RippleButton>
         <RippleButton class="control-button" @click="minimizeWindow">
-          <img src="../assets/minimize.svg">
+          <img class="icon" src="../assets/minimize.svg">
         </RippleButton>
         <RippleButton v-if="!isMaximized" class="control-button" @click="maximizeWindow">
-          <img src="../assets/restore.svg">
+          <img class="icon" src="../assets/restore.svg">
         </RippleButton>
         <RippleButton v-if="isMaximized" class="control-button" @click="maximizeWindow">
-          <img src="../assets/maximize.svg">
+          <img class="icon" src="../assets/maximize.svg">
         </RippleButton>
-        <RippleButton class="control-button" @click="closeWindow"><img src="../assets/close1.svg"></RippleButton>
+        <RippleButton class="control-button" @click="closeWindow"><img class="icon" src="../assets/close1.svg"></RippleButton>
       </div>
     </div>
   </template>
@@ -74,7 +74,7 @@ const closeWindow = async () => {
     right: 6px;
     bottom: 3px;
     padding: 0 3px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(var(--text-color), 0.1);
     backdrop-filter: blur(10px);
     min-width: 10px;
     height: 16px;
@@ -86,7 +86,7 @@ const closeWindow = async () => {
     justify-content: space-between;
     align-items: center;
     height: 30px;
-    color: white;
+    color: rgba(var(--text-color));
     position: absolute;
     left: 0px;
     top: 0px;
@@ -98,7 +98,7 @@ const closeWindow = async () => {
     font-weight: normal;
     left: 15px;
     position: absolute;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(var(--text-color), 0.5);
   }
   
   .controls {
@@ -114,7 +114,7 @@ const closeWindow = async () => {
     padding: 0 15px;
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(var(--text-color), 0.5);
     font-size: 16px;
     cursor: pointer;
     height: 30px;
@@ -127,11 +127,11 @@ const closeWindow = async () => {
   }
   
   .control-button:hover {
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(var(--text-color), 1);
+    background-color: rgba(var(--text-color), 0.1);
   }
   
   .control-button:active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(var(--text-color), 0.2);
   }
   </style>

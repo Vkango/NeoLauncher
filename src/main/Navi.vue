@@ -46,7 +46,7 @@ color: String,
   top: 133px;
   width: 195px;
   height: 2px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(var(--text-color), 0.1);
 }
 input{
   position: absolute;
@@ -57,15 +57,15 @@ input{
   border-radius: 5px;
   resize: none;
   border: none;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(var(--text-color), 0.1);
   text-align: center;
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 12px;
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(var(--text-color), 0.5);
 }
 
 #user-info #avatar
@@ -82,7 +82,7 @@ input::placeholder {
 }
 #user-info #status-info
 {
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 10px;
   left: 83px;
   top: 76px;
@@ -93,12 +93,12 @@ input::placeholder {
   position: absolute;
   left: 71px;
   top: 48px;
-  color: white;
+  color: rgba(var(--text-color));
   font-size: 17px;
 }
 #user-info #circle
 {
-  background-color: white;
+  background-color: rgba(var(--text-color));
   width: 5px;
   height: 5px;
   position: absolute;
@@ -108,7 +108,7 @@ input::placeholder {
 }
 #background
 {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(var(--background-color), 0.1);
   width: 225px;
   height: 100%;
   position: absolute;
