@@ -2,19 +2,19 @@
   <UIContainer>
       <div id="banner">
           <div id="config-title">库内容</div>
-          <div id="tip">📂 查看和管理本地内容，支持拖放导入</div>
+          <div id="tip">📂 查看和管理本地内容，可通过拖放进行导入或进行配置资源管理。</div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ active: item.id === currentTabID }" @click="handleClick(item)">
-              <span id="icon_container">
-              <img class="icon" :src="getIconPath(item.icon)" id="icon">
-              </span>
-              {{ item.text }}
+            <div style="display: flex; align-items: center; gap: 10px">
+                <img class="icon" :src="getIconPath(item.icon)" id="icon">
+                <span style="font-size: 12px;">{{ item.text }}</span>
+              </div>
           </RippleButton>
           </ul>
       </div>
       <div id="manage">
         <Transition name="fade" mode="in">
-          <PackDownList :key="currentTabID" :currentTabID="currentTabID" />
+          <component :is="items[currentTabID].component" :key="currentTabID" :currentTabID="items[currentTabID].tabID" />
         </Transition>
       </div>
       <!--<ComboBox :options="options" style="position: absolute; right: 0px; z-index: 1"/>-->
@@ -25,6 +25,8 @@
 <script setup>
 import { ref } from 'vue';
 import PackDownList from './PackDownList.vue';
+import VersionList from './VersionList.vue';
+import ConfigList from './ConfigList.vue';
 const options = ref([
   { label: 'Option 1', value: '1' },
   { label: 'Option 2', value: '2' },
@@ -32,14 +34,15 @@ const options = ref([
 ]);
 const currentTabID = ref(0);
 const items = ref([
-  { id: 0, text: '配置', clickable: true, icon: 'run.svg'}, 
-  { id: 1, text: '游戏核心', clickable: true, icon: 'game.svg'},
-  { id: 2, text: '模组', clickable: true, icon: 'setting.svg'},
-  { id: 3, text: '材质', clickable: true, icon: 'color.svg'},
-  { id: 4, text: '光影', clickable: true, icon: 'light.svg'},
-  { id: 5, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
-  { id: 6, text: '世界存档', clickable: true, icon: 'world.svg'}, 
-  { id: 7, text: '启动器插件', clickable: true, icon: 'plugin.svg'}, 
+  { id: 0, text: '配置', clickable: true, icon: 'run.svg', component: ConfigList, tabID: 0}, 
+  { id: 1, text: '游戏核心', clickable: true, icon: 'game.svg', component: VersionList, tabID: 0},
+  { id: 2, text: '模组', clickable: true, icon: 'setting.svg', component: PackDownList, tabID: 0},
+  { id: 3, text: '材质', clickable: true, icon: 'color.svg', component: PackDownList, tabID: 1},
+  { id: 4, text: '光影', clickable: true, icon: 'light.svg', component: PackDownList, tabID: 2},
+  { id: 5, text: '整合包', clickable: true, icon: 'liteloader.svg', component: PackDownList, tabID: 3}, 
+  { id: 6, text: '世界存档', clickable: true, icon: 'world.svg', component: VersionList, tabID: 0}, 
+  { id: 7, text: '截图', clickable: true, icon: 'camera.svg', component: VersionList, tabID: 0}, 
+  { id: 8, text: '启动器插件', clickable: true, icon: 'plugin.svg', component: VersionList, tabID: 0}, 
   ]);
 
 const handleClick = (item) => {
@@ -149,10 +152,6 @@ left: 30px;
 bottom: -12px;
 }
 
-#icon_container {
-  margin-right: 30px;
-
-}
 #config-title {
   color: rgba(var(--text-color));
   font-size: 24px;
@@ -171,7 +170,7 @@ bottom: -12px;
 #icon {
   width: 16px;
   height: 16px;
-  position: absolute;
+  position: relative;
 }
 ul {
   list-style-type: none;

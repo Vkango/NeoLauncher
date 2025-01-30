@@ -13,6 +13,7 @@ import AddConfigUI from "./pages/AddConfigUI.vue";
 import DebugTest from "./pages/DebugTest.vue";
 import LibraryUI from './pages/LibraryUI.vue';
 import LoginUI from "./pages/LoginUI.vue";
+import UserInfo from './pages/UserInfo.vue';
 let currentComponent = shallowRef(HomeUI);
 const showLoginUI = ref(false);
 const componentsMap = {
@@ -60,7 +61,8 @@ const onLoginUIClose = () => {
   <div style="position: absolute; left: 30px; top: 30px">
 
   </div>
-    <LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>
+    <!--<LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>-->
+    <UserInfo v-if="showLoginUI" @onClose="onLoginUIClose"/>
     <Notification ref="notificationComponent"/>
     <Toast ref="ToastComponent"/>
     <MessageBox ref="MessageBoxComponent"/>

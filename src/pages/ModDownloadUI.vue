@@ -1,7 +1,7 @@
 <template>
   <UIContainer>
       <div id="banner">
-          <div id="config-title">浏览平台</div>
+          <div id="config-title">CurseForge & Modrinth</div>
           <div id="tags" style="">
 
               <Tag title="🔗 Modrinth"></Tag>
@@ -9,10 +9,10 @@
           </div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.text" :class="{ active: item.id === currentTabID }" @click="handleClick(item)">
-              <span id="icon_container">
-              <img class="icon" :src="getIconPath(item.icon)" id="icon">
-              </span>
-              {{ item.text }}
+            <div style="display: flex; align-items: center; gap: 10px">
+                <img class="icon" :src="getIconPath(item.icon)" id="icon">
+                <span style="font-size: 12px;">{{ item.text }}</span>
+              </div>
           </RippleButton>
           </ul>
       </div>
@@ -40,7 +40,6 @@ const items = ref([
   { id: 1, text: '材质', clickable: true, icon: 'color.svg'},
   { id: 2, text: '光影', clickable: true, icon: 'light.svg'},
   { id: 3, text: '整合包', clickable: true, icon: 'liteloader.svg'}, 
-  { id: 4, text: '已下载', clickable: true, icon: 'download.svg'}, 
   ]);
 
 const handleClick = (item) => {
@@ -172,7 +171,7 @@ bottom: -12px;
 #icon {
   width: 16px;
   height: 16px;
-  position: absolute;
+  position: relative;
 }
 ul {
   list-style-type: none;

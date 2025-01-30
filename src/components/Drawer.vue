@@ -5,7 +5,7 @@
   </Transition>
   <Transition name="drawer1" mode="in">
     <div id="drawer-container" v-if="isDrawerOpen.state" @click="closeDrawer">
-        <div id="config-drawer" @click.stop>
+        <div id="config-drawer" @click.stop :style="{ width: props.width }">
             <div id="detail" @click.stop :style="{ top: top_position ? '0px' : '40px', height: top_position ? '100%' : 'calc(100% - 40px)'}">
                 <slot></slot>
             </div>
@@ -25,7 +25,7 @@ let isDrawerOpen = getCurrentInstance().appContext.config.globalProperties.$IsDr
 const closeDrawer = () => {
   isDrawerOpen.state = false;
 };
-defineProps({
+const props = defineProps({
   ctitle: {
     type: String,
     required: true
@@ -34,6 +34,11 @@ defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  width: {
+    type: String,
+    required: false,
+    default: '400px',
   }
 });
 </script>

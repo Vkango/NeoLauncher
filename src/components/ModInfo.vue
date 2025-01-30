@@ -61,7 +61,7 @@ onMounted(async () => {
     border-radius: 5px;
 }
 #description a{
-    color: aqua;
+    color: rgb(51, 125, 210);
 }
 #description h1 {
     font-size: 16px;

@@ -7,10 +7,10 @@
           </div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
-              <span v-if="item.clickable" id="icon_container">
+            <div style="display: flex; align-items: center; gap: 10px">
                 <img class="icon" :src="getIconPath(item.icon)" id="icon">
-              </span>
-              {{ item.text }}
+                <span style="font-size: 12px;">{{ item.text }}</span>
+              </div>
           </RippleButton>
           </ul>
       </div>
@@ -75,10 +75,6 @@ position: absolute;
 left: 30px;
 bottom: -12px;
 }
-#icon_container {
-  margin-right: 30px;
-
-}
 #config-title {
   color: rgba(var(--text-color));
   font-size: 24px;
@@ -103,7 +99,7 @@ bottom: -12px;
 #icon {
   width: 16px;
   height: 16px;
-  position: absolute;
+  position: relative;
 }
 ul {
   list-style-type: none;
