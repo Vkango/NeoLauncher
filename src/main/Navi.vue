@@ -8,7 +8,7 @@
         <div id="status-info">正版登录</div>
       </div>
     </div>
-    <input type="text" placeholder="Search in web / local..."></input>
+    <RippleButton id="RippleButton" @click="emit('onSearchUI')"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">Search in web / local...</div></RippleButton>
     <div id="line"></div>
     <div id="list"><NaviList @changePage="handleChangePage"></NaviList></div>
 
@@ -18,7 +18,7 @@
 <script setup>
 import { defineEmits } from 'vue';
 import NaviList from './NaviList.vue';
-const emit = defineEmits(['changePage', 'onLoginUI']);
+const emit = defineEmits(['changePage', 'onLoginUI', 'onSearchUI']);
 const onLoginUI = () => {
   emit('onLoginUI');
 }
@@ -36,10 +36,10 @@ color: String,
 {
   position: absolute;
   left: 0px;
-  top: 130px;
+  top: 140px;
   width: 225px;
-  height: calc(100% - 130px);
-
+  height: calc(100% - 140px);
+  overflow-y: auto;
 }
 
 #line
@@ -51,7 +51,7 @@ color: String,
   height: 2px;
   background-color: rgba(var(--text-color), 0.1);
 }
-input{
+#RippleButton{
   position: absolute;
   left: 15px;
   top: 100px;
@@ -60,9 +60,10 @@ input{
   border-radius: 5px;
   resize: none;
   border: none;
+  padding: 0;
   background-color: rgba(var(--text-color), 0.1);
   text-align: center;
-  color: rgba(var(--text-color));
+  color: rgba(var(--text-color), 0.5);
   font-size: 12px;
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

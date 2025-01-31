@@ -384,6 +384,11 @@ watch(items, (newItems, oldItems) => {
     top: 165px;
     width: calc(100% - 60px);
     margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #desc.gallery
 {

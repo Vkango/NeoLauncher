@@ -14,8 +14,10 @@ import DebugTest from "./pages/DebugTest.vue";
 import LibraryUI from './pages/LibraryUI.vue';
 import LoginUI from "./pages/LoginUI.vue";
 import UserInfo from './pages/UserInfo.vue';
+import SearchUI from './pages/SearchUI.vue';
 let currentComponent = shallowRef(HomeUI);
 const showLoginUI = ref(false);
+const showSearchUI = ref(false);
 const componentsMap = {
   1: HomeUI,
   2: LibraryUI,
@@ -47,13 +49,19 @@ const onLoginUI = () => {
 const onLoginUIClose = () => {
   showLoginUI.value = false;
 }
+const onSearchUI = () => {
+  showSearchUI.value = true;
+}
+const onSearchUIClose = () => {
+  showSearchUI.value = false;
+}
 </script>
 
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
   <TitleBar title="NeoLauncher" style="z-index: 1;" />
-  <Navi @changePage="changePage" @onLoginUI="onLoginUI"></Navi>
+  <Navi @changePage="changePage" @onLoginUI="onLoginUI" @onSearchUI="onSearchUI"></Navi>
   <transition name="fade-up" mode="in">
       <component :is="currentComponent"></component>
   </transition>
@@ -63,6 +71,9 @@ const onLoginUIClose = () => {
   </div>
     <!--<LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>-->
     <UserInfo v-if="showLoginUI" @onClose="onLoginUIClose"/>
+    <Transition name="fade">
+    <SearchUI v-if="showSearchUI" @onClose="onSearchUIClose"/>
+    </Transition>
     <Notification ref="notificationComponent"/>
     <Toast ref="ToastComponent"/>
     <MessageBox ref="MessageBoxComponent"/>
@@ -195,7 +206,10 @@ border-radius: 0;
 transition: background-color 0.2s;
 cursor: pointer;
 }
-
+::selection {
+color: #fff;
+background: rgba(var(--background-color), 0.3);
+}
 ::-webkit-scrollbar-thumb:hover {
 background-color: rgba(var(--text-color), 0.5);
 }

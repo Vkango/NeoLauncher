@@ -56,6 +56,7 @@ ul {
   list-style-type: none;
   padding: 0;
   font-size: 12px;
+  margin: 0;
 }
 
 #RippleButton {

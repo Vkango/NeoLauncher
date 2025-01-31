@@ -1,9 +1,9 @@
 <template>
-<Transition name="drawer" mode="in">
+<Transition name="drawer" mode="out-in">
     <div id="drawer-mask" v-if="isDrawerOpen.state">
     </div>
   </Transition>
-  <Transition name="drawer1" mode="in">
+  <Transition name="drawer1" mode="out-in">
     <div id="drawer-container" v-if="isDrawerOpen.state" @click="closeDrawer">
         <div id="config-drawer" @click.stop :style="{ width: props.width }">
             <div id="detail" @click.stop :style="{ top: top_position ? '0px' : '40px', height: top_position ? '100%' : 'calc(100% - 40px)'}">
