@@ -79,7 +79,7 @@
     height: fit-content;
     min-width: 300px;
     background-color: rgba(30, 30, 30, 0.5);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--blur-value));
     box-shadow: 0px 10px 30px 0px rgba(var(--background-color),0.8);
   
   }

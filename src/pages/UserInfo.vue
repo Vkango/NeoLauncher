@@ -128,7 +128,7 @@ const accounts = ref([
 #login-container {
   width: 400px;
   height: 400px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   background-color: rgba(var(--background-color), 00.5);
   box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 10px 10px;
   border-radius: 5px;

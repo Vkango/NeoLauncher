@@ -1,6 +1,6 @@
 <template>
     <UIContainer>
-      <RippleButton id="container">
+      <RippleButton id="container" @click="launch">
         <div id="config-title">开始游戏</div>
         <div id="tags" @click.stop @mousedown.stop>
             <RippleButton id="RippleButton">▶ default</RippleButton>
@@ -14,7 +14,15 @@
 </template>
 
 <script setup>
-
+import { invoke } from '@tauri-apps/api/core';
+const launch = async () => {
+    try {
+        const greeting = await invoke('greet', { name: 'liigo' });
+        console.log(greeting);
+    } catch (error) {
+        console.error('调用命令时出错:', error);
+    }
+}
 </script>
 
 <style scoped>
@@ -31,7 +39,7 @@
   font-size: 12px;
   color: rgba(var(--text-color), 0.5);
   background-color: rgba(var(--background-color), 0.3);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   padding: 10px 15px;
   border-radius: 30px;
   box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);

@@ -163,7 +163,7 @@ defineExpose({
   .notification {
     pointer-events: all;
     background-color: rgba(var(--background-color), 0.5);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--blur-value));
     border-radius: 4px;
     box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
     width: calc(100% - 10px);

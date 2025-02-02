@@ -81,7 +81,7 @@
   .toast-content {
     padding: 10px 15px;
     background-color: rgba(var(--background-color), 0.5);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--blur-value));
     border-radius: 4px;
     box-shadow: 0 2px 12px rgba(var(--background-color), 0.1);
   }

@@ -59,6 +59,7 @@ color: String,
   height: 22px;
   border-radius: 5px;
   resize: none;
+  box-shadow: none;
   border: none;
   padding: 0;
   background-color: rgba(var(--text-color), 0.1);
@@ -118,6 +119,6 @@ input::placeholder {
   position: absolute;
   left: 0px;
   top: 0px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
 }
 </style>

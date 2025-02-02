@@ -71,7 +71,7 @@ const props = defineProps({
   height: 100%;
   width: 400px;
   background-color: rgba(var(--background-color), 0.5);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   box-shadow: 0px 10px 60px 30px rgba(0, 0, 0, 0.4);
 
 }

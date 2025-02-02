@@ -94,7 +94,7 @@
     width: 100%;
     height: 40px;
     background-color: rgba(var(--background-color), 0.5);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--blur-value));
   }
   .snackbar-content {
 

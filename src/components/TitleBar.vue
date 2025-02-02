@@ -8,7 +8,7 @@
     >
       <div class="title">{{ title }}</div>
       <div class="controls" @mouseup.stop @mouseleave.stop @mousedown.stop>
-        <RippleButton class="control-button" @click="minimizeWindow"><img class="icon" src="../assets/notice.svg" style="width: 80%;"><div id="msgCount">1</div></RippleButton>
+        <RippleButton class="control-button" @click="showTaskList"><img class="icon" src="../assets/task.svg" style="width: 80%;"><div id="msgCount">1</div></RippleButton>
         <RippleButton class="control-button" @click="minimizeWindow">
           <img class="icon" src="../assets/minimize.svg">
         </RippleButton>
@@ -24,8 +24,9 @@
   </template>
   
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 import { getCurrentWindow } from '@tauri-apps/api/window';
+const emit = defineEmits(['onTaskList ']);
 const isMaximized = ref(false);
 onMounted(async () => {
   isMaximized.value = getCurrentWindow().isMaximized();
@@ -46,7 +47,9 @@ const startDragging = (event) => {
   window.startDragging();
 };
 const stopDragging = () => {};
-  
+const showTaskList = () => {
+  emit('onTaskList');
+}
 const minimizeWindow = async () => {
   const window = getCurrentWindow();
   await window.minimize();};

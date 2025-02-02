@@ -30,11 +30,10 @@ import VersionList from './VersionList.vue';
 
 
 const items = ref([
-  { id: 0, text: '稳定版', clickable: true, icon: 'home.svg' },
+  { id: 0, text: '正式版', clickable: true, icon: 'home.svg' },
   { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
   { id: 2, text: 'Beta版', clickable: true, icon: 'beta.svg' },
   { id: 3, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
-  { id: 4, text: '基岩版', clickable: true, icon: 'light.svg'},   
   ]);
 const currentTabID = ref(0);
 
@@ -94,7 +93,7 @@ bottom: -12px;
   width: 100%;
   height: 120px;
   background-color: rgba(var(--background-color), 0.3);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
 }
 #icon {
   width: 16px;

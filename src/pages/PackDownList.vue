@@ -5,7 +5,7 @@
           <ul v-show="IsLoaded">
             <li ref="item" class="item" v-for="item in items" :key="item.text" :class="{ active: item.id === activeItem }" @click="handleClick(item)"> 
               <div v-if="item.gallery" >
-                <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }" style="filter: blur(20px); position: absolute;">
+                <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }" style="filter: blur(var(--blur-value)); position: absolute;">
                 <img :src="item.background_image" id="background-image" :class="{ gallery: item.gallery }">
               </div>
                 <div id="mask"></div>
@@ -359,7 +359,7 @@ watch(items, (newItems, oldItems) => {
   font-size: 12px;
   color: rgba(var(--text-color), 0.5);
   background-color: rgba(var(--background-color), 0.3);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   padding: 10px 15px;
   border-radius: 30px;
   box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
@@ -463,7 +463,7 @@ li {
 li:hover {
   background-color: rgba(var(--text-color), 0.2);
   top: 0px;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
 }
 
 </style>

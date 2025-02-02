@@ -90,7 +90,7 @@ const getIconPath = (icon) => {
     width: 100%;
     height: 80px;
     background-color: rgba(var(--background-color), 0.1);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(var(--blur-value));
 }
 #container
 {

@@ -6,14 +6,14 @@
   <Transition name="mask1" mode="out-in" appear leave>
     <div v-if="!isClosed" id="container" @click="closeEvent">
       <div id="search-result" @click.stop>
-        <SearchResult id="result-content"></SearchResult>
+        <TaskListResult id="result-content"></TaskListResult>
       </div>
       <div v-if="!isClosed" id="searchbar-container" @click.stop>
         <div id="title-bar">
           <RippleButton style="background-color: transparent; box-shadow: none;" @click="closeEvent"><img src="../assets/chevronup.svg"></RippleButton>
-          <span style="color: white">键入关键词后请按下回车键开始查找</span>
+          <span style="color: white">后台任务列表 - 当前正在进行 0 个任务。</span>
         </div>
-        <input type="text" placeholder="搜索：库内容、设置、游戏核心、CurseForge & Modrinth、插件……">
+        <input type="text" placeholder="在后台任务列表中搜索...">
       </div>
 
     </div>
@@ -22,7 +22,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import SearchResult from './SearchResult.vue';
+import TaskListResult from './TaskListResult.vue';
 const emit = defineEmits(['onClose']);
 const isClosed = ref(false);
 const closeEvent = () => {
@@ -99,14 +99,14 @@ input::placeholder {
   justify-content: center;
 }
 #searchbar-container {
-  width: 75%;
+  width: 65%;
   height: fit-content;
   border-radius: 5px;
   align-self: center;
 }
 #search-result {
   flex: 1;
-  width: 75%;
+  width: 65%;
   align-self: center;
   overflow-y: auto;
   overflow-x: hidden;

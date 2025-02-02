@@ -5,7 +5,7 @@
       </Transition>
       <Transition name="fade1">
         <ul v-show="IsLoaded">
-        <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }" @click="handleClick(item)">
+        <li v-for="item in items" :key="item.text" :class="{ clickable: item.clickable, active: item.id === activeItem }">
             <div v-if="item.clickable">
                 <span id="icon_container">
                 <img :src="getIconPath(item.icon)" id="icon">
@@ -25,61 +25,6 @@
         </li>
         </ul>
       </Transition>
-      <Drawer :ctitle="'下载 ' + activeItem">
-        <div id="drawer-content" style="padding: 0 5px;">
-          <img src="../assets/minecraft.png" width="45px" id="mod-icon">
-          <div id="banner-text">
-            <div id="mod-name">{{ activeItem }}</div>
-            <div id="desc">设置下载选项</div>
-          </div>
-          <div id="details">
-            <div id="detail-head">
-              <img class="icon" src="../assets/setting.svg">
-              <span id="head-text">自动安装</span>
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/forge.svg">
-              <span id="detail-name">Forge</span>
-              <span id="detail-detail">51.0.33</span>
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/note.svg">
-              <span id="detail-name">Fabric</span>
-              <span id="detail-detail">不兼容
-              </span>
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/note.svg">
-              <span id="detail-name">NeoForge</span>
-              <span id="detail-detail">不兼容</span>
-              
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/note.svg">
-              <span id="detail-name">OptiFine</span>
-              <span id="detail-detail">不兼容</span>
-            </div>
-            <div id="detail-head">
-              <img class="icon" src="../assets/setting.svg">
-              <span id="head-text">安装信息</span>
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/forge.svg">
-              <span id="detail-name">配置名</span>
-              <span id="detail-detail">default</span>
-              
-            </div>
-            <div id="detail-info">
-              <img class="icon" id="detail-icon" src="../assets/note.svg">
-              <span id="detail-name">显示名称</span>
-              <span id="detail-detail">1.21-Forge_51.0.33
-              </span>
-            </div>
-          </div>
-
-        </div>
-        <RippleButton id="download-button" @click="sendToast('稍等片刻', 10000);"><img src="../assets/download.svg" style="margin-right: 10px;">开始下载</RippleButton>
-      </Drawer>
       <Transition name="fade1">
         <div v-if="isLoadingFailed" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
           <Card icon="offline.svg" title="加载失败" content="可能是网络有问题" @click="fetchVersions"></Card>
@@ -91,6 +36,7 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch, getCurrentInstance, inject } from 'vue';
+import Tip from '../components/Tip.vue';
 const sendToast = inject("sendToast");
 const isLoadingFailed = ref(false);
 const props = defineProps({
@@ -99,7 +45,7 @@ const props = defineProps({
         default: 0
     }
 });
-const types = ['release', 'snapshot', 'old_beta', 'old_alpha', 'release'];
+const types = ['release', 'snapshot', 'old_beta', 'old_alpha'];
 const IsLoaded = ref(false); // <!!>
 const instance = getCurrentInstance();
 let isDrawerOpen = instance.appContext.config.globalProperties.$IsDrawerOpen;
@@ -227,7 +173,7 @@ const getIconPath = (icon) => {
 
 #tip2 {
   position: absolute;
-  right: 15px;
+  left: 15px;
   bottom: 15px;
   font-size: 12px;
   color: rgba(var(--text-color), 0.5);
@@ -260,6 +206,7 @@ const getIconPath = (icon) => {
 #tags
 {
     margin-top: 3px;
+    width: auto;
 }
 #ver-name
 {
@@ -300,23 +247,28 @@ ul {
   font-size: 12px; 
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 li {
-  padding: 20px 15px;
+  padding: 20px 0px;
   color: rgba(var(--text-color), 0.3);
   width: 100%;
+
 }
 
 li.clickable {
   top: 0px;
-  width: 200px;
-  height: 60px;
+  width: 100%;
+  height: auto;
   position: relative;
   cursor: pointer;
   color: rgba(var(--text-color));
   font-size: 12px;
   transition: top 0.2s ease;
+  backdrop-filter: blur(var(--blur-value));
+  border-radius: 5px;
+  background-color: rgba(var(--background-color), 0.4);
 }
 
 li.clickable:hover {

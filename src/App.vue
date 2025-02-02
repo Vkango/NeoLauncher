@@ -15,9 +15,11 @@ import LibraryUI from './pages/LibraryUI.vue';
 import LoginUI from "./pages/LoginUI.vue";
 import UserInfo from './pages/UserInfo.vue';
 import SearchUI from './pages/SearchUI.vue';
+import TaskList from './pages/TaskList.vue';
 let currentComponent = shallowRef(HomeUI);
 const showLoginUI = ref(false);
 const showSearchUI = ref(false);
+const showTaskList = ref(false);
 const componentsMap = {
   1: HomeUI,
   2: LibraryUI,
@@ -55,12 +57,18 @@ const onSearchUI = () => {
 const onSearchUIClose = () => {
   showSearchUI.value = false;
 }
+const onTaskList = () => {
+  showTaskList.value = true;
+}
+const onTaskListClose = () => {
+  showTaskList.value = false;
+}
 </script>
 
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
-  <TitleBar title="NeoLauncher" style="z-index: 1;" />
+  <TitleBar title="NeoLauncher" style="z-index: 1;" @onTaskList="onTaskList"/>
   <Navi @changePage="changePage" @onLoginUI="onLoginUI" @onSearchUI="onSearchUI"></Navi>
   <transition name="fade-up" mode="in">
       <component :is="currentComponent"></component>
@@ -71,9 +79,8 @@ const onSearchUIClose = () => {
   </div>
     <!--<LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>-->
     <UserInfo v-if="showLoginUI" @onClose="onLoginUIClose"/>
-    <Transition name="fade">
     <SearchUI v-if="showSearchUI" @onClose="onSearchUIClose"/>
-    </Transition>
+    <TaskList v-if="showTaskList" @onClose="onTaskListClose"></TaskList>
     <Notification ref="notificationComponent"/>
     <Toast ref="ToastComponent"/>
     <MessageBox ref="MessageBoxComponent"/>
@@ -111,6 +118,7 @@ const onSearchUIClose = () => {
 }
 #container
 {
+  
   background: url('./assets/background.jpg');
   background-size: cover;
   background-position: center;
@@ -128,7 +136,8 @@ const onSearchUIClose = () => {
   left: 0px;
   width: 100%;
   height: 100vh;
-  background-color: rgba(var(--background-color), 0.6);
+  background-color: rgba(var(--background-color), 0.5);
+  transition: background-color 0.3s ease;
 }
 </style>
 <style>
@@ -185,6 +194,7 @@ button:hover {
   --background-color: 0, 0, 0;
   --text-color: 255, 255, 255;
   --invert-percent: 0%;
+  --blur-value: 20px;
   color: rgba(var(--text-color));
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;
@@ -196,7 +206,7 @@ button:hover {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-background: rgba(16, 31, 28, 0.1);
+
 border-radius: 0;
 }
 
@@ -207,7 +217,7 @@ transition: background-color 0.2s;
 cursor: pointer;
 }
 ::selection {
-color: #fff;
+color: rgba(var(--text-color), 1);
 background: rgba(var(--background-color), 0.3);
 }
 ::-webkit-scrollbar-thumb:hover {

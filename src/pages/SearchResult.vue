@@ -178,7 +178,7 @@ const getIconPath = (icon) => {
   font-size: 12px;
   color: rgba(var(--text-color), 0.5);
   background-color: rgba(var(--background-color), 0.3);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   padding: 10px 15px;
   border-radius: 30px;
   box-shadow: 0px 3px 10px -3px rgba(0, 0, 0, 0.6);
@@ -266,9 +266,9 @@ li.clickable {
   color: rgba(var(--text-color));
   font-size: 12px;
   transition: top 0.2s ease;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(var(--blur-value));
   border-radius: 5px;
-  background-color: rgba(var(--text-color), 0.1);
+  background-color: rgba(var(--background-color), 0.4);
 }
 
 li.clickable:hover {
