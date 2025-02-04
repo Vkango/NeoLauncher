@@ -16,10 +16,12 @@ import LoginUI from "./pages/LoginUI.vue";
 import UserInfo from './pages/UserInfo.vue';
 import SearchUI from './pages/SearchUI.vue';
 import TaskList from './pages/TaskList.vue';
+import LoginAction from './pages/LoginAction.vue';
 let currentComponent = shallowRef(HomeUI);
 const showLoginUI = ref(false);
 const showSearchUI = ref(false);
 const showTaskList = ref(false);
+const showLoginAction = ref(false);
 const componentsMap = {
   1: HomeUI,
   2: LibraryUI,
@@ -63,6 +65,12 @@ const onTaskList = () => {
 const onTaskListClose = () => {
   showTaskList.value = false;
 }
+const onLoginAction = () => {
+  showLoginAction.value = true;
+}
+const onLoginActionClose = () => {
+  showLoginAction.value = false;
+}
 </script>
 
 <template>
@@ -71,7 +79,7 @@ const onTaskListClose = () => {
   <TitleBar title="NeoLauncher" style="z-index: 1;" @onTaskList="onTaskList"/>
   <Navi @changePage="changePage" @onLoginUI="onLoginUI" @onSearchUI="onSearchUI"></Navi>
   <transition name="fade-up" mode="in">
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent" @onLoginAction="onLoginAction"></component>
   </transition>
 
   <div style="position: absolute; left: 30px; top: 30px">
@@ -80,6 +88,7 @@ const onTaskListClose = () => {
     <!--<LoginUI v-if="showLoginUI" @onClose="onLoginUIClose"/>-->
     <UserInfo v-if="showLoginUI" @onClose="onLoginUIClose"/>
     <SearchUI v-if="showSearchUI" @onClose="onSearchUIClose"/>
+    <LoginAction v-if="showLoginAction" @onClose="onLoginActionClose"/>
     <TaskList v-if="showTaskList" @onClose="onTaskListClose"></TaskList>
     <Notification ref="notificationComponent"/>
     <Toast ref="ToastComponent"/>
@@ -119,7 +128,7 @@ const onTaskListClose = () => {
 #container
 {
   
-  background: url('./assets/background.jpg');
+  background: var(--background-src);
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -191,6 +200,7 @@ button:hover {
 }
 :root
 {
+  --background-src: url('./assets/background-dark.jpg');
   --background-color: 0, 0, 0;
   --text-color: 255, 255, 255;
   --invert-percent: 0%;
