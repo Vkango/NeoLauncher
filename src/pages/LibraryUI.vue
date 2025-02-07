@@ -27,6 +27,7 @@ import { ref } from 'vue';
 import PackDownList from './PackDownList.vue';
 import VersionList from './VersionList.vue';
 import ConfigList from './ConfigList.vue';
+import ConfigPackList from './ConfigPackList.vue';
 const options = ref([
   { label: 'Option 1', value: '1' },
   { label: 'Option 2', value: '2' },
@@ -36,7 +37,7 @@ const currentTabID = ref(0);
 const items = ref([
   { id: 0, text: '配置', clickable: true, icon: 'run.svg', component: ConfigList, tabID: 0}, 
   { id: 1, text: '游戏核心', clickable: true, icon: 'game.svg', component: VersionList, tabID: 0},
-  { id: 2, text: '模组', clickable: true, icon: 'setting.svg', component: PackDownList, tabID: 0},
+  { id: 2, text: '模组', clickable: true, icon: 'setting.svg', component: ConfigPackList, tabID: 0},
   { id: 3, text: '材质', clickable: true, icon: 'color.svg', component: PackDownList, tabID: 1},
   { id: 4, text: '光影', clickable: true, icon: 'light.svg', component: PackDownList, tabID: 2},
   { id: 5, text: '整合包', clickable: true, icon: 'liteloader.svg', component: PackDownList, tabID: 3}, 

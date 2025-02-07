@@ -3,8 +3,13 @@
       <div id="banner">
           <div id="config-title">CurseForge & Modrinth</div>
           <div id="tags" style="">
-
-              <Tag title="🔗 Modrinth"></Tag>
+            <ComboBox
+      v-model="selected"
+      :options="options"
+      @change="handleChange"
+      :enableSearch="false"
+      style="display: inline-block; z-index: 2;"
+    />
               <input placeholder="🔍 Search"></input>
           </div>
           <ul class="horizontal-list">
@@ -29,10 +34,12 @@
 <script setup>
 import { ref } from 'vue';
 import PackDownList from './PackDownList.vue';
+import ComboBox from '../components/ComboBox.vue';
+
+const selected = ref("1");
 const options = ref([
-  { label: 'Option 1', value: '1' },
-  { label: 'Option 2', value: '2' },
-  { label: 'Option 3', value: '3' }
+  { value: "1", label: "⭐ Modrinth" },
+  { value: "2", label: "🎈 CurseForge" },
 ]);
 const currentTabID = ref(0);
 const items = ref([
@@ -167,6 +174,7 @@ bottom: -12px;
   height: 120px;
   background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(var(--blur-value));
+  z-index: 1;
 }
 #icon {
   width: 16px;

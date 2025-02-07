@@ -2,11 +2,12 @@
     <UIContainer>
       <div id="config-title">调教刑具</div>
       <div style="display: flex; gap: 5px; margin: 20px; flex-wrap: wrap;">
-        <RippleButton @mousedown.stop @click="onclick1()">MessageBox</RippleButton>
-        <RippleButton @mousedown.stop @click="onclick1()">Toast</RippleButton>
-        <RippleButton @mousedown.stop @click="onclick3()">Notification</RippleButton>
-        <RippleButton @mousedown.stop @click="onclick2()">切换主题喵</RippleButton>
-        <RippleButton @mousedown.stop @click="onclick4()">OpenLoginAction</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick1()">信息框_弹出</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick1()">吐司_弹出</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick3()">通知_添加通知</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick2()">主题_切换</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick4()">微软_登录</RippleButton>
+        <RippleButton @mousedown.stop @click="onclick5()">窗口_置Acrylic</RippleButton>
       </div>
   </UIContainer>
 </template>
@@ -27,7 +28,7 @@ const onclick4 = async () => {
   sendNotification(
       '即将进行微软登录...',
       LoadingWithTip,
-      { Tip: '3秒后弹出窗口，请在弹出的窗口中继续操作...' },
+      { Tip: '3秒后弹出窗口🤔' },
       3000)
     setTimeout(async () => {
       const webview = new WebviewWindow("login-window", {
@@ -112,11 +113,31 @@ const onclick3 = (() => {
       5000)
     }, 3000);
 })
+const onclick5 = () => {
+  const root = document.documentElement;
+  if (getComputedStyle(document.documentElement).getPropertyValue('--background-src').trim() == "url('')") // 关闭Acrylic
+  {
+    console.log('acrylic is off');
+    root.style.setProperty('--blur-value', '20px');
+    if (getComputedStyle(document.documentElement).getPropertyValue('--invert-percent').trim() == "100%") // 浅色模式
+    {
+      root.style.setProperty('--background-src',"url('/src/assets/background-light.jpg')");
+    }
+    else {
+      root.style.setProperty('--background-src',"url('/src/assets/background-dark.jpg')");
+    }
+  }
+  else {
+    console.log('acrylic is on')
+    root.style.setProperty('--background-src', "url('')");
+    root.style.setProperty('--blur-value', '1');
+  }
+}
 const onclick2 = (() => {
   // 修改反色逻辑
   console.log(theme.value)
   const root = document.documentElement;
-  if (theme.value) {
+  if (getComputedStyle(document.documentElement).getPropertyValue('--invert-percent').trim() == "0%") {
     root.style.setProperty('--text-color', '0, 0, 0');
     root.style.setProperty('--background-color', '255, 255, 255');
     root.style.setProperty('--invert-percent', '100%');
@@ -124,7 +145,7 @@ const onclick2 = (() => {
   }
   else {
     root.style.setProperty('--text-color', '255, 255, 255');
-    root.style.setProperty('--background-color', '0, 0, 0');
+    root.style.setProperty('--background-color', '14, 16, 20');
     root.style.setProperty('--invert-percent', '0%');
     root.style.setProperty('--background-src',"url('/src/assets/background-dark.jpg')");
   }

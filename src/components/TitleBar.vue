@@ -4,7 +4,8 @@
       @mousedown="startDragging"
       @mouseup="stopDragging"
       @mouseleave="stopDragging"
-
+      @mousemove="handleDraggingMaxized"
+      @dblclick="maximizeWindow"
     >
       <div class="title">{{ title }}</div>
       <div class="controls" @mouseup.stop @mouseleave.stop @mousedown.stop>
@@ -12,10 +13,10 @@
         <RippleButton class="control-button" @click="minimizeWindow">
           <img class="icon" src="../assets/minimize.svg">
         </RippleButton>
-        <RippleButton v-if="!isMaximized" class="control-button" @click="maximizeWindow">
+        <RippleButton v-if="isMaximized" class="control-button" @click="maximizeWindow">
           <img class="icon" src="../assets/restore.svg">
         </RippleButton>
-        <RippleButton v-if="isMaximized" class="control-button" @click="maximizeWindow">
+        <RippleButton v-if="!isMaximized" class="control-button" @click="maximizeWindow">
           <img class="icon" src="../assets/maximize.svg">
         </RippleButton>
         <RippleButton class="control-button" @click="closeWindow"><img class="icon" src="../assets/close1.svg"></RippleButton>
@@ -28,13 +29,14 @@ import { ref, onMounted, defineEmits } from 'vue';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 const emit = defineEmits(['onTaskList ']);
 const isMaximized = ref(false);
+const isMouseDown = ref(false);
 onMounted(async () => {
   isMaximized.value = getCurrentWindow().isMaximized();
   await getCurrentWindow().onResized(handleResize);
 })
 const handleResize = async () => {
   const window = getCurrentWindow();
-  isMaximized.value = !await window.isMaximized();
+  isMaximized.value = await window.isMaximized();
 };
 const props = defineProps({
   title: {
@@ -42,11 +44,25 @@ const props = defineProps({
     default: 'Tauri App'
   }
 });
+const handleDraggingMaxized = () => {
+  if (isMaximized.value && isMouseDown.value) {
+    const window = getCurrentWindow();
+    window.startDragging();
+    isMaximized.value = false;
+  }
+};
 const startDragging = (event) => {
+  isMouseDown.value = true;
+  if (isMaximized.value) {
+    return;
+  }
   const window = getCurrentWindow();
   window.startDragging();
+
 };
-const stopDragging = () => {};
+const stopDragging = () => {
+  isMouseDown.value = false;
+};
 const showTaskList = () => {
   emit('onTaskList');
 }
@@ -61,6 +77,7 @@ const maximizeWindow = async () => {
   } else {
     await window.maximize();
   }
+  isMaximized.value = await window.isMaximized();
 };
 
 const closeWindow = async () => {

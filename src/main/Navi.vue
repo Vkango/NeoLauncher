@@ -113,7 +113,7 @@ input::placeholder {
 }
 #background
 {
-  background-color: rgba(var(--background-color), 0.1);
+  background-color: rgba(var(--background-color), 0.15);
   width: 225px;
   height: 100%;
   position: absolute;

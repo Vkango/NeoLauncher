@@ -76,7 +76,7 @@ const onLoginActionClose = () => {
 <template>
   <div id="container"></div>
   <div id="overlay"></div>
-  <TitleBar title="NeoLauncher" style="z-index: 1;" @onTaskList="onTaskList"/>
+  <TitleBar title="NeoLauncher" style="z-index: 2;" @onTaskList="onTaskList"/>
   <Navi @changePage="changePage" @onLoginUI="onLoginUI" @onSearchUI="onSearchUI"></Navi>
   <transition name="fade-up" mode="in">
       <component :is="currentComponent" @onLoginAction="onLoginAction"></component>
@@ -145,7 +145,7 @@ const onLoginActionClose = () => {
   left: 0px;
   width: 100%;
   height: 100vh;
-  background-color: rgba(var(--background-color), 0.5);
+  background-color: rgba(var(--background-color), 0.3);
   transition: background-color 0.3s ease;
 }
 </style>
@@ -201,7 +201,7 @@ button:hover {
 :root
 {
   --background-src: url('./assets/background-dark.jpg');
-  --background-color: 0, 0, 0;
+  --background-color: 14, 16, 20;
   --text-color: 255, 255, 255;
   --invert-percent: 0%;
   --blur-value: 20px;
@@ -226,10 +226,7 @@ border-radius: 0;
 transition: background-color 0.2s;
 cursor: pointer;
 }
-::selection {
-color: rgba(var(--text-color), 1);
-background: rgba(var(--background-color), 0.3);
-}
+
 ::-webkit-scrollbar-thumb:hover {
 background-color: rgba(var(--text-color), 0.5);
 }

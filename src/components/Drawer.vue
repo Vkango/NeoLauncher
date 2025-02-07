@@ -120,6 +120,7 @@ const props = defineProps({
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: flex-end;
+  z-index: 2;
 }
 
 </style>

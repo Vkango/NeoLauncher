@@ -1,9 +1,14 @@
 <template>
   <UIContainer>
-      <div id="banner">
+    <div id="banner">
           <div id="config-title">下载游戏核心</div>
           <div id="tags">
-              <Tag title="🔗 BUGJUMP"></Tag>
+              <ComboBox
+      v-model="selected"
+      :options="options"
+      @change="handleChange"
+      :enableSearch="false"
+    />
           </div>
           <ul class="horizontal-list">
           <RippleButton id="RippleButton" v-for="item in items" :key="item.id" :class="{ clickable: item.clickable, active: item.id === currentTabID }" @click="handleClick(item.id)">
@@ -14,11 +19,14 @@
           </RippleButton>
           </ul>
       </div>
-      <div id="manage">
+          <div id="manage">
         <Transition name="fade" mode="in">
           <VersionList :key="currentTabID" :currentTabID="currentTabID" />
         </Transition>
       </div>
+
+
+      
   </UIContainer>
 
 </template>
@@ -27,8 +35,18 @@
 
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
+import ComboBox from '../components/ComboBox.vue';
 
+const selected = ref("1");
+const options = ref([
+  { value: "1", label: "🔗 BUGJUMP" },
+  { value: "2", label: "🔗 BMCLAPI" },
+  { value: "3", label: "🔗 基岩版" },
+]);
 
+const handleChange = (value) => {
+  console.log("Selected value:", value);
+};
 const items = ref([
   { id: 0, text: '正式版', clickable: true, icon: 'home.svg' },
   { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
@@ -94,6 +112,7 @@ bottom: -12px;
   height: 120px;
   background-color: rgba(var(--background-color), 0.3);
   backdrop-filter: blur(var(--blur-value));
+  z-index: 1;
 }
 #icon {
   width: 16px;
