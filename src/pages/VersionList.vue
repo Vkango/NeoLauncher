@@ -91,12 +91,17 @@
 
 <script setup>
 import { ref, onMounted, defineProps, watch, getCurrentInstance, inject } from 'vue';
+import { fetchData } from '../scripts/request.js'
 const sendToast = inject("sendToast");
 const isLoadingFailed = ref(false);
 const props = defineProps({
     currentTabID: {
         type: Number,
         default: 0
+    },
+    currentSelected: {
+      type: Number,
+      default: 0
     }
 });
 const types = ['release', 'snapshot', 'old_beta', 'old_alpha', 'release'];
@@ -116,10 +121,22 @@ onMounted(() => {
 
 
 
-const fetchVersions = () => {
+const fetchVersions = async () => {
   IsLoaded.value = false;
   isLoadingFailed.value = false;
-  worker.postMessage({ currentTabID: props.currentTabID, types });
+  let responseData;
+  switch (props.currentSelected)
+  {
+    case 1:
+      responseData = await fetchData('https://piston-meta.mojang.com/mc/game/version_manifest.json');
+      break;
+    case 2:
+      responseData = await fetchData('https://bmclapi2.bangbang93.com/mc/game/version_manifest.json');
+      break;
+    case 3:
+      responseData = await fetchData('https://mrarm.io/r/w10-vdb');
+  }
+  worker.postMessage({ responseData: responseData, currentTabID: props.currentTabID, currentSelected: props.currentSelected, types });
   worker.onmessage = (event) => {
     if (event.data.error) {
       console.error('Error fetching versions:', event.data.error);

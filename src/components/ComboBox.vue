@@ -95,7 +95,6 @@ const selectOption = (option) => {
   isDropdownVisible.value = false;
   emit('update:modelValue', selectedValue.value);
   emit('change', selectedValue.value);
-  console('Selected:', selectedValue.value);
 };
 
 // 点击外部区域关闭下拉菜单

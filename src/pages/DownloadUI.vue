@@ -21,7 +21,7 @@
       </div>
           <div id="manage">
         <Transition name="fade" mode="in">
-          <VersionList :key="currentTabID" :currentTabID="currentTabID" />
+          <VersionList :key="currentTabID + selected * 2" :currentTabID="currentTabID" :currentSelected="selected"/>
         </Transition>
       </div>
 
@@ -36,24 +36,46 @@
 import { ref } from 'vue';
 import VersionList from './VersionList.vue';
 import ComboBox from '../components/ComboBox.vue';
-
-const selected = ref("1");
+const currentTabID = ref(0);
+const selected = ref(1);
 const options = ref([
-  { value: "1", label: "🔗 BUGJUMP" },
-  { value: "2", label: "🔗 BMCLAPI" },
-  { value: "3", label: "🔗 基岩版" },
+  { value: 1, label: "🔗 BUGJUMP" },
+  { value: 2, label: "🔗 BMCLAPI" },
+  { value: 3, label: "🔗 基岩版 (MCMrARM)" },
 ]);
-
-const handleChange = (value) => {
-  console.log("Selected value:", value);
-};
 const items = ref([
   { id: 0, text: '正式版', clickable: true, icon: 'home.svg' },
   { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
   { id: 2, text: 'Beta版', clickable: true, icon: 'beta.svg' },
   { id: 3, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
   ]);
-const currentTabID = ref(0);
+const handleChange = (value) => {
+  switch (value) {
+    case 1 || 2:
+      {
+        items.value = [{ id: 0, text: '正式版', clickable: true, icon: 'home.svg' },
+          { id: 1, text: '快照版', clickable: true, icon: 'camera.svg' },
+          { id: 2, text: 'Beta版', clickable: true, icon: 'beta.svg' },
+          { id: 3, text: 'Alpha版', clickable: true, icon: 'bug.svg' },
+          ];
+
+        break;
+      }
+
+    case 3:
+      {
+        items.value = [{ id: 0, text: '正式版', clickable: true, icon: 'home.svg' },
+          { id: 1, text: '测试版', clickable: true, icon: 'camera.svg' },
+          { id: 2, text: '预览版', clickable: true, icon: 'beta.svg' },
+          ];
+        break;
+      }
+  }
+  currentTabID.value = 0;
+  console.log("Selected value:", value);
+};
+
+
 
 const handleClick = (id) => {
   currentTabID.value = id;

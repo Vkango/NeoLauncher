@@ -145,7 +145,7 @@ const onLoginActionClose = () => {
   left: 0px;
   width: 100%;
   height: 100vh;
-  background-color: rgba(var(--background-color), 0.3);
+  background-color: rgba(var(--background-color), 0.5);
   transition: background-color 0.3s ease;
 }
 </style>

@@ -64,6 +64,7 @@ const closeEvent = () => {
   position: absolute;
   transition: opacity 0.5s ease;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 input {
   position: relative;
@@ -97,6 +98,7 @@ input::placeholder {
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
+  z-index: 2;
 }
 #searchbar-container {
   width: 65%;

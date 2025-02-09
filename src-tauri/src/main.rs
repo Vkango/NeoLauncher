@@ -2,8 +2,20 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 use tauri::Manager;
 use window_vibrancy::*;
+mod request;
+use request::fetch_data;
+use tauri::command;
+
+#[command]
+async fn fetch_data_command(url: &str) -> Result<String, String> {
+    match fetch_data(url).await {
+        Ok(data) => Ok(data),
+        Err(e) => Err(format!("Failed to fetch data: {}", e)),
+    }
+}
 fn main() {
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![fetch_data_command])
         .setup(|app| {
             let window = app.get_webview_window("main").unwrap();
 
